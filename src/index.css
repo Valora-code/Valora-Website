@@ -475,15 +475,15 @@ All colors MUST be HSL.
     animation: machinePulse 4s ease-in-out infinite;
   }
 
-  /* Logo glow pulse - subtle breathing effect */
+  /* Logo glow pulse - subtle breathing effect on edges only */
   @keyframes logoGlowPulse {
     0%, 100% {
-      opacity: 0.3;
-      filter: blur(20px);
+      opacity: 0.15;
+      filter: blur(12px);
     }
     50% {
-      opacity: 0.6;
-      filter: blur(25px);
+      opacity: 0.3;
+      filter: blur(16px);
     }
   }
 

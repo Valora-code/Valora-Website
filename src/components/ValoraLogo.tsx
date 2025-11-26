@@ -13,7 +13,7 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
   return (
     <div className={`flex items-center ${gap} ${className}`}>
       <div className={`relative ${showAnimation ? 'logo-core-rotate chromatic-hover' : ''}`}>
-        {/* Pulsing outer glow */}
+        {/* Pulsing edge glow - only on the outline */}
         {showAnimation && (
           <div className="absolute inset-0 logo-glow-pulse">
             <svg 
@@ -24,7 +24,9 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
             >
             <path 
               d="M50 2 Q55 20, 90 50 Q55 80, 50 98 Q45 80, 10 50 Q45 20, 50 2 Z" 
-              fill="currentColor"
+              stroke="currentColor"
+              strokeWidth="2"
+              fill="none"
               className="text-foreground"
             />
             </svg>
