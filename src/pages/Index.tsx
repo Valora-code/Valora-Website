@@ -206,7 +206,7 @@ const Index = () => {
           
           <div className="max-w-3xl mx-auto space-y-8">
           <ScrollReveal delay={100}>
-            <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl group">
+            <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl group chromatic-hover">
               <div className="flex gap-8 items-center">
                 <CountUpNumber end={88} suffix="%" className="text-6xl font-mono font-light tracking-tighter text-foreground whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
@@ -217,7 +217,7 @@ const Index = () => {
           </ScrollReveal>
             
           <ScrollReveal delay={200}>
-            <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl group">
+            <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl group chromatic-hover">
               <div className="flex gap-8 items-center">
                 <CountUpNumber end={79} suffix="%" className="text-6xl font-mono font-light tracking-tighter text-foreground whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
@@ -228,7 +228,7 @@ const Index = () => {
           </ScrollReveal>
             
           <ScrollReveal delay={300}>
-            <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl group">
+            <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl group chromatic-hover">
               <div className="flex gap-8 items-center">
                 <CountUpNumber end={56} suffix="%" className="text-6xl font-mono font-light tracking-tighter text-foreground whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
@@ -241,7 +241,7 @@ const Index = () => {
           
           <ScrollReveal delay={400}>
             <div className="max-w-3xl mx-auto">
-              <InteractiveCard className="liquid-glass p-10 rounded-xl border-l-2 border-foreground/20 system-glow group">
+              <InteractiveCard className="liquid-glass p-10 rounded-xl border-l-2 border-foreground/20 system-glow group chromatic-hover">
                 <p className="text-xl md:text-2xl font-light italic leading-relaxed mb-4">
                   "Jag har vetat i två år att jag borde göra detta – men jag orkade inte."
                 </p>
@@ -319,7 +319,7 @@ const Index = () => {
           
           <div className="grid md:grid-cols-2 gap-8">
             <ScrollReveal delay={100}>
-              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group">
+              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group chromatic-hover">
                 <div className="text-3xl font-light">Christina</div>
                 <div className="text-4xl font-mono font-light text-secondary tabular-nums">ca 17 000 kr/år</div>
                 <p className="text-secondary font-light italic pt-4">
@@ -329,7 +329,7 @@ const Index = () => {
             </ScrollReveal>
             
             <ScrollReveal delay={200}>
-              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group">
+              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group chromatic-hover">
                 <div className="text-3xl font-light">Ninni</div>
                 <div className="text-4xl font-mono font-light text-secondary tabular-nums">ca 15 000 kr/år</div>
                 <p className="text-secondary font-light italic pt-4">
@@ -340,7 +340,7 @@ const Index = () => {
           </div>
           
           <ScrollReveal delay={300}>
-            <InteractiveCard className="liquid-glass p-10 rounded-xl max-w-2xl mx-auto group">
+            <InteractiveCard className="liquid-glass p-10 rounded-xl max-w-2xl mx-auto group chromatic-hover">
               <p className="text-xl font-light italic text-center">
                 "Ekonomi gav mig ångest innan."
               </p>
@@ -360,7 +360,7 @@ const Index = () => {
           
           <div className="grid md:grid-cols-3 gap-8">
             <ScrollReveal delay={100}>
-              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group">
+              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group chromatic-hover">
                 <h3 className="text-xl font-light">Den upptagna yrkespersonen</h3>
                 <p className="text-secondary font-light leading-relaxed">
                   Du har inte tid att jämföra erbjudanden och förhandla. 
@@ -370,7 +370,7 @@ const Index = () => {
             </ScrollReveal>
             
             <ScrollReveal delay={200}>
-              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group">
+              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group chromatic-hover">
                 <h3 className="text-xl font-light">Familjen med komplex ekonomi</h3>
                 <p className="text-secondary font-light leading-relaxed">
                   Flera lån, försäkringar och sparformer. Valora håller koll på allt 
@@ -380,7 +380,7 @@ const Index = () => {
             </ScrollReveal>
             
             <ScrollReveal delay={300}>
-              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group">
+              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group chromatic-hover">
                 <h3 className="text-xl font-light">Den som vill ha kontroll utan stress</h3>
                 <p className="text-secondary font-light leading-relaxed">
                   Du vill göra rätt men känner dig överväldigad. 

@@ -12,7 +12,7 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
   
   return (
     <div className={`flex items-center ${gap} ${className}`}>
-      <div className={`relative ${showAnimation ? 'logo-core-rotate' : ''}`}>
+      <div className={`relative ${showAnimation ? 'logo-core-rotate chromatic-hover' : ''}`}>
         {/* Subtle outer glow */}
         {showAnimation && (
           <div className="absolute inset-0 blur-2xl opacity-20">
