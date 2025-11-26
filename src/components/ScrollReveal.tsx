@@ -13,11 +13,15 @@ export const ScrollReveal = ({ children, delay = 0, className = '' }: ScrollReve
   return (
     <div
       ref={elementRef}
-      className={`transition-all duration-1000 ease-out ${
+      className={`${
         isVisible 
           ? 'opacity-100 translate-y-0' 
-          : 'opacity-0 translate-y-8'
+          : 'opacity-0 translate-y-12'
       } ${className}`}
+      style={{
+        transition: 'all 1s cubic-bezier(0.23, 1, 0.32, 1)',
+        transitionDelay: `${delay}ms`,
+      }}
     >
       {children}
     </div>

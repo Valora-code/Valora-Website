@@ -7,6 +7,7 @@ import { ParallaxSection } from "@/components/ParallaxSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { DataParticles } from "@/components/DataParticles";
+import { MagneticCursor } from "@/components/MagneticCursor";
 import { useParallax } from "@/hooks/use-parallax";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -72,6 +73,9 @@ const Index = () => {
     });
   };
   return <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
+      {/* Magnetic Cursor */}
+      <MagneticCursor />
+      
       {/* Depth layer - distant background with parallax and ambient life */}
       <div className="fixed inset-0 z-0">
         <DataParticles />
@@ -93,16 +97,16 @@ const Index = () => {
             <ValoraLogo size="small" />
             
             <div className="hidden md:flex items-center gap-8">
-              <button onClick={() => scrollToSection('why')} className="text-sm font-light text-secondary hover:text-foreground transition-colors tracking-wide">
+              <button onClick={() => scrollToSection('why')} className="interactive-element text-sm font-light text-secondary hover:text-foreground transition-all tracking-wide">
                 VARFÖR VALORA
               </button>
-              <button onClick={() => scrollToSection('how')} className="text-sm font-light text-secondary hover:text-foreground transition-colors tracking-wide">
+              <button onClick={() => scrollToSection('how')} className="interactive-element text-sm font-light text-secondary hover:text-foreground transition-all tracking-wide">
                 HUR DET FUNGERAR
               </button>
-              <button onClick={() => scrollToSection('proof')} className="text-sm font-light text-secondary hover:text-foreground transition-colors tracking-wide">
+              <button onClick={() => scrollToSection('proof')} className="interactive-element text-sm font-light text-secondary hover:text-foreground transition-all tracking-wide">
                 BEVIS
               </button>
-              <button onClick={() => scrollToSection('faq')} className="text-sm font-light text-secondary hover:text-foreground transition-colors tracking-wide">
+              <button onClick={() => scrollToSection('faq')} className="interactive-element text-sm font-light text-secondary hover:text-foreground transition-all tracking-wide">
                 VANLIGA FRÅGOR
               </button>
               <Button variant="glass" size="sm" onClick={() => scrollToSection('waitlist')}>
@@ -132,7 +136,7 @@ const Index = () => {
               <div className="space-y-8 fade-in-up" style={{
               animationDelay: '0.3s'
             }}>
-                <h1 className="text-5xl md:text-7xl font-extralight tracking-tight leading-[1.05] max-w-2xl">
+                <h1 className="text-6xl md:text-8xl font-extralight tracking-tighter leading-[0.95] max-w-2xl">
                   Autopiloten för din privatekonomi.
                 </h1>
                 
@@ -175,7 +179,7 @@ const Index = () => {
                     Begär tidig access
                   </span>
                 </button>
-                <button onClick={() => scrollToSection('how')} className="text-secondary hover:text-foreground transition-colors text-sm tracking-wide pt-2">
+                <button onClick={() => scrollToSection('how')} className="interactive-element text-secondary hover:text-foreground transition-all text-sm tracking-wide pt-2">
                   Så fungerar Valora →
                 </button>
               </div>
@@ -201,9 +205,9 @@ const Index = () => {
           
           <div className="max-w-3xl mx-auto space-y-8">
           <ScrollReveal delay={100}>
-            <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl">
+            <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl group">
               <div className="flex gap-8 items-center">
-                <CountUpNumber end={88} suffix="%" className="text-6xl font-extralight tracking-tighter text-foreground whitespace-nowrap" />
+                <CountUpNumber end={88} suffix="%" className="text-6xl font-mono font-light tracking-tighter text-foreground whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
                   har någon gång skjutit upp att byta lån eller försäkring trots att de vet att de borde.
                 </p>
@@ -212,9 +216,9 @@ const Index = () => {
           </ScrollReveal>
             
           <ScrollReveal delay={200}>
-            <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl">
+            <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl group">
               <div className="flex gap-8 items-center">
-                <CountUpNumber end={79} suffix="%" className="text-6xl font-extralight tracking-tighter text-foreground whitespace-nowrap" />
+                <CountUpNumber end={79} suffix="%" className="text-6xl font-mono font-light tracking-tighter text-foreground whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
                   känner ibland eller ofta dåligt samvete över att inte ta tag i sin ekonomi.
                 </p>
@@ -223,9 +227,9 @@ const Index = () => {
           </ScrollReveal>
             
           <ScrollReveal delay={300}>
-            <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl">
+            <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl group">
               <div className="flex gap-8 items-center">
-                <CountUpNumber end={56} suffix="%" className="text-6xl font-extralight tracking-tighter text-foreground whitespace-nowrap" />
+                <CountUpNumber end={56} suffix="%" className="text-6xl font-mono font-light tracking-tighter text-foreground whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
                   upplever hög mental belastning när de tänker på lån, försäkringar och ekonomi.
                 </p>
@@ -236,7 +240,7 @@ const Index = () => {
           
           <ScrollReveal delay={400}>
             <div className="max-w-3xl mx-auto">
-              <InteractiveCard className="liquid-glass p-10 rounded-xl border-l-2 border-foreground/20 system-glow">
+              <InteractiveCard className="liquid-glass p-10 rounded-xl border-l-2 border-foreground/20 system-glow group">
                 <p className="text-xl md:text-2xl font-light italic leading-relaxed mb-4">
                   "Jag har vetat i två år att jag borde göra detta – men jag orkade inte."
                 </p>
@@ -314,9 +318,9 @@ const Index = () => {
           
           <div className="grid md:grid-cols-2 gap-8">
             <ScrollReveal delay={100}>
-              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
+              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group">
                 <div className="text-3xl font-light">Christina</div>
-                <div className="text-4xl font-extralight text-secondary">ca 17 000 kr/år</div>
+                <div className="text-4xl font-mono font-light text-secondary tabular-nums">ca 17 000 kr/år</div>
                 <p className="text-secondary font-light italic pt-4">
                   "Jag hade aldrig gjort detta själv."
                 </p>
@@ -324,9 +328,9 @@ const Index = () => {
             </ScrollReveal>
             
             <ScrollReveal delay={200}>
-              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
+              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group">
                 <div className="text-3xl font-light">Ninni</div>
-                <div className="text-4xl font-extralight text-secondary">ca 15 000 kr/år</div>
+                <div className="text-4xl font-mono font-light text-secondary tabular-nums">ca 15 000 kr/år</div>
                 <p className="text-secondary font-light italic pt-4">
                   "Jag betalar hellre än att behöva tänka på det."
                 </p>
@@ -335,7 +339,7 @@ const Index = () => {
           </div>
           
           <ScrollReveal delay={300}>
-            <InteractiveCard className="liquid-glass p-10 rounded-xl max-w-2xl mx-auto">
+            <InteractiveCard className="liquid-glass p-10 rounded-xl max-w-2xl mx-auto group">
               <p className="text-xl font-light italic text-center">
                 "Ekonomi gav mig ångest innan."
               </p>
@@ -355,7 +359,7 @@ const Index = () => {
           
           <div className="grid md:grid-cols-3 gap-8">
             <ScrollReveal delay={100}>
-              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
+              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group">
                 <h3 className="text-xl font-light">Den upptagna yrkespersonen</h3>
                 <p className="text-secondary font-light leading-relaxed">
                   Du har inte tid att jämföra erbjudanden och förhandla. 
@@ -365,7 +369,7 @@ const Index = () => {
             </ScrollReveal>
             
             <ScrollReveal delay={200}>
-              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
+              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group">
                 <h3 className="text-xl font-light">Familjen med komplex ekonomi</h3>
                 <p className="text-secondary font-light leading-relaxed">
                   Flera lån, försäkringar och sparformer. Valora håller koll på allt 
@@ -375,7 +379,7 @@ const Index = () => {
             </ScrollReveal>
             
             <ScrollReveal delay={300}>
-              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
+              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group">
                 <h3 className="text-xl font-light">Den som vill ha kontroll utan stress</h3>
                 <p className="text-secondary font-light leading-relaxed">
                   Du vill göra rätt men känner dig överväldigad. 
