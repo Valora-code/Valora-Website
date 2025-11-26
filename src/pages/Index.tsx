@@ -17,10 +17,13 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
-
 const waitlistSchema = z.object({
-  email: z.string().trim().email({ message: "Ogiltig e-postadress" }).max(255),
-  note: z.string().trim().max(500, { message: "Anteckningen får vara max 500 tecken" }).optional(),
+  email: z.string().trim().email({
+    message: "Ogiltig e-postadress"
+  }).max(255),
+  note: z.string().trim().max(500, {
+    message: "Anteckningen får vara max 500 tecken"
+  }).optional()
 });
 const Index = () => {
   const [email, setEmail] = useState("");
@@ -52,20 +55,20 @@ const Index = () => {
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       // Validate input
-      const validatedData = waitlistSchema.parse({ email, note });
+      const validatedData = waitlistSchema.parse({
+        email,
+        note
+      });
 
       // Save to Supabase
-      const { error } = await supabase
-        .from('waitlist')
-        .insert([
-          {
-            email: validatedData.email,
-            note: validatedData.note || null,
-          }
-        ]);
+      const {
+        error
+      } = await supabase.from('waitlist').insert([{
+        email: validatedData.email,
+        note: validatedData.note || null
+      }]);
 
       // Anti-enumeration protection: Always show success to prevent timing attacks
       // Even if the email already exists (duplicate key error), we show success
@@ -74,7 +77,6 @@ const Index = () => {
         // Only show error for non-duplicate database errors
         throw error;
       }
-
       setSubmitted(true);
       toast({
         title: "Tack",
@@ -152,9 +154,7 @@ const Index = () => {
               </MagneticButton>
               
               {/* Theme Toggle */}
-              <div className="pl-2 border-l border-border/30">
-                <ThemeToggle />
-              </div>
+              
             </div>
 
             {/* Mobile Menu Button */}
