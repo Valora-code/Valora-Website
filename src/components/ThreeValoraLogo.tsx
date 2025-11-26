@@ -42,7 +42,7 @@ function RotatingLogo() {
 
 export const ThreeValoraLogo = () => {
   return (
-    <div className="w-full flex items-center justify-center gap-1 md:gap-2">
+    <div className="w-full flex items-center justify-center gap-0">
       <div className="w-[212px] h-[212px] md:w-[297px] md:h-[297px]">
         <Canvas 
           camera={{ position: [0, 0, 8], fov: 50 }}
@@ -54,7 +54,7 @@ export const ThreeValoraLogo = () => {
           <RotatingLogo />
         </Canvas>
       </div>
-      <span className="text-5xl md:text-7xl font-extralight tracking-[0.2em] text-foreground">
+      <span className="text-5xl md:text-7xl font-extralight tracking-[0.2em] text-foreground -ml-4 md:-ml-6">
         VALORA
       </span>
     </div>
