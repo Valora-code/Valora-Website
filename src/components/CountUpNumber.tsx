@@ -53,8 +53,8 @@ export const CountUpNumber = ({ end, duration = 2000, suffix = '', className = '
   }, [isVisible, end, duration]);
 
   return (
-    <div ref={elementRef} className={className}>
+    <span ref={elementRef} className={className}>
       {count}{suffix}
-    </div>
+    </span>
   );
 };
