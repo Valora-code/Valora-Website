@@ -34,7 +34,7 @@ function RotatingLogo() {
       {/* Single wireframe outline with thicker lines */}
       <lineSegments>
         <edgesGeometry args={[new THREE.ShapeGeometry(shape)]} />
-        <lineBasicMaterial color="#ffffff" opacity={0.9} transparent linewidth={4} />
+        <lineBasicMaterial color="#ffffff" opacity={0.9} transparent linewidth={6} />
       </lineSegments>
     </group>
   );
