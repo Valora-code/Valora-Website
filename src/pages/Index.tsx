@@ -142,7 +142,7 @@ const Index = () => {
               animationDelay: '0.3s'
             }}>
                 <h1 className="text-6xl md:text-8xl font-extralight tracking-tighter leading-[0.95] max-w-2xl">
-                  Valora – din autonoma ekonomi.
+                  Din autonoma ekonomi.
                 </h1>
                 
                 <p className="text-lg md:text-xl text-secondary font-light leading-relaxed max-w-xl">
