@@ -129,82 +129,47 @@ const Index = () => {
             {/* Mobile Menu Button */}
             <div className="flex md:hidden items-center gap-4">
               <ThemeToggle />
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="interactive-element p-2"
-                aria-label="Toggle menu"
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  {mobileMenuOpen ? (
-                    <path d="M6 18L18 6M6 6l12 12" />
-                  ) : (
-                    <path d="M4 6h16M4 12h16M4 18h16" />
-                  )}
+              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="interactive-element p-2" aria-label="Toggle menu">
+                <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                  {mobileMenuOpen ? <path d="M6 18L18 6M6 6l12 12" /> : <path d="M4 6h16M4 12h16M4 18h16" />}
                 </svg>
               </button>
             </div>
           </div>
 
           {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden mt-4 pb-4 space-y-4 animate-fade-in">
-              <button
-                onClick={() => {
-                  scrollToSection('why');
-                  setMobileMenuOpen(false);
-                }}
-                className="block w-full text-left py-2 text-sm font-light text-secondary hover:text-foreground transition-all tracking-wide"
-              >
+          {mobileMenuOpen && <div className="md:hidden mt-4 pb-4 space-y-4 animate-fade-in">
+              <button onClick={() => {
+            scrollToSection('why');
+            setMobileMenuOpen(false);
+          }} className="block w-full text-left py-2 text-sm font-light text-secondary hover:text-foreground transition-all tracking-wide">
                 VARFÖR VALORA
               </button>
-              <button
-                onClick={() => {
-                  scrollToSection('how');
-                  setMobileMenuOpen(false);
-                }}
-                className="block w-full text-left py-2 text-sm font-light text-secondary hover:text-foreground transition-all tracking-wide"
-              >
+              <button onClick={() => {
+            scrollToSection('how');
+            setMobileMenuOpen(false);
+          }} className="block w-full text-left py-2 text-sm font-light text-secondary hover:text-foreground transition-all tracking-wide">
                 HUR DET FUNGERAR
               </button>
-              <button
-                onClick={() => {
-                  scrollToSection('proof');
-                  setMobileMenuOpen(false);
-                }}
-                className="block w-full text-left py-2 text-sm font-light text-secondary hover:text-foreground transition-all tracking-wide"
-              >
+              <button onClick={() => {
+            scrollToSection('proof');
+            setMobileMenuOpen(false);
+          }} className="block w-full text-left py-2 text-sm font-light text-secondary hover:text-foreground transition-all tracking-wide">
                 BEVIS
               </button>
-              <button
-                onClick={() => {
-                  scrollToSection('faq');
-                  setMobileMenuOpen(false);
-                }}
-                className="block w-full text-left py-2 text-sm font-light text-secondary hover:text-foreground transition-all tracking-wide"
-              >
+              <button onClick={() => {
+            scrollToSection('faq');
+            setMobileMenuOpen(false);
+          }} className="block w-full text-left py-2 text-sm font-light text-secondary hover:text-foreground transition-all tracking-wide">
                 VANLIGA FRÅGOR
               </button>
-              <Button
-                variant="glass"
-                size="sm"
-                className="w-full"
-                onClick={() => {
-                  scrollToSection('waitlist');
-                  setMobileMenuOpen(false);
-                }}
-              >
+              <Button variant="glass" size="sm" className="w-full" onClick={() => {
+            scrollToSection('waitlist');
+            setMobileMenuOpen(false);
+          }}>
                 Gå med i väntelistan
               </Button>
-            </div>
-          )}
+            </div>}
         </div>
       </nav>
 
@@ -221,8 +186,8 @@ const Index = () => {
             {/* Right: Content */}
             <div className="space-y-8 lg:space-y-16 order-1 lg:order-2">
               <div className="space-y-6 lg:space-y-8 fade-in-up" style={{
-              animationDelay: '0.3s'
-            }}>
+                animationDelay: '0.3s'
+              }}>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-extralight tracking-tighter leading-[0.95] max-w-2xl">
                   Din autonoma ekonomi.
                 </h1>
@@ -235,32 +200,32 @@ const Index = () => {
               
               <div className="space-y-4 lg:space-y-5 max-w-xl">
                 <div className="flex items-start gap-3 slide-in-left" style={{
-                animationDelay: '0.5s'
-              }}>
+                  animationDelay: '0.5s'
+                }}>
                   <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" />
                   <p className="text-sm sm:text-base text-secondary font-light">Automatiskt bättre villkor – utan manuell jämförelse</p>
                 </div>
                 <div className="flex items-start gap-3 slide-in-left" style={{
-                animationDelay: '0.7s'
-              }}>
+                  animationDelay: '0.7s'
+                }}>
                   <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" style={{
-                  animationDelay: '0.5s'
-                }} />
+                    animationDelay: '0.5s'
+                  }} />
                   <p className="text-sm sm:text-base text-secondary font-light">Full kontroll via policyer och samtycke</p>
                 </div>
                 <div className="flex items-start gap-3 slide-in-left" style={{
-                animationDelay: '0.9s'
-              }}>
+                  animationDelay: '0.9s'
+                }}>
                   <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" style={{
-                  animationDelay: '1s'
-                }} />
+                    animationDelay: '1s'
+                  }} />
                   <p className="text-sm sm:text-base text-secondary font-light">Lägre kostnader, mindre mental belastning</p>
                 </div>
               </div>
               
               <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 pt-4 fade-in-up" style={{
-              animationDelay: '1.1s'
-            }}>
+                animationDelay: '1.1s'
+              }}>
                 <MagneticButton strength={0.4}>
                   <button onClick={() => scrollToSection('waitlist')} onMouseMove={handleMouseMove} className="access-port group">
                     <span className="relative z-10 text-sm font-light tracking-[0.15em] uppercase">
@@ -334,7 +299,7 @@ const Index = () => {
                 <p className="text-lg sm:text-xl md:text-2xl font-light italic leading-relaxed mb-4">
                   "Jag har vetat i två år att jag borde göra detta – men jag orkade inte."
                 </p>
-                <p className="text-secondary text-sm tracking-wide">– Christina, 63</p>
+                <p className="text-secondary text-sm tracking-wide">– kvinna, 63år</p>
               </InteractiveCard>
             </div>
           </ScrollReveal>
