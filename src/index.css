@@ -174,13 +174,6 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
     font-feature-settings: 'tnum' on, 'lnum' on;
     letter-spacing: -0.01em;
-    cursor: none;
-  }
-
-  @media (max-width: 1024px) {
-    body {
-      cursor: default;
-    }
   }
 }
 
@@ -217,13 +210,6 @@ All colors MUST be HSL.
   /* Premium micro-interactions */
   .interactive-element {
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    cursor: none;
-  }
-
-  @media (max-width: 1024px) {
-    .interactive-element {
-      cursor: pointer;
-    }
   }
   
   .interactive-element:hover {
@@ -472,13 +458,6 @@ All colors MUST be HSL.
     backdrop-filter: blur(20px);
     overflow: hidden;
     transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    cursor: none;
-  }
-
-  @media (max-width: 1024px) {
-    .access-port {
-      cursor: pointer;
-    }
   }
 
   .access-port::before {

@@ -7,7 +7,6 @@ import { ParallaxSection } from "@/components/ParallaxSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { DataParticles } from "@/components/DataParticles";
-import { MagneticCursor } from "@/components/MagneticCursor";
 import { useParallax } from "@/hooks/use-parallax";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -73,9 +72,6 @@ const Index = () => {
     });
   };
   return <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
-      {/* Magnetic Cursor */}
-      <MagneticCursor />
-      
       {/* Depth layer - distant background with parallax and ambient life */}
       <div className="fixed inset-0 z-0">
         <DataParticles />
