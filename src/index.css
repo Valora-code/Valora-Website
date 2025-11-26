@@ -160,6 +160,119 @@ All colors MUST be HSL.
     }
   }
   
+  /* Logo power core animation - ultra slow rotation */
+  @keyframes logoCoreRotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .logo-core-rotate {
+    animation: logoCoreRotate 120s linear infinite;
+  }
+
+  /* Logo text shimmer - subtle left to right */
+  @keyframes logoTextShimmer {
+    0%, 100% {
+      background-position: -200% center;
+    }
+    50% {
+      background-position: 200% center;
+    }
+  }
+
+  .logo-text-shimmer {
+    background: linear-gradient(
+      90deg,
+      currentColor 0%,
+      currentColor 40%,
+      rgba(255, 255, 255, 0.8) 50%,
+      currentColor 60%,
+      currentColor 100%
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: logoTextShimmer 8s ease-in-out infinite;
+  }
+
+  /* Ambient liquid glass background */
+  @keyframes liquidGlass {
+    0%, 100% {
+      background-position: 0% 50%;
+      opacity: 0.4;
+    }
+    50% {
+      background-position: 100% 50%;
+      opacity: 0.6;
+    }
+  }
+
+  .ambient-liquid {
+    background: radial-gradient(
+      circle at 30% 50%,
+      rgba(255, 255, 255, 0.02) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 50%,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 50%
+    );
+    background-size: 400% 400%;
+    animation: liquidGlass 60s ease-in-out infinite;
+  }
+
+  /* Light sweep through separators */
+  @keyframes lightSweep {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+
+  .separator-sweep {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .separator-sweep::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: lightSweep 8s ease-in-out infinite;
+  }
+
+  /* Breathing stats */
+  @keyframes breathe {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.85;
+      transform: scale(0.998);
+    }
+  }
+
+  .stat-breathe {
+    animation: breathe 6s ease-in-out infinite;
+  }
+  
   .diagnostic-row {
     position: relative;
     overflow: hidden;
