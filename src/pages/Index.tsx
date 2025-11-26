@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { ValoraLogo } from "@/components/ValoraLogo";
+import { CountUpNumber } from "@/components/CountUpNumber";
+import { SystemStatus } from "@/components/SystemStatus";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -48,7 +50,13 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground relative">
+      {/* Depth layer - distant background */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background-elevated to-background opacity-60" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.02),transparent_50%)]" />
+      </div>
+
       {/* Fixed Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
         <div className="container mx-auto px-6 py-4">
@@ -93,41 +101,44 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-20">
+      <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-20 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-12">
-          <ValoraLogo size="large" className="fade-in-up" />
+          <div className="fade-in-up system-glow">
+            <ValoraLogo size="large" />
+          </div>
           
-          <div className="space-y-6 fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <div className="space-y-6 fade-in-up" style={{ animationDelay: '0.3s' }}>
             <h1 className="text-5xl md:text-7xl font-extralight tracking-tight leading-[1.1]">
               Autopiloten för din privatekonomi.
             </h1>
             
             <p className="text-lg md:text-xl text-secondary font-light leading-relaxed max-w-3xl mx-auto">
-              Valora är ett autonomt finansiellt system som analyserar, förhandlar och förbättrar 
-              dina lån och försäkringar automatiskt – inom dina egna regler.
+              Ett autonomt finansiellt system som analyserar, förhandlar och förbättrar 
+              dina lån och försäkringar – inom dina egna regler.
             </p>
           </div>
           
-          <div className="space-y-4 text-left max-w-2xl mx-auto fade-in-up" style={{ animationDelay: '0.4s' }}>
-            <div className="flex items-start gap-3">
+          <div className="space-y-4 text-left max-w-2xl mx-auto">
+            <div className="flex items-start gap-3 slide-in-left" style={{ animationDelay: '0.5s' }}>
               <div className="w-1 h-1 rounded-full bg-foreground mt-2.5" />
               <p className="text-secondary font-light">Automatisk optimering utan manuellt arbete</p>
             </div>
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-3 slide-in-left" style={{ animationDelay: '0.7s' }}>
               <div className="w-1 h-1 rounded-full bg-foreground mt-2.5" />
               <p className="text-secondary font-light">Allt styrs av dina policyer och samtycke</p>
             </div>
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-3 slide-in-left" style={{ animationDelay: '0.9s' }}>
               <div className="w-1 h-1 rounded-full bg-foreground mt-2.5" />
               <p className="text-secondary font-light">Minskar både kostnad och mental belastning</p>
             </div>
           </div>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 fade-in-up" style={{ animationDelay: '0.6s' }}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 fade-in-up" style={{ animationDelay: '1.1s' }}>
             <Button 
               variant="glass" 
               size="lg"
               onClick={() => scrollToSection('waitlist')}
+              className="system-glow"
             >
               Begär tidig access
             </Button>
@@ -141,9 +152,9 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Problem Section */}
-      <section id="why" className="py-32 px-6 border-t border-border">
-        <div className="max-w-6xl mx-auto space-y-20">
+      {/* Problem Section - Diagnostic Panel */}
+      <section id="why" className="py-32 px-6 border-t border-border relative z-10">
+        <div className="max-w-5xl mx-auto space-y-20">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             <h2 className="text-4xl md:text-5xl font-extralight tracking-tight">
               Problemet är inte information. Det är mänskligt beteende.
@@ -154,31 +165,49 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="liquid-glass p-8 rounded-xl space-y-4">
-              <div className="text-6xl font-extralight tracking-tighter">88 %</div>
-              <p className="text-secondary font-light leading-relaxed">
-                har någon gång skjutit upp att byta lån eller försäkring trots att de vet att de borde.
-              </p>
+          <div className="max-w-3xl mx-auto space-y-8">
+            <div className="diagnostic-row liquid-glass p-8 rounded-xl">
+              <div className="grid grid-cols-[120px_1fr] gap-8 items-center">
+                <CountUpNumber 
+                  end={88} 
+                  suffix=" %" 
+                  className="text-6xl font-extralight tracking-tighter text-foreground"
+                />
+                <p className="text-secondary font-light leading-relaxed">
+                  har någon gång skjutit upp att byta lån eller försäkring trots att de vet att de borde.
+                </p>
+              </div>
             </div>
             
-            <div className="liquid-glass p-8 rounded-xl space-y-4">
-              <div className="text-6xl font-extralight tracking-tighter">79 %</div>
-              <p className="text-secondary font-light leading-relaxed">
-                känner ibland eller ofta dåligt samvete över att inte ta tag i sin ekonomi.
-              </p>
+            <div className="diagnostic-row liquid-glass p-8 rounded-xl">
+              <div className="grid grid-cols-[120px_1fr] gap-8 items-center">
+                <CountUpNumber 
+                  end={79} 
+                  suffix=" %" 
+                  className="text-6xl font-extralight tracking-tighter text-foreground"
+                />
+                <p className="text-secondary font-light leading-relaxed">
+                  känner ibland eller ofta dåligt samvete över att inte ta tag i sin ekonomi.
+                </p>
+              </div>
             </div>
             
-            <div className="liquid-glass p-8 rounded-xl space-y-4">
-              <div className="text-6xl font-extralight tracking-tighter">56 %</div>
-              <p className="text-secondary font-light leading-relaxed">
-                upplever hög mental belastning när de tänker på lån, försäkringar och ekonomi.
-              </p>
+            <div className="diagnostic-row liquid-glass p-8 rounded-xl">
+              <div className="grid grid-cols-[120px_1fr] gap-8 items-center">
+                <CountUpNumber 
+                  end={56} 
+                  suffix=" %" 
+                  className="text-6xl font-extralight tracking-tighter text-foreground"
+                />
+                <p className="text-secondary font-light leading-relaxed">
+                  upplever hög mental belastning när de tänker på lån, försäkringar och ekonomi.
+                </p>
+              </div>
             </div>
           </div>
           
           <div className="max-w-3xl mx-auto">
-            <div className="liquid-glass p-10 rounded-xl border-l-2 border-foreground/20">
+            <div className="liquid-glass p-10 rounded-xl border-l-2 border-foreground/20 system-glow">
               <p className="text-xl md:text-2xl font-light italic leading-relaxed mb-4">
                 "Jag har vetat i två år att jag borde göra detta – men jag orkade inte."
               </p>
@@ -188,8 +217,11 @@ const Index = () => {
         </div>
       </section>
 
+      {/* System Status Section */}
+      <SystemStatus />
+
       {/* How It Works */}
-      <section id="how" className="py-32 px-6 border-t border-border bg-background-elevated">
+      <section id="how" className="py-32 px-6 border-t border-border bg-background-elevated relative z-10">
         <div className="max-w-5xl mx-auto space-y-20">
           <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
             Så fungerar Valora
@@ -234,7 +266,7 @@ const Index = () => {
       </section>
 
       {/* Proof Section */}
-      <section id="proof" className="py-32 px-6 border-t border-border">
+      <section id="proof" className="py-32 px-6 border-t border-border relative z-10">
         <div className="max-w-5xl mx-auto space-y-20">
           <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
             Verifierad besparing och mental lättnad
@@ -267,7 +299,7 @@ const Index = () => {
       </section>
 
       {/* Target Audience */}
-      <section className="py-32 px-6 border-t border-border bg-background-elevated">
+      <section className="py-32 px-6 border-t border-border bg-background-elevated relative z-10">
         <div className="max-w-6xl mx-auto space-y-16">
           <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
             För vem är Valora
@@ -302,7 +334,7 @@ const Index = () => {
       </section>
 
       {/* Waitlist */}
-      <section id="waitlist" className="py-32 px-6 border-t border-border">
+      <section id="waitlist" className="py-32 px-6 border-t border-border relative z-10">
         <div className="max-w-2xl mx-auto space-y-12">
           <div className="text-center space-y-4">
             <h2 className="text-4xl md:text-5xl font-extralight tracking-tight">
@@ -358,7 +390,7 @@ const Index = () => {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-32 px-6 border-t border-border bg-background-elevated">
+      <section id="faq" className="py-32 px-6 border-t border-border bg-background-elevated relative z-10">
         <div className="max-w-3xl mx-auto space-y-12">
           <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
             Vanliga frågor
@@ -413,7 +445,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-16 px-6 border-t border-border">
+      <footer className="py-16 px-6 border-t border-border relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
             <p className="text-secondary font-light">

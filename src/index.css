@@ -83,6 +83,27 @@ All colors MUST be HSL.
     opacity: 0;
   }
   
+  .slide-in-left {
+    animation: slideInLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0;
+  }
+  
+  .system-glow {
+    box-shadow: 0 0 60px rgba(255, 255, 255, 0.03);
+  }
+  
+  .scan-line {
+    animation: scanLine 8s linear infinite;
+  }
+  
+  .pulse-soft {
+    animation: pulseSoft 3s ease-in-out infinite;
+  }
+  
+  .rotate-slow {
+    animation: rotateSlow 60s linear infinite;
+  }
+  
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -92,6 +113,67 @@ All colors MUST be HSL.
       opacity: 1;
       transform: translateY(0);
     }
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes scanLine {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateY(200%);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes pulseSoft {
+    0%, 100% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+  }
+  
+  @keyframes rotateSlow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(2deg);
+    }
+  }
+  
+  .diagnostic-row {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .diagnostic-row::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: scanLine 8s linear infinite;
   }
 }
 
