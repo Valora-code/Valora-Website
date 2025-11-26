@@ -67,8 +67,14 @@ const Index = () => {
           }
         ]);
 
-      // Always show success message to prevent email enumeration attacks
-      // Even if email already exists, we don't reveal this to the user
+      // Anti-enumeration protection: Always show success to prevent timing attacks
+      // Even if the email already exists (duplicate key error), we show success
+      // This prevents attackers from determining which emails are in the waitlist
+      if (error && error.code !== '23505') {
+        // Only show error for non-duplicate database errors
+        throw error;
+      }
+
       setSubmitted(true);
       toast({
         title: "Tack",
@@ -82,7 +88,7 @@ const Index = () => {
           variant: "destructive"
         });
       } else {
-        // Generic error message for all database errors (including duplicates)
+        // Generic error message for all database errors
         // to prevent timing attacks and email enumeration
         toast({
           title: "Ett fel uppstod",
