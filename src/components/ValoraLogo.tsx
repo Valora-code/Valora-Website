@@ -13,9 +13,9 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
   return (
     <div className={`flex items-center ${gap} ${className}`}>
       <div className={`relative ${showAnimation ? 'logo-core-rotate chromatic-hover' : ''}`}>
-        {/* Subtle outer glow */}
+        {/* Pulsing outer glow */}
         {showAnimation && (
-          <div className="absolute inset-0 blur-2xl opacity-20">
+          <div className="absolute inset-0 logo-glow-pulse">
             <svg 
               width={diamondSize} 
               height={diamondSize} 
