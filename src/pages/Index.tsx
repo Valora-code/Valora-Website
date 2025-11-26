@@ -7,8 +7,6 @@ import { ParallaxSection } from "@/components/ParallaxSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { DataParticles } from "@/components/DataParticles";
-import { ThreeScene } from "@/components/ThreeScene";
-import { CustomCursor } from "@/components/CustomCursor";
 import { MagneticButton } from "@/components/MagneticButton";
 import { useParallax } from "@/hooks/use-parallax";
 import { Button } from "@/components/ui/button";
@@ -74,10 +72,7 @@ const Index = () => {
       block: 'start'
     });
   };
-  return <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden" style={{ cursor: 'none' }}>
-      {/* Custom cursor */}
-      <CustomCursor />
-      
+  return <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
       {/* Vignette overlay for depth */}
       <div className="fixed inset-0 pointer-events-none z-50">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_40%,rgba(0,0,0,0.3)_100%)]" />
@@ -135,9 +130,9 @@ const Index = () => {
       <section className="min-h-screen flex items-center px-6 pt-24 pb-20 relative z-10">
         <div className="max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left: 3D Visualization */}
-            <div className="fade-in-up order-2 lg:order-1" style={logoParallax}>
-              <ThreeScene />
+            {/* Left: Valora Logo */}
+            <div className="fade-in-up system-glow order-2 lg:order-1 flex justify-center" style={logoParallax}>
+              <ValoraLogo size="large" className="opacity-100" />
             </div>
             
             {/* Right: Content */}
