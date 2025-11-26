@@ -2,7 +2,6 @@ import { useState } from "react";
 import { ValoraLogo } from "@/components/ValoraLogo";
 import { CountUpNumber } from "@/components/CountUpNumber";
 import { SystemStatus } from "@/components/SystemStatus";
-import { SystemMetrics } from "@/components/SystemMetrics";
 import { InteractiveCard } from "@/components/InteractiveCard";
 import { ParallaxSection } from "@/components/ParallaxSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -72,9 +71,6 @@ const Index = () => {
     });
   };
   return <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
-      {/* System Metrics - Fixed bottom left */}
-      <SystemMetrics />
-      
       {/* Depth layer - distant background with parallax and ambient life */}
       <div className="fixed inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background-elevated to-background opacity-60" style={bgParallax} />
