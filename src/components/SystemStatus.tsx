@@ -45,7 +45,8 @@ export const SystemStatus = () => {
           </div>
         </div>
         
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extralight tracking-tight text-center mb-12 sm:mb-16 lg:mb-20 leading-tight">Ekonomin är manuell. Människan är flaskhalsen.</h2>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extralight tracking-tight text-center mb-12 sm:mb-16 lg:mb-20 leading-tight">Marknaden är manuell. Belastningen hamnar på individen.
+  </h2>
         
         <div className="max-w-2xl mx-auto liquid-glass p-5 sm:p-6 lg:p-8 rounded-xl">
           <StatusIndicator label="Manuell jämförelse mellan aktörer" delay={200} />
