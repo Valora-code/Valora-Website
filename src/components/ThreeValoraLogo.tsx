@@ -47,7 +47,15 @@ export const ThreeValoraLogo = () => {
         <Canvas 
           camera={{ position: [0, 0, 8], fov: 50 }}
           style={{ background: 'transparent' }}
-          gl={{ alpha: true, antialias: true }}
+          gl={{ 
+            alpha: true, 
+            antialias: true,
+            premultipliedAlpha: false
+          }}
+          onCreated={({ gl, scene }) => {
+            gl.setClearColor(0x000000, 0);
+            scene.background = null;
+          }}
         >
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={0.8} />
