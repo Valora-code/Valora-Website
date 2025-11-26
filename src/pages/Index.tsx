@@ -6,6 +6,7 @@ import { InteractiveCard } from "@/components/InteractiveCard";
 import { ParallaxSection } from "@/components/ParallaxSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { DataParticles } from "@/components/DataParticles";
 import { useParallax } from "@/hooks/use-parallax";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -73,6 +74,7 @@ const Index = () => {
   return <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
       {/* Depth layer - distant background with parallax and ambient life */}
       <div className="fixed inset-0 z-0">
+        <DataParticles />
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background-elevated to-background opacity-60" style={bgParallax} />
         <div className="absolute inset-0 ambient-liquid" style={{
         willChange: 'transform',
