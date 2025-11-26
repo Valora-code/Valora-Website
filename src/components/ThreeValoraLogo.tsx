@@ -15,13 +15,14 @@ function RotatingLogo() {
   // Create Valora diamond shape with concave curves
   const createDiamondShape = () => {
     const shape = new THREE.Shape();
+    const scale = 0.85; // 15% smaller
     
     // Diamond with concave curves matching the 2D logo
-    shape.moveTo(0, 2.5);
-    shape.quadraticCurveTo(0.5, 1.2, 2.3, 0);
-    shape.quadraticCurveTo(0.5, -1.2, 0, -2.5);
-    shape.quadraticCurveTo(-0.5, -1.2, -2.3, 0);
-    shape.quadraticCurveTo(-0.5, 1.2, 0, 2.5);
+    shape.moveTo(0, 2.5 * scale);
+    shape.quadraticCurveTo(0.5 * scale, 1.2 * scale, 2.3 * scale, 0);
+    shape.quadraticCurveTo(0.5 * scale, -1.2 * scale, 0, -2.5 * scale);
+    shape.quadraticCurveTo(-0.5 * scale, -1.2 * scale, -2.3 * scale, 0);
+    shape.quadraticCurveTo(-0.5 * scale, 1.2 * scale, 0, 2.5 * scale);
     
     return shape;
   };
@@ -30,10 +31,10 @@ function RotatingLogo() {
 
   return (
     <group ref={groupRef}>
-      {/* Single wireframe outline */}
+      {/* Single wireframe outline with thicker lines */}
       <lineSegments>
         <edgesGeometry args={[new THREE.ShapeGeometry(shape)]} />
-        <lineBasicMaterial color="#ffffff" opacity={0.8} transparent linewidth={2} />
+        <lineBasicMaterial color="#ffffff" opacity={0.9} transparent linewidth={3} />
       </lineSegments>
     </group>
   );
@@ -41,8 +42,8 @@ function RotatingLogo() {
 
 export const ThreeValoraLogo = () => {
   return (
-    <div className="w-full flex items-center justify-center gap-4 md:gap-6">
-      <div className="w-[250px] h-[250px] md:w-[350px] md:h-[350px]">
+    <div className="w-full flex items-center justify-center gap-2 md:gap-3">
+      <div className="w-[212px] h-[212px] md:w-[297px] md:h-[297px]">
         <Canvas 
           camera={{ position: [0, 0, 8], fov: 50 }}
           style={{ background: 'transparent' }}
