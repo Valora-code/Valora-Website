@@ -5,6 +5,7 @@ import { SystemStatus } from "@/components/SystemStatus";
 import { InteractiveCard } from "@/components/InteractiveCard";
 import { ParallaxSection } from "@/components/ParallaxSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useParallax } from "@/hooks/use-parallax";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -105,6 +106,11 @@ const Index = () => {
               <Button variant="glass" size="sm" onClick={() => scrollToSection('waitlist')}>
                 Gå med i väntelistan
               </Button>
+              
+              {/* Theme Toggle */}
+              <div className="pl-2 border-l border-border/30">
+                <ThemeToggle />
+              </div>
             </div>
           </div>
         </div>

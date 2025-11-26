@@ -7,8 +7,10 @@ All colors MUST be HSL.
 */
 
 @layer base {
-  :root {
-    /* Valora Financial OS Design System - Monochrome Only */
+  /* Obsidian Theme - Default monochrome */
+  :root,
+  .obsidian {
+    /* Valora Financial OS Design System - Obsidian */
     --background: 0 0% 2%;
     --background-elevated: 0 0% 4%;
     --background-surface: 0 0% 7%;
@@ -46,6 +48,117 @@ All colors MUST be HSL.
     --glass-border: 0 0% 100% / 0.08;
     --glass-hover: 0 0% 100% / 0.06;
   }
+
+  /* Arctic Theme - Blue-tinted dark */
+  .arctic {
+    --background: 210 30% 3%;
+    --background-elevated: 210 28% 5%;
+    --background-surface: 210 25% 8%;
+    --foreground: 210 100% 98%;
+    
+    --card: 210 28% 5%;
+    --card-foreground: 210 100% 98%;
+    
+    --popover: 210 28% 5%;
+    --popover-foreground: 210 100% 98%;
+    
+    --primary: 210 100% 98%;
+    --primary-foreground: 210 30% 3%;
+    
+    --secondary: 210 20% 70%;
+    --secondary-foreground: 210 100% 98%;
+    
+    --muted: 210 25% 8%;
+    --muted-foreground: 210 20% 70%;
+    
+    --accent: 210 25% 12%;
+    --accent-foreground: 210 100% 98%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 100% 98%;
+    
+    --border: 210 25% 14%;
+    --input: 210 25% 14%;
+    --ring: 210 20% 70%;
+    
+    --glass-bg: 210 80% 90% / 0.04;
+    --glass-border: 210 80% 90% / 0.1;
+    --glass-hover: 210 80% 90% / 0.07;
+  }
+
+  /* Emerald Theme - Green-tinted dark */
+  .emerald {
+    --background: 160 25% 3%;
+    --background-elevated: 160 23% 5%;
+    --background-surface: 160 20% 8%;
+    --foreground: 160 60% 98%;
+    
+    --card: 160 23% 5%;
+    --card-foreground: 160 60% 98%;
+    
+    --popover: 160 23% 5%;
+    --popover-foreground: 160 60% 98%;
+    
+    --primary: 160 60% 98%;
+    --primary-foreground: 160 25% 3%;
+    
+    --secondary: 160 15% 68%;
+    --secondary-foreground: 160 60% 98%;
+    
+    --muted: 160 20% 8%;
+    --muted-foreground: 160 15% 68%;
+    
+    --accent: 160 20% 12%;
+    --accent-foreground: 160 60% 98%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 160 60% 98%;
+    
+    --border: 160 20% 14%;
+    --input: 160 20% 14%;
+    --ring: 160 15% 68%;
+    
+    --glass-bg: 160 60% 90% / 0.04;
+    --glass-border: 160 60% 90% / 0.1;
+    --glass-hover: 160 60% 90% / 0.07;
+  }
+
+  /* Violet Theme - Purple-tinted dark */
+  .violet {
+    --background: 270 30% 3%;
+    --background-elevated: 270 28% 5%;
+    --background-surface: 270 25% 8%;
+    --foreground: 270 70% 98%;
+    
+    --card: 270 28% 5%;
+    --card-foreground: 270 70% 98%;
+    
+    --popover: 270 28% 5%;
+    --popover-foreground: 270 70% 98%;
+    
+    --primary: 270 70% 98%;
+    --primary-foreground: 270 30% 3%;
+    
+    --secondary: 270 18% 72%;
+    --secondary-foreground: 270 70% 98%;
+    
+    --muted: 270 25% 8%;
+    --muted-foreground: 270 18% 72%;
+    
+    --accent: 270 25% 12%;
+    --accent-foreground: 270 70% 98%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 270 70% 98%;
+    
+    --border: 270 25% 14%;
+    --input: 270 25% 14%;
+    --ring: 270 18% 72%;
+    
+    --glass-bg: 270 70% 90% / 0.04;
+    --glass-border: 270 70% 90% / 0.1;
+    --glass-hover: 270 70% 90% / 0.07;
+  }
 }
 
 @layer base {
@@ -66,16 +179,16 @@ All colors MUST be HSL.
 
 @layer utilities {
   .liquid-glass {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: hsl(var(--glass-bg));
+    border: 1px solid hsl(var(--glass-border));
     backdrop-filter: blur(20px);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .liquid-glass:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.08);
+    background: hsl(var(--glass-hover));
+    border-color: hsl(var(--glass-border));
+    box-shadow: 0 0 30px hsl(var(--glass-bg));
   }
   
   .fade-in-up {
