@@ -3,6 +3,8 @@ import { ValoraLogo } from "@/components/ValoraLogo";
 import { CountUpNumber } from "@/components/CountUpNumber";
 import { SystemStatus } from "@/components/SystemStatus";
 import { InteractiveCard } from "@/components/InteractiveCard";
+import { ParallaxSection } from "@/components/ParallaxSection";
+import { useParallax } from "@/hooks/use-parallax";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,6 +21,11 @@ const Index = () => {
   const [note, setNote] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const { toast } = useToast();
+
+  // Parallax effects for different depth layers
+  const bgParallax = useParallax({ speed: 0.15, direction: 'down' });
+  const midParallax = useParallax({ speed: 0.3, direction: 'up' });
+  const logoParallax = useParallax({ speed: 0.08, direction: 'up' });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,11 +58,17 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
-      {/* Depth layer - distant background */}
+    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
+      {/* Depth layer - distant background with parallax */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background-elevated to-background opacity-60" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.02),transparent_50%)]" />
+        <div 
+          className="absolute inset-0 bg-gradient-to-br from-background via-background-elevated to-background opacity-60"
+          style={bgParallax}
+        />
+        <div 
+          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.02),transparent_50%)]"
+          style={{ ...bgParallax, transform: `${bgParallax.transform} scale(1.2)` }}
+        />
       </div>
 
       {/* Fixed Navigation */}
@@ -104,7 +117,7 @@ const Index = () => {
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-20 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-12">
-          <div className="fade-in-up system-glow">
+          <div className="fade-in-up system-glow" style={logoParallax}>
             <ValoraLogo size="large" />
           </div>
           
@@ -156,7 +169,7 @@ const Index = () => {
       {/* Problem Section - Diagnostic Panel */}
       <section id="why" className="py-32 px-6 border-t border-border relative z-10">
         <div className="max-w-5xl mx-auto space-y-20">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
+          <div className="max-w-3xl mx-auto text-center space-y-6" style={midParallax}>
             <h2 className="text-4xl md:text-5xl font-extralight tracking-tight">
               Problemet är inte information. Det är mänskligt beteende.
             </h2>
@@ -224,9 +237,11 @@ const Index = () => {
       {/* How It Works */}
       <section id="how" className="py-32 px-6 border-t border-border bg-background-elevated relative z-10">
         <div className="max-w-5xl mx-auto space-y-20">
-          <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
-            Så fungerar Valora
-          </h2>
+          <ParallaxSection speed={0.15}>
+            <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
+              Så fungerar Valora
+            </h2>
+          </ParallaxSection>
           
           <div className="space-y-16">
             <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start">
@@ -269,9 +284,11 @@ const Index = () => {
       {/* Proof Section */}
       <section id="proof" className="py-32 px-6 border-t border-border relative z-10">
         <div className="max-w-5xl mx-auto space-y-20">
-          <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
-            Verifierad besparing och mental lättnad
-          </h2>
+          <ParallaxSection speed={0.2}>
+            <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
+              Verifierad besparing och mental lättnad
+            </h2>
+          </ParallaxSection>
           
           <div className="grid md:grid-cols-2 gap-8">
             <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
@@ -302,9 +319,11 @@ const Index = () => {
       {/* Target Audience */}
       <section className="py-32 px-6 border-t border-border bg-background-elevated relative z-10">
         <div className="max-w-6xl mx-auto space-y-16">
-          <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
-            För vem är Valora
-          </h2>
+          <ParallaxSection speed={0.18}>
+            <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
+              För vem är Valora
+            </h2>
+          </ParallaxSection>
           
           <div className="grid md:grid-cols-3 gap-8">
             <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
@@ -337,14 +356,16 @@ const Index = () => {
       {/* Waitlist */}
       <section id="waitlist" className="py-32 px-6 border-t border-border relative z-10">
         <div className="max-w-2xl mx-auto space-y-12">
-          <div className="text-center space-y-4">
-            <h2 className="text-4xl md:text-5xl font-extralight tracking-tight">
-              Begär tidig tillgång till Valora
-            </h2>
-            <p className="text-lg text-secondary font-light">
-              Vi öppnar successivt upp Valora för ett begränsat antal användare.
-            </p>
-          </div>
+          <ParallaxSection speed={0.12}>
+            <div className="text-center space-y-4">
+              <h2 className="text-4xl md:text-5xl font-extralight tracking-tight">
+                Begär tidig tillgång till Valora
+              </h2>
+              <p className="text-lg text-secondary font-light">
+                Vi öppnar successivt upp Valora för ett begränsat antal användare.
+              </p>
+            </div>
+          </ParallaxSection>
           
           {!submitted ? (
             <form onSubmit={handleSubmit} className="liquid-glass p-10 rounded-xl space-y-6">
