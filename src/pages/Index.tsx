@@ -128,6 +128,7 @@ const Index = () => {
       </nav>
 
       {/* Hero Section - System Entry Zone */}
+      <ScrollReveal>
       <section className="min-h-screen flex items-center px-6 pt-24 pb-20 relative z-10">
         <div className="max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -196,6 +197,7 @@ const Index = () => {
           </div>
         </div>
       </section>
+      </ScrollReveal>
 
       {/* Problem Section - Diagnostic Panel */}
       <section id="why" className="py-40 px-6 border-t border-border relative z-10">
@@ -259,7 +261,9 @@ const Index = () => {
       </section>
 
       {/* System Status Section */}
-      <SystemStatus />
+      <ScrollReveal delay={100}>
+        <SystemStatus />
+      </ScrollReveal>
 
       {/* How It Works - Interactive Timeline */}
       <section id="how" className="py-40 px-6 border-t border-border bg-background-elevated relative z-10 overflow-hidden">
@@ -456,6 +460,7 @@ const Index = () => {
       </section>
 
       {/* FAQ */}
+      <ScrollReveal delay={150}>
       <section id="faq" className="py-40 px-6 border-t border-border bg-background-elevated relative z-10">
         <div className="max-w-3xl mx-auto space-y-16">
           <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
@@ -501,6 +506,7 @@ const Index = () => {
           </Accordion>
         </div>
       </section>
+      </ScrollReveal>
 
       {/* Footer */}
       <footer className="py-16 px-6 border-t border-border relative z-10">
