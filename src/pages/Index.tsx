@@ -202,9 +202,7 @@ const Index = () => {
         <div className="max-w-5xl mx-auto space-y-24">
           <ScrollReveal>
             <div className="max-w-3xl mx-auto text-center space-y-6">
-              <h2 className="text-4xl md:text-5xl font-extralight tracking-tight">
-                Problemet är inte brist på information. Det är att människor inte orkar agera.
-              </h2>
+              <h2 className="text-4xl md:text-5xl font-extralight tracking-tight">Problemet är inte brist på besparingar. Det är att människor inte orkar agera.</h2>
               <p className="text-lg text-secondary font-light leading-relaxed">
                 I både tester och enkätdata framträder samma mönster: människor vet vad de borde göra – 
                 men skjuter upp det. Inte av okunskap, utan på grund av mental belastning, friktion och prokrastinering.
@@ -401,9 +399,7 @@ const Index = () => {
             <ScrollReveal delay={200}>
               <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group chromatic-hover">
                 <h3 className="text-xl font-light">Familjen med komplex ekonomi</h3>
-                <p className="text-secondary font-light leading-relaxed">
-                  Flera lån, försäkringar och sparformer. Valora håller allt optimerat i bakgrunden.
-                </p>
+                <p className="text-secondary font-light leading-relaxed">Flera lån och försäkringar. Valora håller allt optimerat i bakgrunden.</p>
               </InteractiveCard>
             </ScrollReveal>
             
