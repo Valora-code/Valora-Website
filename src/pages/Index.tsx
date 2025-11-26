@@ -59,15 +59,19 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
-      {/* Depth layer - distant background with parallax */}
+      {/* Depth layer - distant background with parallax and ambient life */}
       <div className="fixed inset-0 z-0">
         <div 
           className="absolute inset-0 bg-gradient-to-br from-background via-background-elevated to-background opacity-60"
           style={bgParallax}
         />
         <div 
-          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.02),transparent_50%)]"
+          className="absolute inset-0 ambient-liquid"
           style={{ ...bgParallax, transform: `${bgParallax.transform} scale(1.2)` }}
+        />
+        <div 
+          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.01),transparent_60%)]"
+          style={{ ...bgParallax, transform: `${bgParallax.transform} scale(1.1)` }}
         />
       </div>
 
@@ -114,54 +118,60 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center px-6 pt-24 pb-20 relative z-10">
-        <div className="max-w-4xl mx-auto text-center space-y-12">
-          <div className="fade-in-up system-glow" style={logoParallax}>
-            <ValoraLogo size="large" />
-          </div>
-          
-          <div className="space-y-6 fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <h1 className="text-5xl md:text-7xl font-extralight tracking-tight leading-[1.1]">
-              Autopiloten för din privatekonomi.
-            </h1>
+      {/* Hero Section - System Entry Zone */}
+      <section className="min-h-screen flex items-center px-6 pt-24 pb-20 relative z-10">
+        <div className="max-w-6xl mx-auto w-full">
+          <div className="grid md:grid-cols-[1fr_1.2fr] gap-16 items-center">
+            {/* Left: Logo offset */}
+            <div className="fade-in-up system-glow md:justify-self-start" style={logoParallax}>
+              <ValoraLogo size="large" />
+            </div>
             
-            <p className="text-lg md:text-xl text-secondary font-light leading-relaxed max-w-3xl mx-auto">
-              Ett autonomt finansiellt system som analyserar, förhandlar och förbättrar 
-              dina lån och försäkringar – inom dina egna regler.
-            </p>
-          </div>
-          
-          <div className="space-y-4 text-left max-w-2xl mx-auto">
-            <div className="flex items-start gap-3 slide-in-left" style={{ animationDelay: '0.5s' }}>
-              <div className="w-1 h-1 rounded-full bg-foreground mt-2.5" />
-              <p className="text-secondary font-light">Automatisk optimering utan manuellt arbete</p>
+            {/* Right: Content */}
+            <div className="space-y-16">
+              <div className="space-y-8 fade-in-up" style={{ animationDelay: '0.3s' }}>
+                <h1 className="text-5xl md:text-7xl font-extralight tracking-tight leading-[1.05] max-w-2xl">
+                  Autopiloten för din privatekonomi.
+                </h1>
+                
+                <p className="text-lg md:text-xl text-secondary font-light leading-relaxed max-w-xl">
+                  Ett autonomt finansiellt system som analyserar, förhandlar och förbättrar 
+                  dina lån och försäkringar – inom dina egna regler.
+                </p>
+              </div>
+              
+              <div className="space-y-5 max-w-xl">
+                <div className="flex items-start gap-3 slide-in-left" style={{ animationDelay: '0.5s' }}>
+                  <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" />
+                  <p className="text-secondary font-light">Automatisk optimering utan manuellt arbete</p>
+                </div>
+                <div className="flex items-start gap-3 slide-in-left" style={{ animationDelay: '0.7s' }}>
+                  <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" style={{ animationDelay: '0.5s' }} />
+                  <p className="text-secondary font-light">Allt styrs av dina policyer och samtycke</p>
+                </div>
+                <div className="flex items-start gap-3 slide-in-left" style={{ animationDelay: '0.9s' }}>
+                  <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" style={{ animationDelay: '1s' }} />
+                  <p className="text-secondary font-light">Minskar både kostnad och mental belastning</p>
+                </div>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row items-start gap-6 pt-4 fade-in-up" style={{ animationDelay: '1.1s' }}>
+                <Button 
+                  variant="glass" 
+                  size="lg"
+                  onClick={() => scrollToSection('waitlist')}
+                  className="system-glow"
+                >
+                  Begär tidig access
+                </Button>
+                <button 
+                  onClick={() => scrollToSection('how')}
+                  className="text-secondary hover:text-foreground transition-colors text-sm tracking-wide pt-2"
+                >
+                  Så fungerar Valora →
+                </button>
+              </div>
             </div>
-            <div className="flex items-start gap-3 slide-in-left" style={{ animationDelay: '0.7s' }}>
-              <div className="w-1 h-1 rounded-full bg-foreground mt-2.5" />
-              <p className="text-secondary font-light">Allt styrs av dina policyer och samtycke</p>
-            </div>
-            <div className="flex items-start gap-3 slide-in-left" style={{ animationDelay: '0.9s' }}>
-              <div className="w-1 h-1 rounded-full bg-foreground mt-2.5" />
-              <p className="text-secondary font-light">Minskar både kostnad och mental belastning</p>
-            </div>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 fade-in-up" style={{ animationDelay: '1.1s' }}>
-            <Button 
-              variant="glass" 
-              size="lg"
-              onClick={() => scrollToSection('waitlist')}
-              className="system-glow"
-            >
-              Begär tidig access
-            </Button>
-            <button 
-              onClick={() => scrollToSection('how')}
-              className="text-secondary hover:text-foreground transition-colors text-sm tracking-wide"
-            >
-              Så fungerar Valora →
-            </button>
           </div>
         </div>
       </section>
@@ -245,7 +255,7 @@ const Index = () => {
           
           <div className="space-y-16">
             <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start">
-              <div className="text-5xl font-extralight text-secondary">01</div>
+              <div className="text-5xl font-extralight text-secondary stat-breathe">01</div>
               <div className="space-y-3">
                 <h3 className="text-2xl font-light tracking-tight">Koppla din ekonomi</h3>
                 <p className="text-secondary font-light leading-relaxed">
@@ -254,10 +264,10 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="h-px bg-border" />
+            <div className="h-px bg-border separator-sweep" />
             
             <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start">
-              <div className="text-5xl font-extralight text-secondary">02</div>
+              <div className="text-5xl font-extralight text-secondary stat-breathe">02</div>
               <div className="space-y-3">
                 <h3 className="text-2xl font-light tracking-tight">Valora analyserar och förhandlar</h3>
                 <p className="text-secondary font-light leading-relaxed">
@@ -266,10 +276,10 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="h-px bg-border" />
+            <div className="h-px bg-border separator-sweep" />
             
             <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start">
-              <div className="text-5xl font-extralight text-secondary">03</div>
+              <div className="text-5xl font-extralight text-secondary stat-breathe">03</div>
               <div className="space-y-3">
                 <h3 className="text-2xl font-light tracking-tight">Du godkänner – Valora verkställer</h3>
                 <p className="text-secondary font-light leading-relaxed">
