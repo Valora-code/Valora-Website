@@ -27,14 +27,24 @@ const StatusIndicator = ({ label, delay }: StatusIndicatorProps) => {
   }, [delay]);
 
   return (
-    <div ref={elementRef} className="flex items-center gap-4 py-6 border-b border-border/30">
-      <div className={`w-3 h-3 rounded-full transition-all duration-700 ${
-        isActive 
-          ? 'bg-foreground pulse-soft' 
-          : 'bg-border'
-      }`} />
-      <span className={`text-lg font-light tracking-wide transition-colors duration-700 ${
-        isActive ? 'text-foreground' : 'text-secondary'
+    <div ref={elementRef} className="flex items-center gap-6 py-7 border-b border-border/20 diagnostic-row group">
+      {/* Machine status indicator with faint pulse */}
+      <div className="relative flex items-center gap-3">
+        <div className={`w-2 h-2 rounded-full transition-all duration-1000 ${
+          isActive 
+            ? 'bg-foreground shadow-[0_0_8px_rgba(255,255,255,0.4)] machine-pulse' 
+            : 'bg-border/50'
+        }`} />
+        <div className={`text-[10px] font-light tracking-[0.2em] uppercase transition-all duration-1000 ${
+          isActive ? 'text-foreground/60' : 'text-border'
+        }`}>
+          {isActive ? 'ACTIVE' : 'IDLE'}
+        </div>
+      </div>
+      
+      {/* Fault state label */}
+      <span className={`text-lg font-light tracking-wide transition-all duration-1000 ${
+        isActive ? 'text-foreground' : 'text-secondary/60'
       }`}>
         {label}
       </span>
@@ -48,11 +58,17 @@ export const SystemStatus = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background-elevated to-background opacity-50" />
       
       <div className="max-w-4xl mx-auto relative z-10">
+        <div className="text-center mb-4">
+          <div className="inline-block px-4 py-1 rounded-full border border-border/30 mb-6">
+            <span className="text-xs font-light tracking-[0.2em] uppercase text-secondary">SYSTEM STATUS</span>
+          </div>
+        </div>
+        
         <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center mb-20">
-          Status: Marknaden är manuell. Människan är flaskhalsen.
+          Marknaden är manuell. Människan är flaskhalsen.
         </h2>
         
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto liquid-glass p-8 rounded-xl">
           <StatusIndicator label="Manuell jämförelse" delay={200} />
           <StatusIndicator label="Prokrastination" delay={600} />
           <StatusIndicator label="Kognitiv överbelastning" delay={1000} />
