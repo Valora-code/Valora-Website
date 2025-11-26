@@ -15,6 +15,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+const waitlistSchema = z.object({
+  email: z.string().trim().email({ message: "Ogiltig e-postadress" }).max(255),
+  note: z.string().trim().max(500, { message: "Anteckningen får vara max 500 tecken" }).optional(),
+});
 const Index = () => {
   const [email, setEmail] = useState("");
   const [note, setNote] = useState("");
@@ -46,13 +53,21 @@ const Index = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Simulated API call - replace with actual endpoint
     try {
-      // await fetch('/api/waitlist', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email, note })
-      // });
+      // Validate input
+      const validatedData = waitlistSchema.parse({ email, note });
+
+      // Save to Supabase
+      const { error } = await supabase
+        .from('waitlist')
+        .insert([
+          {
+            email: validatedData.email,
+            note: validatedData.note || null,
+          }
+        ]);
+
+      if (error) throw error;
 
       setSubmitted(true);
       toast({
@@ -60,11 +75,19 @@ const Index = () => {
         description: "Du är nu registrerad för tidig access."
       });
     } catch (error) {
-      toast({
-        title: "Ett fel uppstod",
-        description: "Försök igen senare.",
-        variant: "destructive"
-      });
+      if (error instanceof z.ZodError) {
+        toast({
+          title: "Ogiltig inmatning",
+          description: error.errors[0].message,
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Ett fel uppstod",
+          description: "Försök igen senare.",
+          variant: "destructive"
+        });
+      }
     }
   };
   const scrollToSection = (id: string) => {
