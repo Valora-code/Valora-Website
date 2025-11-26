@@ -53,8 +53,24 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        sans: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'SF Pro Display',
+          'SF Pro Text',
+          'Segoe UI',
+          'Roboto',
+          'system-ui',
+          'sans-serif'
+        ],
+        mono: [
+          'SF Mono',
+          'Monaco',
+          'Cascadia Code',
+          'Consolas',
+          'Courier New',
+          'monospace'
+        ],
       },
       letterSpacing: {
         tight: '-0.02em',
