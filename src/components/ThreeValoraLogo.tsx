@@ -41,9 +41,13 @@ function RotatingLogo() {
 
 export const ThreeValoraLogo = () => {
   return (
-    <div className="w-full flex items-center justify-center gap-8 md:gap-12">
-      <div className="w-[300px] h-[300px] md:w-[400px] md:h-[400px]">
-        <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>
+    <div className="w-full flex items-center justify-center gap-4 md:gap-6">
+      <div className="w-[250px] h-[250px] md:w-[350px] md:h-[350px]">
+        <Canvas 
+          camera={{ position: [0, 0, 8], fov: 50 }}
+          style={{ background: 'transparent' }}
+          gl={{ alpha: true, antialias: true }}
+        >
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={0.8} />
           <RotatingLogo />
