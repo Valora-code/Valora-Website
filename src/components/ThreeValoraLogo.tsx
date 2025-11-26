@@ -17,12 +17,12 @@ function RotatingLogo() {
     const shape = new THREE.Shape();
     const scale = 0.85; // 15% smaller
     
-    // Diamond with concave curves matching the 2D logo
-    shape.moveTo(0, 2.5 * scale);
-    shape.quadraticCurveTo(0.5 * scale, 1.2 * scale, 2.3 * scale, 0);
-    shape.quadraticCurveTo(0.5 * scale, -1.2 * scale, 0, -2.5 * scale);
-    shape.quadraticCurveTo(-0.5 * scale, -1.2 * scale, -2.3 * scale, 0);
-    shape.quadraticCurveTo(-0.5 * scale, 1.2 * scale, 0, 2.5 * scale);
+    // Diamond with more pronounced vertical stretch and concave curves
+    shape.moveTo(0, 3.2 * scale);
+    shape.quadraticCurveTo(0.4 * scale, 1.5 * scale, 1.8 * scale, 0);
+    shape.quadraticCurveTo(0.4 * scale, -1.5 * scale, 0, -3.2 * scale);
+    shape.quadraticCurveTo(-0.4 * scale, -1.5 * scale, -1.8 * scale, 0);
+    shape.quadraticCurveTo(-0.4 * scale, 1.5 * scale, 0, 3.2 * scale);
     
     return shape;
   };
@@ -34,7 +34,7 @@ function RotatingLogo() {
       {/* Single wireframe outline with thicker lines */}
       <lineSegments>
         <edgesGeometry args={[new THREE.ShapeGeometry(shape)]} />
-        <lineBasicMaterial color="#ffffff" opacity={0.9} transparent linewidth={3} />
+        <lineBasicMaterial color="#ffffff" opacity={0.9} transparent linewidth={4} />
       </lineSegments>
     </group>
   );
