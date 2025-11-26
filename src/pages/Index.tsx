@@ -9,38 +9,42 @@ import { useParallax } from "@/hooks/use-parallax";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
-
 const Index = () => {
   const [email, setEmail] = useState("");
   const [note, setNote] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
 
   // Parallax effects for different depth layers
-  const bgParallax = useParallax({ speed: 0.15, direction: 'down' });
-  const midParallax = useParallax({ speed: 0.3, direction: 'up' });
-  const logoParallax = useParallax({ speed: 0.08, direction: 'up' });
+  const bgParallax = useParallax({
+    speed: 0.15,
+    direction: 'down'
+  });
+  const midParallax = useParallax({
+    speed: 0.3,
+    direction: 'up'
+  });
+  const logoParallax = useParallax({
+    speed: 0.08,
+    direction: 'up'
+  });
 
   // Mouse tracking for access port light refraction
   const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
     const button = e.currentTarget;
     const rect = button.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    const x = (e.clientX - rect.left) / rect.width * 100;
+    const y = (e.clientY - rect.top) / rect.height * 100;
     button.style.setProperty('--mouse-x', `${x}%`);
     button.style.setProperty('--mouse-y', `${y}%`);
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Simulated API call - replace with actual endpoint
     try {
       // await fetch('/api/waitlist', {
@@ -48,42 +52,39 @@ const Index = () => {
       //   headers: { 'Content-Type': 'application/json' },
       //   body: JSON.stringify({ email, note })
       // });
-      
+
       setSubmitted(true);
       toast({
         title: "Tack",
-        description: "Du är nu registrerad för tidig access.",
+        description: "Du är nu registrerad för tidig access."
       });
     } catch (error) {
       toast({
         title: "Ett fel uppstod",
         description: "Försök igen senare.",
-        variant: "destructive",
+        variant: "destructive"
       });
     }
   };
-
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    element?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
   };
-
-  return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
+  return <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
       {/* Depth layer - distant background with parallax and ambient life */}
       <div className="fixed inset-0 z-0">
-        <div 
-          className="absolute inset-0 bg-gradient-to-br from-background via-background-elevated to-background opacity-60"
-          style={bgParallax}
-        />
-        <div 
-          className="absolute inset-0 ambient-liquid"
-          style={{ ...bgParallax, transform: `${bgParallax.transform} scale(1.2)` }}
-        />
-        <div 
-          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.01),transparent_60%)]"
-          style={{ ...bgParallax, transform: `${bgParallax.transform} scale(1.1)` }}
-        />
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background-elevated to-background opacity-60" style={bgParallax} />
+        <div className="absolute inset-0 ambient-liquid" style={{
+        ...bgParallax,
+        transform: `${bgParallax.transform} scale(1.2)`
+      }} />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.01),transparent_60%)]" style={{
+        ...bgParallax,
+        transform: `${bgParallax.transform} scale(1.1)`
+      }} />
       </div>
 
       {/* Fixed Navigation */}
@@ -93,35 +94,19 @@ const Index = () => {
             <ValoraLogo size="small" />
             
             <div className="hidden md:flex items-center gap-8">
-              <button 
-                onClick={() => scrollToSection('why')}
-                className="text-sm font-light text-secondary hover:text-foreground transition-colors tracking-wide"
-              >
+              <button onClick={() => scrollToSection('why')} className="text-sm font-light text-secondary hover:text-foreground transition-colors tracking-wide">
                 VARFÖR VALORA
               </button>
-              <button 
-                onClick={() => scrollToSection('how')}
-                className="text-sm font-light text-secondary hover:text-foreground transition-colors tracking-wide"
-              >
+              <button onClick={() => scrollToSection('how')} className="text-sm font-light text-secondary hover:text-foreground transition-colors tracking-wide">
                 HUR DET FUNGERAR
               </button>
-              <button 
-                onClick={() => scrollToSection('proof')}
-                className="text-sm font-light text-secondary hover:text-foreground transition-colors tracking-wide"
-              >
+              <button onClick={() => scrollToSection('proof')} className="text-sm font-light text-secondary hover:text-foreground transition-colors tracking-wide">
                 BEVIS
               </button>
-              <button 
-                onClick={() => scrollToSection('faq')}
-                className="text-sm font-light text-secondary hover:text-foreground transition-colors tracking-wide"
-              >
+              <button onClick={() => scrollToSection('faq')} className="text-sm font-light text-secondary hover:text-foreground transition-colors tracking-wide">
                 VANLIGA FRÅGOR
               </button>
-              <Button 
-                variant="glass" 
-                size="sm"
-                onClick={() => scrollToSection('waitlist')}
-              >
+              <Button variant="glass" size="sm" onClick={() => scrollToSection('waitlist')}>
                 Gå med i väntelistan
               </Button>
               
@@ -140,12 +125,14 @@ const Index = () => {
           <div className="grid md:grid-cols-[1fr_1.2fr] gap-16 items-center">
             {/* Left: Logo offset */}
             <div className="fade-in-up system-glow md:justify-self-start" style={logoParallax}>
-              <ValoraLogo size="large" />
+              <ValoraLogo size="large" className="opacity-100" />
             </div>
             
             {/* Right: Content */}
             <div className="space-y-16">
-              <div className="space-y-8 fade-in-up" style={{ animationDelay: '0.3s' }}>
+              <div className="space-y-8 fade-in-up" style={{
+              animationDelay: '0.3s'
+            }}>
                 <h1 className="text-5xl md:text-7xl font-extralight tracking-tight leading-[1.05] max-w-2xl">
                   Autopiloten för din privatekonomi.
                 </h1>
@@ -157,34 +144,39 @@ const Index = () => {
               </div>
               
               <div className="space-y-5 max-w-xl">
-                <div className="flex items-start gap-3 slide-in-left" style={{ animationDelay: '0.5s' }}>
+                <div className="flex items-start gap-3 slide-in-left" style={{
+                animationDelay: '0.5s'
+              }}>
                   <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" />
                   <p className="text-secondary font-light">Automatisk optimering utan manuellt arbete</p>
                 </div>
-                <div className="flex items-start gap-3 slide-in-left" style={{ animationDelay: '0.7s' }}>
-                  <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" style={{ animationDelay: '0.5s' }} />
+                <div className="flex items-start gap-3 slide-in-left" style={{
+                animationDelay: '0.7s'
+              }}>
+                  <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" style={{
+                  animationDelay: '0.5s'
+                }} />
                   <p className="text-secondary font-light">Allt styrs av dina policyer och samtycke</p>
                 </div>
-                <div className="flex items-start gap-3 slide-in-left" style={{ animationDelay: '0.9s' }}>
-                  <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" style={{ animationDelay: '1s' }} />
+                <div className="flex items-start gap-3 slide-in-left" style={{
+                animationDelay: '0.9s'
+              }}>
+                  <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" style={{
+                  animationDelay: '1s'
+                }} />
                   <p className="text-secondary font-light">Minskar både kostnad och mental belastning</p>
                 </div>
               </div>
               
-              <div className="flex flex-col sm:flex-row items-start gap-6 pt-4 fade-in-up" style={{ animationDelay: '1.1s' }}>
-                <button 
-                  onClick={() => scrollToSection('waitlist')}
-                  onMouseMove={handleMouseMove}
-                  className="access-port group"
-                >
+              <div className="flex flex-col sm:flex-row items-start gap-6 pt-4 fade-in-up" style={{
+              animationDelay: '1.1s'
+            }}>
+                <button onClick={() => scrollToSection('waitlist')} onMouseMove={handleMouseMove} className="access-port group">
                   <span className="relative z-10 text-sm font-light tracking-[0.15em] uppercase">
                     Begär tidig access
                   </span>
                 </button>
-                <button 
-                  onClick={() => scrollToSection('how')}
-                  className="text-secondary hover:text-foreground transition-colors text-sm tracking-wide pt-2"
-                >
+                <button onClick={() => scrollToSection('how')} className="text-secondary hover:text-foreground transition-colors text-sm tracking-wide pt-2">
                   Så fungerar Valora →
                 </button>
               </div>
@@ -209,11 +201,7 @@ const Index = () => {
           <div className="max-w-3xl mx-auto space-y-8">
             <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl">
               <div className="grid grid-cols-[120px_1fr] gap-8 items-center">
-                <CountUpNumber 
-                  end={88} 
-                  suffix=" %" 
-                  className="text-6xl font-extralight tracking-tighter text-foreground"
-                />
+                <CountUpNumber end={88} suffix=" %" className="text-6xl font-extralight tracking-tighter text-foreground" />
                 <p className="text-secondary font-light leading-relaxed">
                   har någon gång skjutit upp att byta lån eller försäkring trots att de vet att de borde.
                 </p>
@@ -222,11 +210,7 @@ const Index = () => {
             
             <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl">
               <div className="grid grid-cols-[120px_1fr] gap-8 items-center">
-                <CountUpNumber 
-                  end={79} 
-                  suffix=" %" 
-                  className="text-6xl font-extralight tracking-tighter text-foreground"
-                />
+                <CountUpNumber end={79} suffix=" %" className="text-6xl font-extralight tracking-tighter text-foreground" />
                 <p className="text-secondary font-light leading-relaxed">
                   känner ibland eller ofta dåligt samvete över att inte ta tag i sin ekonomi.
                 </p>
@@ -235,11 +219,7 @@ const Index = () => {
             
             <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl">
               <div className="grid grid-cols-[120px_1fr] gap-8 items-center">
-                <CountUpNumber 
-                  end={56} 
-                  suffix=" %" 
-                  className="text-6xl font-extralight tracking-tighter text-foreground"
-                />
+                <CountUpNumber end={56} suffix=" %" className="text-6xl font-extralight tracking-tighter text-foreground" />
                 <p className="text-secondary font-light leading-relaxed">
                   upplever hög mental belastning när de tänker på lån, försäkringar och ekonomi.
                 </p>
@@ -394,47 +374,29 @@ const Index = () => {
             </div>
           </ParallaxSection>
           
-          {!submitted ? (
-            <form onSubmit={handleSubmit} className="liquid-glass p-10 rounded-xl space-y-6">
+          {!submitted ? <form onSubmit={handleSubmit} className="liquid-glass p-10 rounded-xl space-y-6">
               <div className="space-y-2">
                 <label htmlFor="email" className="text-sm font-light tracking-wide text-secondary">
                   E-post *
                 </label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="bg-background-surface border-border"
-                  placeholder="din@email.se"
-                />
+                <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} required className="bg-background-surface border-border" placeholder="din@email.se" />
               </div>
               
               <div className="space-y-2">
                 <label htmlFor="note" className="text-sm font-light tracking-wide text-secondary">
                   Vad vill du att Valora ska optimera? (valfritt)
                 </label>
-                <Textarea
-                  id="note"
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  className="bg-background-surface border-border min-h-24"
-                  placeholder="T.ex. bostadslån, bilförsäkring..."
-                />
+                <Textarea id="note" value={note} onChange={e => setNote(e.target.value)} className="bg-background-surface border-border min-h-24" placeholder="T.ex. bostadslån, bilförsäkring..." />
               </div>
               
               <Button type="submit" variant="glass" className="w-full" size="lg">
                 Gå med i väntelistan
               </Button>
-            </form>
-          ) : (
-            <div className="liquid-glass p-10 rounded-xl text-center">
+            </form> : <div className="liquid-glass p-10 rounded-xl text-center">
               <p className="text-xl font-light">
                 Tack. Du är nu registrerad för tidig access.
               </p>
-            </div>
-          )}
+            </div>}
         </div>
       </section>
 
@@ -515,8 +477,6 @@ const Index = () => {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
