@@ -4,6 +4,7 @@ import { CountUpNumber } from "@/components/CountUpNumber";
 import { SystemStatus } from "@/components/SystemStatus";
 import { InteractiveCard } from "@/components/InteractiveCard";
 import { ParallaxSection } from "@/components/ParallaxSection";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { useParallax } from "@/hooks/use-parallax";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,17 +19,13 @@ const Index = () => {
     toast
   } = useToast();
 
-  // Parallax effects for different depth layers - reduced intensity
+  // Parallax effects - minimal intensity for subtle depth
   const bgParallax = useParallax({
-    speed: 0.05,
+    speed: 0.02,
     direction: 'down'
   });
-  const midParallax = useParallax({
-    speed: 0.08,
-    direction: 'up'
-  });
   const logoParallax = useParallax({
-    speed: 0.03,
+    speed: 0.015,
     direction: 'up'
   });
 
@@ -182,17 +179,20 @@ const Index = () => {
       {/* Problem Section - Diagnostic Panel */}
       <section id="why" className="py-32 px-6 border-t border-border relative z-10">
         <div className="max-w-5xl mx-auto space-y-20">
-          <div className="max-w-3xl mx-auto text-center space-y-6" style={midParallax}>
-            <h2 className="text-4xl md:text-5xl font-extralight tracking-tight">
-              Problemet är inte information. Det är mänskligt beteende.
-            </h2>
-            <p className="text-lg text-secondary font-light leading-relaxed">
-              I tester och enkätdata framträder ett tydligt mönster: människor vet vad de borde göra – 
-              men skjuter upp det.
-            </p>
-          </div>
+          <ScrollReveal>
+            <div className="max-w-3xl mx-auto text-center space-y-6">
+              <h2 className="text-4xl md:text-5xl font-extralight tracking-tight">
+                Problemet är inte information. Det är mänskligt beteende.
+              </h2>
+              <p className="text-lg text-secondary font-light leading-relaxed">
+                I tester och enkätdata framträder ett tydligt mönster: människor vet vad de borde göra – 
+                men skjuter upp det.
+              </p>
+            </div>
+          </ScrollReveal>
           
           <div className="max-w-3xl mx-auto space-y-8">
+          <ScrollReveal delay={100}>
             <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl">
               <div className="flex gap-8 items-center">
                 <CountUpNumber end={88} suffix="%" className="text-6xl font-extralight tracking-tighter text-foreground whitespace-nowrap" />
@@ -201,7 +201,9 @@ const Index = () => {
                 </p>
               </div>
             </InteractiveCard>
+          </ScrollReveal>
             
+          <ScrollReveal delay={200}>
             <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl">
               <div className="flex gap-8 items-center">
                 <CountUpNumber end={79} suffix="%" className="text-6xl font-extralight tracking-tighter text-foreground whitespace-nowrap" />
@@ -210,7 +212,9 @@ const Index = () => {
                 </p>
               </div>
             </InteractiveCard>
+          </ScrollReveal>
             
+          <ScrollReveal delay={300}>
             <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl">
               <div className="flex gap-8 items-center">
                 <CountUpNumber end={56} suffix="%" className="text-6xl font-extralight tracking-tighter text-foreground whitespace-nowrap" />
@@ -219,16 +223,19 @@ const Index = () => {
                 </p>
               </div>
             </InteractiveCard>
+          </ScrollReveal>
           </div>
           
-          <div className="max-w-3xl mx-auto">
-            <InteractiveCard className="liquid-glass p-10 rounded-xl border-l-2 border-foreground/20 system-glow">
-              <p className="text-xl md:text-2xl font-light italic leading-relaxed mb-4">
-                "Jag har vetat i två år att jag borde göra detta – men jag orkade inte."
-              </p>
-              <p className="text-secondary text-sm tracking-wide">– Christina, 63</p>
-            </InteractiveCard>
-          </div>
+          <ScrollReveal delay={400}>
+            <div className="max-w-3xl mx-auto">
+              <InteractiveCard className="liquid-glass p-10 rounded-xl border-l-2 border-foreground/20 system-glow">
+                <p className="text-xl md:text-2xl font-light italic leading-relaxed mb-4">
+                  "Jag har vetat i två år att jag borde göra detta – men jag orkade inte."
+                </p>
+                <p className="text-secondary text-sm tracking-wide">– Christina, 63</p>
+              </InteractiveCard>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -238,46 +245,52 @@ const Index = () => {
       {/* How It Works */}
       <section id="how" className="py-32 px-6 border-t border-border bg-background-elevated relative z-10">
         <div className="max-w-5xl mx-auto space-y-20">
-          <ParallaxSection speed={0.15}>
+          <ScrollReveal>
             <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
               Så fungerar Valora
             </h2>
-          </ParallaxSection>
+          </ScrollReveal>
           
           <div className="space-y-16">
-            <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start">
-              <div className="text-5xl font-extralight text-secondary stat-breathe">01</div>
-              <div className="space-y-3">
-                <h3 className="text-2xl font-light tracking-tight">Koppla din ekonomi</h3>
-                <p className="text-secondary font-light leading-relaxed">
-                  Du kopplar banker och försäkringar och definierar dina regler.
-                </p>
+            <ScrollReveal delay={100}>
+              <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start">
+                <div className="text-5xl font-extralight text-secondary stat-breathe">01</div>
+                <div className="space-y-3">
+                  <h3 className="text-2xl font-light tracking-tight">Koppla din ekonomi</h3>
+                  <p className="text-secondary font-light leading-relaxed">
+                    Du kopplar banker och försäkringar och definierar dina regler.
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
             
             <div className="h-px bg-border separator-sweep" />
             
-            <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start">
-              <div className="text-5xl font-extralight text-secondary stat-breathe">02</div>
-              <div className="space-y-3">
-                <h3 className="text-2xl font-light tracking-tight">Valora analyserar och förhandlar</h3>
-                <p className="text-secondary font-light leading-relaxed">
-                  Systemet jämför marknaden och identifierar förbättringar kontinuerligt.
-                </p>
+            <ScrollReveal delay={200}>
+              <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start">
+                <div className="text-5xl font-extralight text-secondary stat-breathe">02</div>
+                <div className="space-y-3">
+                  <h3 className="text-2xl font-light tracking-tight">Valora analyserar och förhandlar</h3>
+                  <p className="text-secondary font-light leading-relaxed">
+                    Systemet jämför marknaden och identifierar förbättringar kontinuerligt.
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
             
             <div className="h-px bg-border separator-sweep" />
             
-            <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start">
-              <div className="text-5xl font-extralight text-secondary stat-breathe">03</div>
-              <div className="space-y-3">
-                <h3 className="text-2xl font-light tracking-tight">Du godkänner – Valora verkställer</h3>
-                <p className="text-secondary font-light leading-relaxed">
-                  Du godkänner med ett tryck. Valora sköter resten i bakgrunden.
-                </p>
+            <ScrollReveal delay={300}>
+              <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start">
+                <div className="text-5xl font-extralight text-secondary stat-breathe">03</div>
+                <div className="space-y-3">
+                  <h3 className="text-2xl font-light tracking-tight">Du godkänner – Valora verkställer</h3>
+                  <p className="text-secondary font-light leading-relaxed">
+                    Du godkänner med ett tryck. Valora sköter resten i bakgrunden.
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -285,71 +298,83 @@ const Index = () => {
       {/* Proof Section */}
       <section id="proof" className="py-32 px-6 border-t border-border relative z-10">
         <div className="max-w-5xl mx-auto space-y-20">
-          <ParallaxSection speed={0.2}>
+          <ScrollReveal>
             <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
               Verifierad besparing och mental lättnad
             </h2>
-          </ParallaxSection>
+          </ScrollReveal>
           
           <div className="grid md:grid-cols-2 gap-8">
-            <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
-              <div className="text-3xl font-light">Christina</div>
-              <div className="text-4xl font-extralight text-secondary">ca 17 000 kr/år</div>
-              <p className="text-secondary font-light italic pt-4">
-                "Jag hade aldrig gjort detta själv."
-              </p>
-            </InteractiveCard>
+            <ScrollReveal delay={100}>
+              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
+                <div className="text-3xl font-light">Christina</div>
+                <div className="text-4xl font-extralight text-secondary">ca 17 000 kr/år</div>
+                <p className="text-secondary font-light italic pt-4">
+                  "Jag hade aldrig gjort detta själv."
+                </p>
+              </InteractiveCard>
+            </ScrollReveal>
             
-            <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
-              <div className="text-3xl font-light">Ninni</div>
-              <div className="text-4xl font-extralight text-secondary">ca 15 000 kr/år</div>
-              <p className="text-secondary font-light italic pt-4">
-                "Jag betalar hellre än att behöva tänka på det."
-              </p>
-            </InteractiveCard>
+            <ScrollReveal delay={200}>
+              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
+                <div className="text-3xl font-light">Ninni</div>
+                <div className="text-4xl font-extralight text-secondary">ca 15 000 kr/år</div>
+                <p className="text-secondary font-light italic pt-4">
+                  "Jag betalar hellre än att behöva tänka på det."
+                </p>
+              </InteractiveCard>
+            </ScrollReveal>
           </div>
           
-          <InteractiveCard className="liquid-glass p-10 rounded-xl max-w-2xl mx-auto">
-            <p className="text-xl font-light italic text-center">
-              "Ekonomi gav mig ångest innan."
-            </p>
-          </InteractiveCard>
+          <ScrollReveal delay={300}>
+            <InteractiveCard className="liquid-glass p-10 rounded-xl max-w-2xl mx-auto">
+              <p className="text-xl font-light italic text-center">
+                "Ekonomi gav mig ångest innan."
+              </p>
+            </InteractiveCard>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Target Audience */}
       <section className="py-32 px-6 border-t border-border bg-background-elevated relative z-10">
         <div className="max-w-6xl mx-auto space-y-16">
-          <ParallaxSection speed={0.18}>
+          <ScrollReveal>
             <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
               För vem är Valora
             </h2>
-          </ParallaxSection>
+          </ScrollReveal>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
-              <h3 className="text-xl font-light">Den upptagna yrkespersonen</h3>
-              <p className="text-secondary font-light leading-relaxed">
-                Du har inte tid att jämföra erbjudanden och förhandla. 
-                Valora gör det åt dig medan du fokuserar på det som är viktigt.
-              </p>
-            </InteractiveCard>
+            <ScrollReveal delay={100}>
+              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
+                <h3 className="text-xl font-light">Den upptagna yrkespersonen</h3>
+                <p className="text-secondary font-light leading-relaxed">
+                  Du har inte tid att jämföra erbjudanden och förhandla. 
+                  Valora gör det åt dig medan du fokuserar på det som är viktigt.
+                </p>
+              </InteractiveCard>
+            </ScrollReveal>
             
-            <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
-              <h3 className="text-xl font-light">Familjen med komplex ekonomi</h3>
-              <p className="text-secondary font-light leading-relaxed">
-                Flera lån, försäkringar och sparformer. Valora håller koll på allt 
-                och hittar förbättringar du missat.
-              </p>
-            </InteractiveCard>
+            <ScrollReveal delay={200}>
+              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
+                <h3 className="text-xl font-light">Familjen med komplex ekonomi</h3>
+                <p className="text-secondary font-light leading-relaxed">
+                  Flera lån, försäkringar och sparformer. Valora håller koll på allt 
+                  och hittar förbättringar du missat.
+                </p>
+              </InteractiveCard>
+            </ScrollReveal>
             
-            <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
-              <h3 className="text-xl font-light">Den som vill ha kontroll utan stress</h3>
-              <p className="text-secondary font-light leading-relaxed">
-                Du vill göra rätt men känner dig överväldigad. 
-                Valora tar bort stressen och ger dig full kontroll.
-              </p>
-            </InteractiveCard>
+            <ScrollReveal delay={300}>
+              <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
+                <h3 className="text-xl font-light">Den som vill ha kontroll utan stress</h3>
+                <p className="text-secondary font-light leading-relaxed">
+                  Du vill göra rätt men känner dig överväldigad. 
+                  Valora tar bort stressen och ger dig full kontroll.
+                </p>
+              </InteractiveCard>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -357,7 +382,7 @@ const Index = () => {
       {/* Waitlist */}
       <section id="waitlist" className="py-32 px-6 border-t border-border relative z-10">
         <div className="max-w-2xl mx-auto space-y-12">
-          <ParallaxSection speed={0.12}>
+          <ScrollReveal>
             <div className="text-center space-y-4">
               <h2 className="text-4xl md:text-5xl font-extralight tracking-tight">
                 Begär tidig tillgång till Valora
@@ -366,7 +391,7 @@ const Index = () => {
                 Vi öppnar successivt upp Valora för ett begränsat antal användare.
               </p>
             </div>
-          </ParallaxSection>
+          </ScrollReveal>
           
           {!submitted ? <form onSubmit={handleSubmit} className="liquid-glass p-10 rounded-xl space-y-6">
               <div className="space-y-2">
