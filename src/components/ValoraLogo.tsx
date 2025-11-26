@@ -4,7 +4,7 @@ interface ValoraLogoProps {
 }
 
 export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) => {
-  const diamondSize = size === 'large' ? 110 : 40;
+  const diamondSize = size === 'large' ? 130 : 48;
   const strokeWidth = size === 'large' ? 1.5 : 1.5;
   const textSize = size === 'large' ? 'text-5xl' : 'text-base';
   const gap = size === 'large' ? 'gap-6' : 'gap-3';
@@ -23,7 +23,7 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
               fill="none"
             >
             <path 
-              d="M50 3 Q60 22, 88 50 Q60 78, 50 97 Q40 78, 12 50 Q40 22, 50 3 Z" 
+              d="M50 2 Q55 20, 90 50 Q55 80, 50 98 Q45 80, 10 50 Q45 20, 50 2 Z" 
               fill="currentColor"
               className="text-foreground"
             />
@@ -66,7 +66,7 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
           {/* Elegant diamond with deep concave curves for sharp, premium feel */}
           {/* Primary shape - premium stroke with curved sides */}
           <path 
-            d="M50 3 Q60 22, 88 50 Q60 78, 50 97 Q40 78, 12 50 Q40 22, 50 3 Z" 
+            d="M50 2 Q55 20, 90 50 Q55 80, 50 98 Q45 80, 10 50 Q45 20, 50 2 Z" 
             stroke="url(#logoGradient)" 
             strokeWidth={strokeWidth}
             fill="none"
@@ -77,7 +77,7 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
           
           {/* Shimmer overlay for premium feel */}
           <path 
-            d="M50 3 Q60 22, 88 50 Q60 78, 50 97 Q40 78, 12 50 Q40 22, 50 3 Z" 
+            d="M50 2 Q55 20, 90 50 Q55 80, 50 98 Q45 80, 10 50 Q45 20, 50 2 Z" 
             stroke="url(#shimmer)" 
             strokeWidth={strokeWidth * 0.5}
             fill="none"
@@ -89,7 +89,7 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
           
           {/* Inner subtle accent lines for depth */}
           <path 
-            d="M50 12 Q62 28, 80 50 Q62 72, 50 88 Q38 72, 20 50 Q38 28, 50 12 Z" 
+            d="M50 15 Q58 30, 78 50 Q58 70, 50 85 Q42 70, 22 50 Q42 30, 50 15 Z" 
             stroke="currentColor" 
             strokeWidth={strokeWidth * 0.3}
             fill="none"
