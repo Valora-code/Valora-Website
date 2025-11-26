@@ -227,7 +227,7 @@ const Index = () => {
           <ScrollReveal delay={200}>
             <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl group chromatic-hover">
               <div className="flex gap-8 items-center">
-                <CountUpNumber end={79} suffix="%" className="text-6xl font-mono font-light tracking-tighter stat-accent whitespace-nowrap" />
+                <CountUpNumber end={79} suffix="%" className="text-6xl font-mono font-light tracking-tighter text-foreground whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
                   känner ibland eller ofta dåligt samvete över att inte ta tag i sin ekonomi.
                 </p>
@@ -238,7 +238,7 @@ const Index = () => {
           <ScrollReveal delay={300}>
             <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl group chromatic-hover">
               <div className="flex gap-8 items-center">
-                <CountUpNumber end={56} suffix="%" className="text-6xl font-mono font-light tracking-tighter stat-accent whitespace-nowrap" />
+                <CountUpNumber end={56} suffix="%" className="text-6xl font-mono font-light tracking-tighter text-foreground whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
                   upplever hög mental belastning när de tänker på lån, försäkringar och ekonomi.
                 </p>
