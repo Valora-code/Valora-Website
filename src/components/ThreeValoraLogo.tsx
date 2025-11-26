@@ -62,7 +62,7 @@ export const ThreeValoraLogo = () => {
           <RotatingLogo />
         </Canvas>
       </div>
-      <span className="text-4xl sm:text-5xl md:text-7xl font-extralight tracking-[0.2em] text-foreground mt-4 md:mt-0 md:-ml-6">
+      <span className="text-4xl sm:text-5xl md:text-7xl font-extralight tracking-[0.2em] text-foreground mt-4 md:mt-0 -ml-2 md:-ml-12">
         VALORA
       </span>
     </div>
