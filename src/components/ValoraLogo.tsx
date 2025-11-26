@@ -22,11 +22,11 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
               viewBox="0 0 100 100" 
               fill="none"
             >
-              <path 
-                d="M50 8 L92 50 L50 92 L8 50 Z" 
-                fill="currentColor"
-                className="text-foreground"
-              />
+            <path 
+              d="M50 8 Q70 30, 92 50 Q70 70, 50 92 Q30 70, 8 50 Q30 30, 50 8 Z" 
+              fill="currentColor"
+              className="text-foreground"
+            />
             </svg>
           </div>
         )}
@@ -63,10 +63,10 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
             </linearGradient>
           </defs>
           
-          {/* Elegant elongated diamond with refined proportions */}
-          {/* Primary shape - premium stroke */}
+          {/* Elegant diamond with concave curves for sharp, premium feel */}
+          {/* Primary shape - premium stroke with curved sides */}
           <path 
-            d="M50 8 L92 50 L50 92 L8 50 Z" 
+            d="M50 8 Q70 30, 92 50 Q70 70, 50 92 Q30 70, 8 50 Q30 30, 50 8 Z" 
             stroke="url(#logoGradient)" 
             strokeWidth={strokeWidth}
             fill="none"
@@ -77,7 +77,7 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
           
           {/* Shimmer overlay for premium feel */}
           <path 
-            d="M50 8 L92 50 L50 92 L8 50 Z" 
+            d="M50 8 Q70 30, 92 50 Q70 70, 50 92 Q30 70, 8 50 Q30 30, 50 8 Z" 
             stroke="url(#shimmer)" 
             strokeWidth={strokeWidth * 0.5}
             fill="none"
@@ -89,7 +89,7 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
           
           {/* Inner subtle accent lines for depth */}
           <path 
-            d="M50 15 L85 50 L50 85 L15 50 Z" 
+            d="M50 15 Q68 32, 85 50 Q68 68, 50 85 Q32 68, 15 50 Q32 32, 50 15 Z" 
             stroke="currentColor" 
             strokeWidth={strokeWidth * 0.3}
             fill="none"
