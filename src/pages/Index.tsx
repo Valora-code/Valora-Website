@@ -72,6 +72,11 @@ const Index = () => {
     });
   };
   return <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
+      {/* Vignette overlay for depth */}
+      <div className="fixed inset-0 pointer-events-none z-50">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_40%,rgba(0,0,0,0.3)_100%)]" />
+      </div>
+      
       {/* Depth layer - distant background with parallax and ambient life */}
       <div className="fixed inset-0 z-0">
         <DataParticles />
