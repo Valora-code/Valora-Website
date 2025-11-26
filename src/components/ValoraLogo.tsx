@@ -5,7 +5,7 @@ interface ValoraLogoProps {
 
 export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) => {
   const diamondSize = size === 'large' ? 80 : 28;
-  const strokeWidth = size === 'large' ? 0.8 : 0.8;
+  const strokeWidth = size === 'large' ? 1.2 : 1.2;
   const textSize = size === 'large' ? 'text-5xl' : 'text-base';
   const gap = size === 'large' ? 'gap-6' : 'gap-3';
   const showAnimation = size === 'large';
@@ -16,11 +16,10 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
         <svg 
           width={diamondSize} 
           height={diamondSize} 
-          viewBox="0 0 100 140" 
+          viewBox="0 0 100 100" 
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
           className="text-foreground"
-          style={{ background: 'transparent' }}
         >
           <defs>
             {/* Subtle internal energy flow - ultra slow cycle */}
@@ -38,10 +37,10 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
             </linearGradient>
           </defs>
           
-          {/* Elongated asymmetric diamond - precision geometry */}
-          {/* Tighter top/bottom angles, wider side angles for true diamond shape */}
+          {/* Rotated square diamond - 45 degrees, perfect geometry */}
+          {/* Clean outline matching Valora brand */}
           <path 
-            d="M50 10 L90 70 L50 130 L10 70 Z" 
+            d="M50 15 L85 50 L50 85 L15 50 Z" 
             stroke="url(#energyFlow)" 
             strokeWidth={strokeWidth}
             fill="none"
@@ -50,15 +49,15 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
             opacity="0.6"
           />
           
-          {/* Single thin outline - crystalline precision */}
+          {/* Single thin outline - precision edge */}
           <path 
-            d="M50 10 L90 70 L50 130 L10 70 Z" 
+            d="M50 15 L85 50 L50 85 L15 50 Z" 
             stroke="currentColor" 
             strokeWidth={strokeWidth}
             fill="none"
             strokeLinejoin="miter"
             strokeLinecap="square"
-            opacity="0.9"
+            opacity="0.95"
           />
         </svg>
       </div>
