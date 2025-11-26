@@ -216,7 +216,7 @@ const Index = () => {
           <ScrollReveal delay={100}>
             <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl group chromatic-hover">
               <div className="flex gap-8 items-center">
-                <CountUpNumber end={88} suffix="%" className="text-6xl font-mono font-light tracking-tighter stat-accent whitespace-nowrap" />
+                <CountUpNumber end={88} suffix="%" className="text-6xl font-mono font-light tracking-tighter text-foreground whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
                   har någon gång skjutit upp att byta lån eller försäkring trots att de vet att de borde.
                 </p>
