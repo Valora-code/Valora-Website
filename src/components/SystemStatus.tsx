@@ -35,11 +35,6 @@ const StatusIndicator = ({ label, delay }: StatusIndicatorProps) => {
             ? 'bg-foreground shadow-[0_0_8px_rgba(255,255,255,0.4)] machine-pulse' 
             : 'bg-border/50'
         }`} />
-        <div className={`text-[10px] font-light tracking-[0.2em] uppercase transition-all duration-1000 ${
-          isActive ? 'text-foreground/60' : 'text-border'
-        }`}>
-          {isActive ? 'ACTIVE' : 'IDLE'}
-        </div>
       </div>
       
       {/* Fault state label */}
