@@ -22,20 +22,20 @@ const StatusIndicator = ({
     }
     return () => observer.disconnect();
   }, [delay]);
-  return <div ref={elementRef} className="flex items-center gap-6 py-7 border-b border-border/20 diagnostic-row group">
+  return <div ref={elementRef} className="flex items-center gap-4 sm:gap-6 py-5 sm:py-7 border-b border-border/20 diagnostic-row group">
       {/* Machine status indicator with faint pulse */}
       <div className="relative flex items-center gap-3">
         <div className={`w-2 h-2 rounded-full transition-all duration-1000 ${isActive ? 'bg-foreground shadow-[0_0_8px_rgba(255,255,255,0.4)] machine-pulse' : 'bg-border/50'}`} />
       </div>
       
       {/* Fault state label */}
-      <span className={`text-lg font-light tracking-wide transition-all duration-1000 ${isActive ? 'text-foreground' : 'text-secondary/60'}`}>
+      <span className={`text-sm sm:text-base md:text-lg font-light tracking-wide transition-all duration-1000 ${isActive ? 'text-foreground' : 'text-secondary/60'}`}>
         {label}
       </span>
     </div>;
 };
 export const SystemStatus = () => {
-  return <section className="py-32 px-6 border-t border-border relative overflow-hidden">
+  return <section className="py-20 sm:py-28 lg:py-32 px-4 sm:px-6 border-t border-border relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background-elevated to-background opacity-50" />
       
       <div className="max-w-4xl mx-auto relative z-10">
@@ -45,9 +45,9 @@ export const SystemStatus = () => {
           </div>
         </div>
         
-        <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center mb-20">Ekonomin är manuell. Människan är flaskhalsen.</h2>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extralight tracking-tight text-center mb-12 sm:mb-16 lg:mb-20 leading-tight">Ekonomin är manuell. Människan är flaskhalsen.</h2>
         
-        <div className="max-w-2xl mx-auto liquid-glass p-8 rounded-xl">
+        <div className="max-w-2xl mx-auto liquid-glass p-5 sm:p-6 lg:p-8 rounded-xl">
           <StatusIndicator label="Manuell jämförelse mellan aktörer" delay={200} />
           <StatusIndicator label="Prokrastinering vid varje livsbeslut" delay={600} />
           <StatusIndicator label="Kognitiv överbelastning vid komplex ekonomi" delay={1000} />

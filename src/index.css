@@ -176,12 +176,14 @@ All colors MUST be HSL.
   
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
   
   body {
     @apply bg-background text-foreground;
     font-feature-settings: 'tnum' on, 'lnum' on;
     letter-spacing: -0.01em;
+    overflow-x: hidden;
   }
 }
 
