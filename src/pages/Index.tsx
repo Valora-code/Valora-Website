@@ -559,7 +559,10 @@ const Index = () => {
                 Behöver jag byta bank?
               </AccordionTrigger>
               <AccordionContent className="text-sm sm:text-base text-secondary font-light leading-relaxed">
-                Nej. Valora arbetar med dina befintliga aktörer.
+                Nej – och ibland, ja.
+                Du behöver aldrig byta bank för att använda Valora. Systemet analyserar och optimerar din ekonomi ovanpå dina befintliga aktörer.
+                <br /><br />
+                Om Valora identifierar ett förbättringsförslag som kräver ett faktiskt byte av långivare, sker det först efter att du uttryckligen har godkänt det. Inget sker automatiskt utan ditt samtycke.
               </AccordionContent>
             </AccordionItem>
             
