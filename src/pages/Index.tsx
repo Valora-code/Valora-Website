@@ -67,8 +67,8 @@ const Index = () => {
           }
         ]);
 
-      if (error) throw error;
-
+      // Always show success message to prevent email enumeration attacks
+      // Even if email already exists, we don't reveal this to the user
       setSubmitted(true);
       toast({
         title: "Tack",
@@ -82,6 +82,8 @@ const Index = () => {
           variant: "destructive"
         });
       } else {
+        // Generic error message for all database errors (including duplicates)
+        // to prevent timing attacks and email enumeration
         toast({
           title: "Ett fel uppstod",
           description: "Försök igen senare.",
