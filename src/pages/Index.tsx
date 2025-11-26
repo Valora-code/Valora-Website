@@ -4,7 +4,6 @@ import { CountUpNumber } from "@/components/CountUpNumber";
 import { SystemStatus } from "@/components/SystemStatus";
 import { InteractiveCard } from "@/components/InteractiveCard";
 import { ParallaxSection } from "@/components/ParallaxSection";
-import { AmbientSoundToggle } from "@/components/AmbientSoundToggle";
 import { useParallax } from "@/hooks/use-parallax";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,17 +18,17 @@ const Index = () => {
     toast
   } = useToast();
 
-  // Parallax effects for different depth layers
+  // Parallax effects for different depth layers - reduced intensity
   const bgParallax = useParallax({
-    speed: 0.15,
+    speed: 0.05,
     direction: 'down'
   });
   const midParallax = useParallax({
-    speed: 0.3,
+    speed: 0.08,
     direction: 'up'
   });
   const logoParallax = useParallax({
-    speed: 0.08,
+    speed: 0.03,
     direction: 'up'
   });
 
@@ -109,11 +108,6 @@ const Index = () => {
               <Button variant="glass" size="sm" onClick={() => scrollToSection('waitlist')}>
                 Gå med i väntelistan
               </Button>
-              
-              {/* Ambient Sound Toggle */}
-              <div className="pl-2 border-l border-border/30">
-                <AmbientSoundToggle />
-              </div>
             </div>
           </div>
         </div>
@@ -200,8 +194,8 @@ const Index = () => {
           
           <div className="max-w-3xl mx-auto space-y-8">
             <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl">
-              <div className="grid grid-cols-[120px_1fr] gap-8 items-center">
-                <CountUpNumber end={88} suffix=" %" className="text-6xl font-extralight tracking-tighter text-foreground" />
+              <div className="flex gap-8 items-center">
+                <CountUpNumber end={88} suffix="%" className="text-6xl font-extralight tracking-tighter text-foreground whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
                   har någon gång skjutit upp att byta lån eller försäkring trots att de vet att de borde.
                 </p>
@@ -209,8 +203,8 @@ const Index = () => {
             </InteractiveCard>
             
             <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl">
-              <div className="grid grid-cols-[120px_1fr] gap-8 items-center">
-                <CountUpNumber end={79} suffix=" %" className="text-6xl font-extralight tracking-tighter text-foreground" />
+              <div className="flex gap-8 items-center">
+                <CountUpNumber end={79} suffix="%" className="text-6xl font-extralight tracking-tighter text-foreground whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
                   känner ibland eller ofta dåligt samvete över att inte ta tag i sin ekonomi.
                 </p>
@@ -218,8 +212,8 @@ const Index = () => {
             </InteractiveCard>
             
             <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl">
-              <div className="grid grid-cols-[120px_1fr] gap-8 items-center">
-                <CountUpNumber end={56} suffix=" %" className="text-6xl font-extralight tracking-tighter text-foreground" />
+              <div className="flex gap-8 items-center">
+                <CountUpNumber end={56} suffix="%" className="text-6xl font-extralight tracking-tighter text-foreground whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
                   upplever hög mental belastning när de tänker på lån, försäkringar och ekonomi.
                 </p>

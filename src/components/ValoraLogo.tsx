@@ -16,10 +16,11 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
         <svg 
           width={diamondSize} 
           height={diamondSize} 
-          viewBox="0 0 100 120" 
+          viewBox="0 0 100 140" 
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
           className="text-foreground"
+          style={{ background: 'transparent' }}
         >
           <defs>
             {/* Subtle internal energy flow - ultra slow cycle */}
@@ -38,9 +39,9 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
           </defs>
           
           {/* Elongated asymmetric diamond - precision geometry */}
-          {/* Wide side angles, tighter top/bottom angles */}
+          {/* Tighter top/bottom angles, wider side angles for true diamond shape */}
           <path 
-            d="M50 15 L85 60 L50 105 L15 60 Z" 
+            d="M50 10 L90 70 L50 130 L10 70 Z" 
             stroke="url(#energyFlow)" 
             strokeWidth={strokeWidth}
             fill="none"
@@ -51,7 +52,7 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
           
           {/* Single thin outline - crystalline precision */}
           <path 
-            d="M50 15 L85 60 L50 105 L15 60 Z" 
+            d="M50 10 L90 70 L50 130 L10 70 Z" 
             stroke="currentColor" 
             strokeWidth={strokeWidth}
             fill="none"
