@@ -142,12 +142,12 @@ const Index = () => {
               animationDelay: '0.3s'
             }}>
                 <h1 className="text-6xl md:text-8xl font-extralight tracking-tighter leading-[0.95] max-w-2xl">
-                  Autopiloten för din privatekonomi.
+                  Valora – din autonoma ekonomi.
                 </h1>
                 
                 <p className="text-lg md:text-xl text-secondary font-light leading-relaxed max-w-xl">
-                  Ett autonomt finansiellt system som analyserar, förhandlar och förbättrar 
-                  dina lån och försäkringar – inom dina egna regler.
+                  Ett intelligent finansiellt system som analyserar, förhandlar och förbättrar 
+                  dina lån och försäkringar – helt automatiskt, inom dina regler.
                 </p>
               </div>
               
@@ -156,7 +156,7 @@ const Index = () => {
                 animationDelay: '0.5s'
               }}>
                   <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" />
-                  <p className="text-secondary font-light">Automatisk optimering utan manuellt arbete</p>
+                  <p className="text-secondary font-light">Automatiskt bättre villkor – utan manuell jämförelse</p>
                 </div>
                 <div className="flex items-start gap-3 slide-in-left" style={{
                 animationDelay: '0.7s'
@@ -164,7 +164,7 @@ const Index = () => {
                   <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" style={{
                   animationDelay: '0.5s'
                 }} />
-                  <p className="text-secondary font-light">Allt styrs av dina policyer och samtycke</p>
+                  <p className="text-secondary font-light">Full kontroll via policyer och samtycke</p>
                 </div>
                 <div className="flex items-start gap-3 slide-in-left" style={{
                 animationDelay: '0.9s'
@@ -172,7 +172,7 @@ const Index = () => {
                   <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" style={{
                   animationDelay: '1s'
                 }} />
-                  <p className="text-secondary font-light">Minskar både kostnad och mental belastning</p>
+                  <p className="text-secondary font-light">Lägre kostnader, mindre mental belastning</p>
                 </div>
               </div>
               
@@ -182,7 +182,7 @@ const Index = () => {
                 <MagneticButton strength={0.4}>
                   <button onClick={() => scrollToSection('waitlist')} onMouseMove={handleMouseMove} className="access-port group">
                     <span className="relative z-10 text-sm font-light tracking-[0.15em] uppercase">
-                      Begär tidig access
+                      Begär tidig tillgång
                     </span>
                   </button>
                 </MagneticButton>
@@ -203,11 +203,11 @@ const Index = () => {
           <ScrollReveal>
             <div className="max-w-3xl mx-auto text-center space-y-6">
               <h2 className="text-4xl md:text-5xl font-extralight tracking-tight">
-                Problemet är inte information. Det är mänskligt beteende.
+                Problemet är inte brist på information. Det är att människor inte orkar agera.
               </h2>
               <p className="text-lg text-secondary font-light leading-relaxed">
-                I tester och enkätdata framträder ett tydligt mönster: människor vet vad de borde göra – 
-                men skjuter upp det.
+                I både tester och enkätdata framträder samma mönster: människor vet vad de borde göra – 
+                men skjuter upp det. Inte av okunskap, utan på grund av mental belastning, friktion och prokrastinering.
               </p>
             </div>
           </ScrollReveal>
@@ -218,7 +218,7 @@ const Index = () => {
               <div className="flex gap-8 items-center">
                 <CountUpNumber end={88} suffix="%" className="text-6xl font-mono font-light tracking-tighter text-foreground whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
-                  har någon gång skjutit upp att byta lån eller försäkring trots att de vet att de borde.
+                  har skjutit upp att byta lån eller försäkring – trots att de vet att de borde.
                 </p>
               </div>
             </InteractiveCard>
@@ -289,7 +289,7 @@ const Index = () => {
                     <div className="space-y-3">
                       <h3 className="text-2xl font-light tracking-tight">Koppla din ekonomi</h3>
                       <p className="text-secondary font-light leading-relaxed">
-                        Du kopplar banker och försäkringar och definierar dina regler.
+                        Du ansluter banker, lån och försäkringar – och anger dina villkor och preferenser.
                       </p>
                     </div>
                   </InteractiveCard>
@@ -308,7 +308,7 @@ const Index = () => {
                     <div className="space-y-3">
                       <h3 className="text-2xl font-light tracking-tight">Valora analyserar och förhandlar</h3>
                       <p className="text-secondary font-light leading-relaxed">
-                        Systemet jämför marknaden och identifierar förbättringar kontinuerligt.
+                        Systemet bevakar marknaden, identifierar förbättringar och förhandlar kontinuerligt åt dig.
                       </p>
                     </div>
                   </InteractiveCard>
@@ -325,9 +325,9 @@ const Index = () => {
                   </div>
                   <InteractiveCard className="liquid-glass p-6 rounded-xl group chromatic-hover">
                     <div className="space-y-3">
-                      <h3 className="text-2xl font-light tracking-tight">Du godkänner – Valora verkställer</h3>
+                      <h3 className="text-2xl font-light tracking-tight">Du godkänner. Valora verkställer.</h3>
                       <p className="text-secondary font-light leading-relaxed">
-                        Du godkänner med ett tryck. Valora sköter resten i bakgrunden.
+                        Ett klick. Resten sker automatiskt i bakgrunden.
                       </p>
                     </div>
                   </InteractiveCard>
@@ -343,7 +343,7 @@ const Index = () => {
         <div className="max-w-5xl mx-auto space-y-24">
           <ScrollReveal>
             <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
-              Verifierad besparing och mental lättnad
+              Verifierad besparing. Verklig mental lättnad.
             </h2>
           </ScrollReveal>
           
@@ -353,7 +353,7 @@ const Index = () => {
                 <div className="text-3xl font-light">Christina</div>
                 <div className="text-4xl font-mono font-light text-secondary tabular-nums">ca 17 000 kr/år</div>
                 <p className="text-secondary font-light italic pt-4">
-                  "Jag hade aldrig gjort detta själv."
+                  "Jag hade aldrig gjort detta själv. Nu slipper jag tänka."
                 </p>
               </InteractiveCard>
             </ScrollReveal>
@@ -363,7 +363,7 @@ const Index = () => {
                 <div className="text-3xl font-light">Ninni</div>
                 <div className="text-4xl font-mono font-light text-secondary tabular-nums">ca 15 000 kr/år</div>
                 <p className="text-secondary font-light italic pt-4">
-                  "Jag betalar hellre än att behöva tänka på det."
+                  "Jag betalar hellre än att behöva bära detta i huvudet."
                 </p>
               </InteractiveCard>
             </ScrollReveal>
@@ -372,7 +372,7 @@ const Index = () => {
           <ScrollReveal delay={300}>
             <InteractiveCard className="liquid-glass p-10 rounded-xl max-w-2xl mx-auto group chromatic-hover">
               <p className="text-xl font-light italic text-center">
-                "Ekonomi gav mig ångest innan."
+                "Tidigare gav ekonomi mig konstant ångest. Nu känns det löst."
               </p>
             </InteractiveCard>
           </ScrollReveal>
@@ -384,7 +384,7 @@ const Index = () => {
         <div className="max-w-6xl mx-auto space-y-20">
           <ScrollReveal>
             <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
-              För vem är Valora
+              För vem är Valora byggt?
             </h2>
           </ScrollReveal>
           
@@ -393,8 +393,7 @@ const Index = () => {
               <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group chromatic-hover">
                 <h3 className="text-xl font-light">Den upptagna yrkespersonen</h3>
                 <p className="text-secondary font-light leading-relaxed">
-                  Du har inte tid att jämföra erbjudanden och förhandla. 
-                  Valora gör det åt dig medan du fokuserar på det som är viktigt.
+                  Du har inte tid att förhandla, jämföra och bevaka. Valora gör det åt dig.
                 </p>
               </InteractiveCard>
             </ScrollReveal>
@@ -403,8 +402,7 @@ const Index = () => {
               <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group chromatic-hover">
                 <h3 className="text-xl font-light">Familjen med komplex ekonomi</h3>
                 <p className="text-secondary font-light leading-relaxed">
-                  Flera lån, försäkringar och sparformer. Valora håller koll på allt 
-                  och hittar förbättringar du missat.
+                  Flera lån, försäkringar och sparformer. Valora håller allt optimerat i bakgrunden.
                 </p>
               </InteractiveCard>
             </ScrollReveal>
@@ -413,8 +411,7 @@ const Index = () => {
               <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4 group chromatic-hover">
                 <h3 className="text-xl font-light">Den som vill ha kontroll utan stress</h3>
                 <p className="text-secondary font-light leading-relaxed">
-                  Du vill göra rätt men känner dig överväldigad. 
-                  Valora tar bort stressen och ger dig full kontroll.
+                  Du vill göra rätt – men slippa bära ansvaret mentalt. Valora tar över.
                 </p>
               </InteractiveCard>
             </ScrollReveal>
@@ -431,7 +428,7 @@ const Index = () => {
                 Begär tidig tillgång till Valora
               </h2>
               <p className="text-lg text-secondary font-light">
-                Vi öppnar successivt upp Valora för ett begränsat antal användare.
+                Vi öppnar Valora successivt för ett begränsat antal användare.
               </p>
             </div>
           </ScrollReveal>
@@ -446,9 +443,9 @@ const Index = () => {
               
               <div className="space-y-2">
                 <label htmlFor="note" className="text-sm font-light tracking-wide text-secondary">
-                  Vad vill du att Valora ska optimera? (valfritt)
+                  Vad vill du att Valora ska optimera åt dig?
                 </label>
-                <Textarea id="note" value={note} onChange={e => setNote(e.target.value)} className="bg-background-surface border-border min-h-24" placeholder="T.ex. bostadslån, bilförsäkring..." />
+                <Textarea id="note" value={note} onChange={e => setNote(e.target.value)} className="bg-background-surface border-border min-h-24" placeholder="Bostadslån, privatlån, bilförsäkring, hemförsäkring" />
               </div>
               
               <Button type="submit" variant="glass" className="w-full" size="lg">
@@ -475,9 +472,7 @@ const Index = () => {
                 Är Valora en bank?
               </AccordionTrigger>
               <AccordionContent className="text-secondary font-light leading-relaxed">
-                Nej, Valora är inte en bank. Vi är ett autonomt system som hjälper dig 
-                optimera dina befintliga finansiella produkter genom att analysera, 
-                jämföra och förhandla med banker och försäkringsbolag på din vägnar.
+                Nej. Valora är ett autonomt finansiellt system som optimerar din ekonomi ovanpå banker och försäkringsbolag.
               </AccordionContent>
             </AccordionItem>
             
@@ -486,9 +481,7 @@ const Index = () => {
                 Behöver jag byta bank?
               </AccordionTrigger>
               <AccordionContent className="text-secondary font-light leading-relaxed">
-                Inte nödvändigtvis. Valora arbetar med dina nuvarande banker och 
-                försäkringsbolag. Vi hjälper dig bara att få bättre villkor – 
-                antingen hos din nuvarande leverantör eller genom att hitta bättre alternativ.
+                Nej. Valora arbetar med dina befintliga aktörer.
               </AccordionContent>
             </AccordionItem>
             
@@ -497,9 +490,7 @@ const Index = () => {
                 Är det säkert?
               </AccordionTrigger>
               <AccordionContent className="text-secondary font-light leading-relaxed">
-                Ja. Valora använder banknivåkryptering och följer strikt GDPR. 
-                Vi förhandlar aldrig utan ditt uttryckliga godkännande för varje åtgärd. 
-                Du har alltid full kontroll och insyn.
+                Ja. All åtkomst sker med samtycke och enligt bankstandard.
               </AccordionContent>
             </AccordionItem>
             
@@ -508,9 +499,7 @@ const Index = () => {
                 Vad kostar det?
               </AccordionTrigger>
               <AccordionContent className="text-secondary font-light leading-relaxed">
-                Valora tar en liten andel av de besparingar vi genererar för dig. 
-                Om vi inte sparar pengar åt dig betalar du ingenting. 
-                Exakt prissättning kommuniceras när du får tillgång till systemet.
+                Prissättning fastställs vid lansering. Tidiga användare prioriteras.
               </AccordionContent>
             </AccordionItem>
           </Accordion>

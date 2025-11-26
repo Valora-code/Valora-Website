@@ -60,13 +60,13 @@ export const SystemStatus = () => {
         </div>
         
         <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center mb-20">
-          Marknaden är manuell. Människan är flaskhalsen.
+          Status: Ekonomin är manuell. Människan är flaskhalsen.
         </h2>
         
         <div className="max-w-2xl mx-auto liquid-glass p-8 rounded-xl">
-          <StatusIndicator label="Manuell jämförelse" delay={200} />
-          <StatusIndicator label="Prokrastination" delay={600} />
-          <StatusIndicator label="Kognitiv överbelastning" delay={1000} />
+          <StatusIndicator label="Manuell jämförelse mellan aktörer" delay={200} />
+          <StatusIndicator label="Prokrastinering vid varje livsbeslut" delay={600} />
+          <StatusIndicator label="Kognitiv överbelastning vid komplex ekonomi" delay={1000} />
         </div>
       </div>
     </section>
