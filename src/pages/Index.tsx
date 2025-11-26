@@ -450,9 +450,7 @@ const Index = () => {
           
           <ScrollReveal delay={300}>
             <InteractiveCard className="liquid-glass p-6 sm:p-10 rounded-xl max-w-2xl mx-auto group chromatic-hover">
-              <p className="text-lg sm:text-xl font-light italic text-center">
-                "Tidigare gav ekonomi mig konstant ångest. Nu känns det löst."
-              </p>
+              <p className="text-lg sm:text-xl font-light italic text-center">"Tidigare gav ekonomi mig konstant ångest. Nu känns det mycket enklare."</p>
             </InteractiveCard>
           </ScrollReveal>
         </div>
