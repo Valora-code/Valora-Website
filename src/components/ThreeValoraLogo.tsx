@@ -34,7 +34,7 @@ function RotatingLogo() {
       {/* Single wireframe outline with thicker lines */}
       <lineSegments>
         <edgesGeometry args={[new THREE.ShapeGeometry(shape)]} />
-        <lineBasicMaterial color="#ffffff" opacity={0.9} transparent linewidth={6} />
+        <lineBasicMaterial color="#ffffff" opacity={0.9} transparent linewidth={12} />
       </lineSegments>
     </group>
   );
@@ -42,8 +42,8 @@ function RotatingLogo() {
 
 export const ThreeValoraLogo = () => {
   return (
-    <div className="w-full flex items-center justify-center gap-0">
-      <div className="w-[212px] h-[212px] md:w-[297px] md:h-[297px]">
+    <div className="w-full flex flex-col md:flex-row items-center justify-center gap-0">
+      <div className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] md:w-[297px] md:h-[297px]">
         <Canvas 
           camera={{ position: [0, 0, 8], fov: 50 }}
           style={{ background: 'transparent' }}
@@ -62,7 +62,7 @@ export const ThreeValoraLogo = () => {
           <RotatingLogo />
         </Canvas>
       </div>
-      <span className="text-5xl md:text-7xl font-extralight tracking-[0.2em] text-foreground -ml-4 md:-ml-6">
+      <span className="text-4xl sm:text-5xl md:text-7xl font-extralight tracking-[0.2em] text-foreground mt-4 md:mt-0 md:-ml-6">
         VALORA
       </span>
     </div>

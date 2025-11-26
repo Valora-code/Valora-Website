@@ -210,11 +210,11 @@ const Index = () => {
 
       {/* Hero Section - System Entry Zone */}
       <ScrollReveal>
-      <section className="min-h-screen flex items-center px-4 sm:px-6 pt-24 pb-20 relative z-10">
+      <section className="min-h-screen flex items-center px-4 sm:px-6 pt-32 sm:pt-24 pb-20 relative z-10">
         <div className="max-w-7xl mx-auto w-full">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left: 3D Rotating Valora Logo */}
-            <div className="fade-in-up system-glow order-2 lg:order-1 h-[300px] sm:h-[400px] lg:h-auto" style={logoParallax}>
+            <div className="fade-in-up system-glow order-2 lg:order-1 flex items-center justify-center" style={logoParallax}>
               <ThreeValoraLogo />
             </div>
             
