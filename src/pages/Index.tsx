@@ -27,6 +27,16 @@ const Index = () => {
   const midParallax = useParallax({ speed: 0.3, direction: 'up' });
   const logoParallax = useParallax({ speed: 0.08, direction: 'up' });
 
+  // Mouse tracking for access port light refraction
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const button = e.currentTarget;
+    const rect = button.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    button.style.setProperty('--mouse-x', `${x}%`);
+    button.style.setProperty('--mouse-y', `${y}%`);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -156,14 +166,15 @@ const Index = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row items-start gap-6 pt-4 fade-in-up" style={{ animationDelay: '1.1s' }}>
-                <Button 
-                  variant="glass" 
-                  size="lg"
+                <button 
                   onClick={() => scrollToSection('waitlist')}
-                  className="system-glow"
+                  onMouseMove={handleMouseMove}
+                  className="access-port group"
                 >
-                  Begär tidig access
-                </Button>
+                  <span className="relative z-10 text-sm font-light tracking-[0.15em] uppercase">
+                    Begär tidig access
+                  </span>
+                </button>
                 <button 
                   onClick={() => scrollToSection('how')}
                   className="text-secondary hover:text-foreground transition-colors text-sm tracking-wide pt-2"
