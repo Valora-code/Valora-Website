@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ValoraLogo } from "@/components/ValoraLogo";
 import { CountUpNumber } from "@/components/CountUpNumber";
 import { SystemStatus } from "@/components/SystemStatus";
+import { InteractiveCard } from "@/components/InteractiveCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -166,7 +167,7 @@ const Index = () => {
           </div>
           
           <div className="max-w-3xl mx-auto space-y-8">
-            <div className="diagnostic-row liquid-glass p-8 rounded-xl">
+            <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl">
               <div className="grid grid-cols-[120px_1fr] gap-8 items-center">
                 <CountUpNumber 
                   end={88} 
@@ -177,9 +178,9 @@ const Index = () => {
                   har någon gång skjutit upp att byta lån eller försäkring trots att de vet att de borde.
                 </p>
               </div>
-            </div>
+            </InteractiveCard>
             
-            <div className="diagnostic-row liquid-glass p-8 rounded-xl">
+            <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl">
               <div className="grid grid-cols-[120px_1fr] gap-8 items-center">
                 <CountUpNumber 
                   end={79} 
@@ -190,9 +191,9 @@ const Index = () => {
                   känner ibland eller ofta dåligt samvete över att inte ta tag i sin ekonomi.
                 </p>
               </div>
-            </div>
+            </InteractiveCard>
             
-            <div className="diagnostic-row liquid-glass p-8 rounded-xl">
+            <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl">
               <div className="grid grid-cols-[120px_1fr] gap-8 items-center">
                 <CountUpNumber 
                   end={56} 
@@ -203,16 +204,16 @@ const Index = () => {
                   upplever hög mental belastning när de tänker på lån, försäkringar och ekonomi.
                 </p>
               </div>
-            </div>
+            </InteractiveCard>
           </div>
           
           <div className="max-w-3xl mx-auto">
-            <div className="liquid-glass p-10 rounded-xl border-l-2 border-foreground/20 system-glow">
+            <InteractiveCard className="liquid-glass p-10 rounded-xl border-l-2 border-foreground/20 system-glow">
               <p className="text-xl md:text-2xl font-light italic leading-relaxed mb-4">
                 "Jag har vetat i två år att jag borde göra detta – men jag orkade inte."
               </p>
               <p className="text-secondary text-sm tracking-wide">– Christina, 63</p>
-            </div>
+            </InteractiveCard>
           </div>
         </div>
       </section>
@@ -273,28 +274,28 @@ const Index = () => {
           </h2>
           
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="liquid-glass p-8 rounded-xl space-y-4">
+            <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
               <div className="text-3xl font-light">Christina</div>
               <div className="text-4xl font-extralight text-secondary">ca 17 000 kr/år</div>
               <p className="text-secondary font-light italic pt-4">
                 "Jag hade aldrig gjort detta själv."
               </p>
-            </div>
+            </InteractiveCard>
             
-            <div className="liquid-glass p-8 rounded-xl space-y-4">
+            <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
               <div className="text-3xl font-light">Ninni</div>
               <div className="text-4xl font-extralight text-secondary">ca 15 000 kr/år</div>
               <p className="text-secondary font-light italic pt-4">
                 "Jag betalar hellre än att behöva tänka på det."
               </p>
-            </div>
+            </InteractiveCard>
           </div>
           
-          <div className="liquid-glass p-10 rounded-xl max-w-2xl mx-auto">
+          <InteractiveCard className="liquid-glass p-10 rounded-xl max-w-2xl mx-auto">
             <p className="text-xl font-light italic text-center">
               "Ekonomi gav mig ångest innan."
             </p>
-          </div>
+          </InteractiveCard>
         </div>
       </section>
 
@@ -306,29 +307,29 @@ const Index = () => {
           </h2>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="liquid-glass p-8 rounded-xl space-y-4">
+            <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
               <h3 className="text-xl font-light">Den upptagna yrkespersonen</h3>
               <p className="text-secondary font-light leading-relaxed">
                 Du har inte tid att jämföra erbjudanden och förhandla. 
                 Valora gör det åt dig medan du fokuserar på det som är viktigt.
               </p>
-            </div>
+            </InteractiveCard>
             
-            <div className="liquid-glass p-8 rounded-xl space-y-4">
+            <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
               <h3 className="text-xl font-light">Familjen med komplex ekonomi</h3>
               <p className="text-secondary font-light leading-relaxed">
                 Flera lån, försäkringar och sparformer. Valora håller koll på allt 
                 och hittar förbättringar du missat.
               </p>
-            </div>
+            </InteractiveCard>
             
-            <div className="liquid-glass p-8 rounded-xl space-y-4">
+            <InteractiveCard className="liquid-glass p-8 rounded-xl space-y-4">
               <h3 className="text-xl font-light">Den som vill ha kontroll utan stress</h3>
               <p className="text-secondary font-light leading-relaxed">
                 Du vill göra rätt men känner dig överväldigad. 
                 Valora tar bort stressen och ger dig full kontroll.
               </p>
-            </div>
+            </InteractiveCard>
           </div>
         </div>
       </section>
