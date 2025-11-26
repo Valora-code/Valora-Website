@@ -4,6 +4,7 @@ import { CountUpNumber } from "@/components/CountUpNumber";
 import { SystemStatus } from "@/components/SystemStatus";
 import { InteractiveCard } from "@/components/InteractiveCard";
 import { ParallaxSection } from "@/components/ParallaxSection";
+import { AmbientSoundToggle } from "@/components/AmbientSoundToggle";
 import { useParallax } from "@/hooks/use-parallax";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -123,6 +124,11 @@ const Index = () => {
               >
                 Gå med i väntelistan
               </Button>
+              
+              {/* Ambient Sound Toggle */}
+              <div className="pl-2 border-l border-border/30">
+                <AmbientSoundToggle />
+              </div>
             </div>
           </div>
         </div>
