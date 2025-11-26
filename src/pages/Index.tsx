@@ -398,7 +398,7 @@ const Index = () => {
           <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
             <ScrollReveal delay={100}>
               <InteractiveCard className="liquid-glass p-6 sm:p-8 rounded-xl space-y-3 sm:space-y-4 group chromatic-hover">
-                <div className="text-2xl sm:text-3xl font-light">privatperson, 60+</div>
+                <div className="text-2xl sm:text-3xl font-light">privatperson, 63 </div>
                 <div className="text-3xl sm:text-4xl font-mono font-light text-secondary tabular-nums">ca 17 000 kr/år</div>
                 <p className="text-sm sm:text-base text-secondary font-light italic pt-2 sm:pt-4">
                   "Jag hade aldrig gjort detta själv. Nu slipper jag tänka."
@@ -408,7 +408,7 @@ const Index = () => {
             
             <ScrollReveal delay={200}>
               <InteractiveCard className="liquid-glass p-6 sm:p-8 rounded-xl space-y-3 sm:space-y-4 group chromatic-hover">
-                <div className="text-2xl sm:text-3xl font-light">privatperson, 30+</div>
+                <div className="text-2xl sm:text-3xl font-light">privatperson, 33</div>
                 <div className="text-3xl sm:text-4xl font-mono font-light text-secondary tabular-nums">ca 15 000 kr/år</div>
                 <p className="text-sm sm:text-base text-secondary font-light italic pt-2 sm:pt-4">
                   "Jag betalar hellre än att behöva bära detta i huvudet."
