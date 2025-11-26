@@ -174,21 +174,65 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
     font-feature-settings: 'tnum' on, 'lnum' on;
     letter-spacing: -0.01em;
+    cursor: none;
+  }
+
+  @media (max-width: 1024px) {
+    body {
+      cursor: default;
+    }
   }
 }
 
 @layer utilities {
+  /* Enhanced glass morphism with noise texture */
   .liquid-glass {
     background: hsl(var(--glass-bg));
     border: 1px solid hsl(var(--glass-border));
     backdrop-filter: blur(20px);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+  }
+  
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-image: 
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
   }
   
   .liquid-glass:hover {
     background: hsl(var(--glass-hover));
     border-color: hsl(var(--glass-border));
-    box-shadow: 0 0 30px hsl(var(--glass-bg));
+    box-shadow: 
+      0 0 40px hsl(var(--glass-bg)),
+      0 20px 60px -20px hsl(var(--foreground) / 0.1);
+    transform: translateY(-2px);
+  }
+  
+  /* Premium micro-interactions */
+  .interactive-element {
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    cursor: none;
+  }
+
+  @media (max-width: 1024px) {
+    .interactive-element {
+      cursor: pointer;
+    }
+  }
+  
+  .interactive-element:hover {
+    transform: translateY(-1px);
+  }
+  
+  .interactive-element:active {
+    transform: translateY(0);
+    transition-duration: 0.1s;
   }
   
   .fade-in-up {
@@ -427,7 +471,14 @@ All colors MUST be HSL.
     border-radius: 0.5rem;
     backdrop-filter: blur(20px);
     overflow: hidden;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    cursor: none;
+  }
+
+  @media (max-width: 1024px) {
+    .access-port {
+      cursor: pointer;
+    }
   }
 
   .access-port::before {
@@ -435,10 +486,10 @@ All colors MUST be HSL.
     position: absolute;
     inset: 0;
     background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-      rgba(255, 255, 255, 0.08) 0%, 
+      rgba(255, 255, 255, 0.12) 0%, 
       transparent 60%);
     opacity: 0;
-    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .access-port:hover::before {
@@ -451,10 +502,10 @@ All colors MUST be HSL.
     inset: -2px;
     background: linear-gradient(45deg, 
       transparent 40%, 
-      rgba(255, 255, 255, 0.03) 50%, 
+      rgba(255, 255, 255, 0.05) 50%, 
       transparent 60%);
     opacity: 0;
-    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .access-port:hover::after {
@@ -462,10 +513,16 @@ All colors MUST be HSL.
   }
 
   .access-port:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.05), 
-                inset 0 0 20px rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.08), 
+                inset 0 0 30px rgba(255, 255, 255, 0.03);
+    transform: translateY(-2px);
+  }
+  
+  .access-port:active {
+    transform: translateY(0);
+    transition-duration: 0.1s;
   }
 }
 
