@@ -475,6 +475,22 @@ All colors MUST be HSL.
     animation: machinePulse 4s ease-in-out infinite;
   }
 
+  /* Logo glow pulse - subtle breathing effect */
+  @keyframes logoGlowPulse {
+    0%, 100% {
+      opacity: 0.3;
+      filter: blur(20px);
+    }
+    50% {
+      opacity: 0.6;
+      filter: blur(25px);
+    }
+  }
+
+  .logo-glow-pulse {
+    animation: logoGlowPulse 4s ease-in-out infinite;
+  }
+
   /* Access port - frosted glass with internal light refraction */
   .access-port {
     position: relative;
