@@ -23,13 +23,13 @@ const Index = () => {
     toast
   } = useToast();
 
-  // Parallax effects - minimal intensity for subtle depth
+  // Parallax effects - enhanced for more pronounced depth
   const bgParallax = useParallax({
-    speed: 0.02,
+    speed: 0.04,
     direction: 'down'
   });
   const logoParallax = useParallax({
-    speed: 0.015,
+    speed: 0.03,
     direction: 'up'
   });
 
@@ -198,8 +198,8 @@ const Index = () => {
       </section>
 
       {/* Problem Section - Diagnostic Panel */}
-      <section id="why" className="py-32 px-6 border-t border-border relative z-10">
-        <div className="max-w-5xl mx-auto space-y-20">
+      <section id="why" className="py-40 px-6 border-t border-border relative z-10">
+        <div className="max-w-5xl mx-auto space-y-24">
           <ScrollReveal>
             <div className="max-w-3xl mx-auto text-center space-y-6">
               <h2 className="text-4xl md:text-5xl font-extralight tracking-tight">
@@ -216,7 +216,7 @@ const Index = () => {
           <ScrollReveal delay={100}>
             <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl group chromatic-hover">
               <div className="flex gap-8 items-center">
-                <CountUpNumber end={88} suffix="%" className="text-6xl font-mono font-light tracking-tighter text-foreground whitespace-nowrap" />
+                <CountUpNumber end={88} suffix="%" className="text-6xl font-mono font-light tracking-tighter stat-accent whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
                   har någon gång skjutit upp att byta lån eller försäkring trots att de vet att de borde.
                 </p>
@@ -227,7 +227,7 @@ const Index = () => {
           <ScrollReveal delay={200}>
             <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl group chromatic-hover">
               <div className="flex gap-8 items-center">
-                <CountUpNumber end={79} suffix="%" className="text-6xl font-mono font-light tracking-tighter text-foreground whitespace-nowrap" />
+                <CountUpNumber end={79} suffix="%" className="text-6xl font-mono font-light tracking-tighter stat-accent whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
                   känner ibland eller ofta dåligt samvete över att inte ta tag i sin ekonomi.
                 </p>
@@ -238,7 +238,7 @@ const Index = () => {
           <ScrollReveal delay={300}>
             <InteractiveCard className="diagnostic-row liquid-glass p-8 rounded-xl group chromatic-hover">
               <div className="flex gap-8 items-center">
-                <CountUpNumber end={56} suffix="%" className="text-6xl font-mono font-light tracking-tighter text-foreground whitespace-nowrap" />
+                <CountUpNumber end={56} suffix="%" className="text-6xl font-mono font-light tracking-tighter stat-accent whitespace-nowrap" />
                 <p className="text-secondary font-light leading-relaxed">
                   upplever hög mental belastning när de tänker på lån, försäkringar och ekonomi.
                 </p>
@@ -263,62 +263,84 @@ const Index = () => {
       {/* System Status Section */}
       <SystemStatus />
 
-      {/* How It Works */}
-      <section id="how" className="py-32 px-6 border-t border-border bg-background-elevated relative z-10">
-        <div className="max-w-5xl mx-auto space-y-20">
+      {/* How It Works - Interactive Timeline */}
+      <section id="how" className="py-40 px-6 border-t border-border bg-background-elevated relative z-10 overflow-hidden">
+        <div className="max-w-5xl mx-auto space-y-24">
           <ScrollReveal>
             <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
               Så fungerar Valora
             </h2>
           </ScrollReveal>
           
-          <div className="space-y-16">
-            <ScrollReveal delay={100}>
-              <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start">
-                <div className="text-5xl font-extralight text-secondary stat-breathe">01</div>
-                <div className="space-y-3">
-                  <h3 className="text-2xl font-light tracking-tight">Koppla din ekonomi</h3>
-                  <p className="text-secondary font-light leading-relaxed">
-                    Du kopplar banker och försäkringar och definierar dina regler.
-                  </p>
+          {/* Visual Timeline */}
+          <div className="relative">
+            {/* Connecting vertical line */}
+            <div className="absolute left-[50px] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-border to-transparent hidden md:block" />
+            
+            <div className="space-y-20">
+              <ScrollReveal delay={100}>
+                <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start relative">
+                  {/* Number with glow */}
+                  <div className="relative">
+                    <div className="text-5xl font-extralight stat-accent stat-breathe relative z-10">01</div>
+                    <div className="absolute inset-0 blur-2xl opacity-30 stat-accent">01</div>
+                  </div>
+                  <InteractiveCard className="liquid-glass p-6 rounded-xl group chromatic-hover">
+                    <div className="space-y-3">
+                      <h3 className="text-2xl font-light tracking-tight">Koppla din ekonomi</h3>
+                      <p className="text-secondary font-light leading-relaxed">
+                        Du kopplar banker och försäkringar och definierar dina regler.
+                      </p>
+                    </div>
+                  </InteractiveCard>
                 </div>
-              </div>
-            </ScrollReveal>
-            
-            <div className="h-px bg-border separator-sweep" />
-            
-            <ScrollReveal delay={200}>
-              <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start">
-                <div className="text-5xl font-extralight text-secondary stat-breathe">02</div>
-                <div className="space-y-3">
-                  <h3 className="text-2xl font-light tracking-tight">Valora analyserar och förhandlar</h3>
-                  <p className="text-secondary font-light leading-relaxed">
-                    Systemet jämför marknaden och identifierar förbättringar kontinuerligt.
-                  </p>
+              </ScrollReveal>
+              
+              <div className="h-px bg-border separator-sweep" />
+              
+              <ScrollReveal delay={200}>
+                <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start relative">
+                  <div className="relative">
+                    <div className="text-5xl font-extralight stat-accent stat-breathe relative z-10">02</div>
+                    <div className="absolute inset-0 blur-2xl opacity-30 stat-accent">02</div>
+                  </div>
+                  <InteractiveCard className="liquid-glass p-6 rounded-xl group chromatic-hover">
+                    <div className="space-y-3">
+                      <h3 className="text-2xl font-light tracking-tight">Valora analyserar och förhandlar</h3>
+                      <p className="text-secondary font-light leading-relaxed">
+                        Systemet jämför marknaden och identifierar förbättringar kontinuerligt.
+                      </p>
+                    </div>
+                  </InteractiveCard>
                 </div>
-              </div>
-            </ScrollReveal>
-            
-            <div className="h-px bg-border separator-sweep" />
-            
-            <ScrollReveal delay={300}>
-              <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start">
-                <div className="text-5xl font-extralight text-secondary stat-breathe">03</div>
-                <div className="space-y-3">
-                  <h3 className="text-2xl font-light tracking-tight">Du godkänner – Valora verkställer</h3>
-                  <p className="text-secondary font-light leading-relaxed">
-                    Du godkänner med ett tryck. Valora sköter resten i bakgrunden.
-                  </p>
+              </ScrollReveal>
+              
+              <div className="h-px bg-border separator-sweep" />
+              
+              <ScrollReveal delay={300}>
+                <div className="grid md:grid-cols-[100px_1fr] gap-8 items-start relative">
+                  <div className="relative">
+                    <div className="text-5xl font-extralight stat-accent stat-breathe relative z-10">03</div>
+                    <div className="absolute inset-0 blur-2xl opacity-30 stat-accent">03</div>
+                  </div>
+                  <InteractiveCard className="liquid-glass p-6 rounded-xl group chromatic-hover">
+                    <div className="space-y-3">
+                      <h3 className="text-2xl font-light tracking-tight">Du godkänner – Valora verkställer</h3>
+                      <p className="text-secondary font-light leading-relaxed">
+                        Du godkänner med ett tryck. Valora sköter resten i bakgrunden.
+                      </p>
+                    </div>
+                  </InteractiveCard>
                 </div>
-              </div>
-            </ScrollReveal>
+              </ScrollReveal>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Proof Section */}
-      <section id="proof" className="py-32 px-6 border-t border-border relative z-10">
-        <div className="max-w-5xl mx-auto space-y-20">
+      <section id="proof" className="py-40 px-6 border-t border-border relative z-10">
+        <div className="max-w-5xl mx-auto space-y-24">
           <ScrollReveal>
             <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
               Verifierad besparing och mental lättnad
@@ -358,8 +380,8 @@ const Index = () => {
       </section>
 
       {/* Target Audience */}
-      <section className="py-32 px-6 border-t border-border bg-background-elevated relative z-10">
-        <div className="max-w-6xl mx-auto space-y-16">
+      <section className="py-40 px-6 border-t border-border bg-background-elevated relative z-10">
+        <div className="max-w-6xl mx-auto space-y-20">
           <ScrollReveal>
             <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
               För vem är Valora
@@ -401,8 +423,8 @@ const Index = () => {
       </section>
 
       {/* Waitlist */}
-      <section id="waitlist" className="py-32 px-6 border-t border-border relative z-10">
-        <div className="max-w-2xl mx-auto space-y-12">
+      <section id="waitlist" className="py-40 px-6 border-t border-border relative z-10">
+        <div className="max-w-2xl mx-auto space-y-16">
           <ScrollReveal>
             <div className="text-center space-y-4">
               <h2 className="text-4xl md:text-5xl font-extralight tracking-tight">
@@ -441,8 +463,8 @@ const Index = () => {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-32 px-6 border-t border-border bg-background-elevated relative z-10">
-        <div className="max-w-3xl mx-auto space-y-12">
+      <section id="faq" className="py-40 px-6 border-t border-border bg-background-elevated relative z-10">
+        <div className="max-w-3xl mx-auto space-y-16">
           <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-center">
             Vanliga frågor
           </h2>
