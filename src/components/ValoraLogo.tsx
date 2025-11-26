@@ -23,7 +23,7 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
               fill="none"
             >
             <path 
-              d="M50 2 Q55 20, 90 50 Q55 80, 50 98 Q45 80, 10 50 Q45 20, 50 2 Z" 
+              d="M50 0 Q65 25, 92 50 Q65 75, 50 100 Q35 75, 8 50 Q35 25, 50 0 Z" 
               stroke="currentColor"
               strokeWidth="2"
               fill="none"
@@ -65,10 +65,10 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
             </linearGradient>
           </defs>
           
-          {/* Elegant diamond with deep concave curves for sharp, premium feel */}
+          {/* Elegant diamond with subtle curves for sharp, premium feel */}
           {/* Primary shape - premium stroke with curved sides */}
           <path 
-            d="M50 2 Q55 20, 90 50 Q55 80, 50 98 Q45 80, 10 50 Q45 20, 50 2 Z" 
+            d="M50 0 Q65 25, 92 50 Q65 75, 50 100 Q35 75, 8 50 Q35 25, 50 0 Z" 
             stroke="url(#logoGradient)" 
             strokeWidth={strokeWidth}
             fill="none"
@@ -79,7 +79,7 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
           
           {/* Shimmer overlay for premium feel */}
           <path 
-            d="M50 2 Q55 20, 90 50 Q55 80, 50 98 Q45 80, 10 50 Q45 20, 50 2 Z" 
+            d="M50 0 Q65 25, 92 50 Q65 75, 50 100 Q35 75, 8 50 Q35 25, 50 0 Z" 
             stroke="url(#shimmer)" 
             strokeWidth={strokeWidth * 0.5}
             fill="none"
@@ -87,16 +87,6 @@ export const ValoraLogo = ({ size = 'small', className = '' }: ValoraLogoProps) 
             strokeLinecap="square"
             vectorEffect="non-scaling-stroke"
             opacity="0.8"
-          />
-          
-          {/* Inner subtle accent lines for depth */}
-          <path 
-            d="M50 15 Q58 30, 78 50 Q58 70, 50 85 Q42 70, 22 50 Q42 30, 50 15 Z" 
-            stroke="currentColor" 
-            strokeWidth={strokeWidth * 0.3}
-            fill="none"
-            strokeLinejoin="miter"
-            opacity="0.2"
           />
         </svg>
       </div>
