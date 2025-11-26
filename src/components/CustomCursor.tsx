@@ -3,17 +3,10 @@ import { useEffect, useState } from 'react';
 export const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isPointer, setIsPointer] = useState(false);
-  const [trail, setTrail] = useState<{ x: number; y: number; id: number }[]>([]);
 
   useEffect(() => {
-    let trailId = 0;
-
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
-      
-      // Add trail point
-      const newPoint = { x: e.clientX, y: e.clientY, id: trailId++ };
-      setTrail((prev) => [...prev.slice(-8), newPoint]);
 
       // Check if hovering over interactive element
       const target = e.target as HTMLElement;
@@ -37,23 +30,6 @@ export const CustomCursor = () => {
 
   return (
     <>
-      {/* Trail effects */}
-      {trail.map((point, index) => (
-        <div
-          key={point.id}
-          className="fixed pointer-events-none z-[9999] rounded-full mix-blend-screen"
-          style={{
-            left: `${point.x}px`,
-            top: `${point.y}px`,
-            width: `${12 - index}px`,
-            height: `${12 - index}px`,
-            backgroundColor: `hsl(var(--foreground) / ${(index + 1) * 0.08})`,
-            transform: 'translate(-50%, -50%)',
-            transition: 'all 0.1s ease-out',
-          }}
-        />
-      ))}
-      
       {/* Main cursor */}
       <div
         className="fixed pointer-events-none z-[9999] rounded-full border transition-all duration-200 ease-out mix-blend-difference"

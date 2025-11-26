@@ -20,8 +20,8 @@ function DataPoint({ position }: { position: [number, number, number] }) {
   );
 }
 
-function WireframeSphere() {
-  const meshRef = useRef<THREE.Mesh>(null);
+function ValoraLogoShape() {
+  const meshRef = useRef<THREE.Group>(null);
   
   useFrame((state) => {
     if (meshRef.current) {
@@ -30,20 +30,57 @@ function WireframeSphere() {
     }
   });
 
+  // Create Valora diamond shape path
+  const shape = useMemo(() => {
+    const path = new THREE.Shape();
+    // Diamond with concave curves matching the logo
+    path.moveTo(0, 2.5);
+    path.quadraticCurveTo(0.3, 1.5, 2, 0);
+    path.quadraticCurveTo(0.3, -1.5, 0, -2.5);
+    path.quadraticCurveTo(-0.3, -1.5, -2, 0);
+    path.quadraticCurveTo(-0.3, 1.5, 0, 2.5);
+    return path;
+  }, []);
+
   return (
-    <mesh ref={meshRef}>
-      <sphereGeometry args={[2, 32, 32]} />
-      <meshBasicMaterial color="#ffffff" wireframe opacity={0.15} transparent />
-    </mesh>
+    <group ref={meshRef}>
+      {/* Front wireframe */}
+      <mesh position={[0, 0, 0]}>
+        <shapeGeometry args={[shape]} />
+        <meshBasicMaterial color="#ffffff" wireframe opacity={0.2} transparent />
+      </mesh>
+      {/* Back wireframe for depth */}
+      <mesh position={[0, 0, -0.3]}>
+        <shapeGeometry args={[shape]} />
+        <meshBasicMaterial color="#ffffff" wireframe opacity={0.1} transparent />
+      </mesh>
+      {/* Edge glow */}
+      <lineSegments>
+        <edgesGeometry args={[new THREE.ShapeGeometry(shape)]} />
+        <lineBasicMaterial color="#ffffff" opacity={0.4} transparent />
+      </lineSegments>
+    </group>
   );
 }
 
 function ConnectionLines() {
+  // Create diamond-shaped connection points
   const points = useMemo(() => {
     const pts = [];
-    for (let i = 0; i < 20; i++) {
-      const angle = (i / 20) * Math.PI * 2;
-      const radius = 2;
+    const numPoints = 24;
+    for (let i = 0; i < numPoints; i++) {
+      const t = i / numPoints;
+      const angle = t * Math.PI * 2;
+      
+      // Diamond shape with concave curves
+      let radius;
+      const segmentAngle = angle % (Math.PI / 2);
+      if (segmentAngle < Math.PI / 4) {
+        radius = 2.5 - Math.sin(segmentAngle * 2) * 0.3;
+      } else {
+        radius = 2.5 - Math.sin((Math.PI / 2 - segmentAngle) * 2) * 0.3;
+      }
+      
       pts.push([
         Math.cos(angle) * radius,
         Math.sin(angle) * radius,
@@ -62,7 +99,7 @@ function ConnectionLines() {
             key={i}
             points={[point, nextPoint] as [number, number, number][]}
             color="#ffffff"
-            opacity={0.1}
+            opacity={0.08}
             transparent
             lineWidth={1}
           />
@@ -75,15 +112,14 @@ function ConnectionLines() {
 function Scene() {
   const dataPoints = useMemo(() => {
     const points: [number, number, number][] = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 25; i++) {
       const theta = Math.random() * Math.PI * 2;
-      const phi = Math.random() * Math.PI;
-      const radius = 2.2 + Math.random() * 0.5;
+      const radiusVariation = 2.8 + Math.random() * 0.6;
       
       points.push([
-        radius * Math.sin(phi) * Math.cos(theta),
-        radius * Math.sin(phi) * Math.sin(theta),
-        radius * Math.cos(phi)
+        Math.cos(theta) * radiusVariation,
+        (Math.random() - 0.5) * 5,
+        Math.sin(theta) * radiusVariation * 0.3
       ]);
     }
     return points;
@@ -93,7 +129,7 @@ function Scene() {
     <>
       <ambientLight intensity={0.3} />
       <pointLight position={[10, 10, 10]} intensity={0.5} />
-      <WireframeSphere />
+      <ValoraLogoShape />
       <ConnectionLines />
       {dataPoints.map((pos, i) => (
         <DataPoint key={i} position={pos} />
