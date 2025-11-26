@@ -78,12 +78,12 @@ const Index = () => {
       <div className="fixed inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background-elevated to-background opacity-60" style={bgParallax} />
         <div className="absolute inset-0 ambient-liquid" style={{
-        ...bgParallax,
-        transform: `${bgParallax.transform} scale(1.2)`
+        willChange: 'transform',
+        transform: `${bgParallax.transform?.replace('translateY(', 'translateY(') || 'translateY(0px)'} scale(1.2)`
       }} />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.01),transparent_60%)]" style={{
-        ...bgParallax,
-        transform: `${bgParallax.transform} scale(1.1)`
+        willChange: 'transform',
+        transform: `${bgParallax.transform?.replace('translateY(', 'translateY(') || 'translateY(0px)'} scale(1.1)`
       }} />
       </div>
 
