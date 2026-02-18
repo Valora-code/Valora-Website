@@ -576,7 +576,7 @@ const Index = () => {
               <AccordionTrigger className="text-left font-light text-base sm:text-lg hover:no-underline">
                 Är Valora en bank?
               </AccordionTrigger>
-              <AccordionContent className="text-sm sm:text-base text-secondary font-light leading-relaxed">
+              <AccordionContent className="text-sm sm:text-base text-foreground/80 font-light leading-relaxed">
                 Nej. Valora är ett autonomt finansiellt system som optimerar din ekonomi ovanpå banker och försäkringsbolag.
               </AccordionContent>
             </AccordionItem>
@@ -585,7 +585,7 @@ const Index = () => {
               <AccordionTrigger className="text-left font-light text-base sm:text-lg hover:no-underline">
                 Behöver jag byta bank?
               </AccordionTrigger>
-              <AccordionContent className="text-sm sm:text-base text-secondary font-light leading-relaxed">
+              <AccordionContent className="text-sm sm:text-base text-foreground/80 font-light leading-relaxed">
                 Nej – och ibland, ja.
                 Du behöver aldrig byta bank för att använda Valora. Systemet analyserar och optimerar din ekonomi ovanpå dina befintliga aktörer.
                 <br /><br />
@@ -597,7 +597,7 @@ const Index = () => {
               <AccordionTrigger className="text-left font-light text-base sm:text-lg hover:no-underline">
                 Är det säkert?
               </AccordionTrigger>
-              <AccordionContent className="text-sm sm:text-base text-secondary font-light leading-relaxed">
+              <AccordionContent className="text-sm sm:text-base text-foreground/80 font-light leading-relaxed">
                 Ja. All åtkomst sker med samtycke och enligt bankstandard.
               </AccordionContent>
             </AccordionItem>
@@ -606,7 +606,7 @@ const Index = () => {
               <AccordionTrigger className="text-left font-light text-base sm:text-lg hover:no-underline">
                 Vad kostar det?
               </AccordionTrigger>
-              <AccordionContent className="text-sm sm:text-base text-secondary font-light leading-relaxed">
+              <AccordionContent className="text-sm sm:text-base text-foreground/80 font-light leading-relaxed">
                 Prissättning fastställs vid lansering. Tidiga användare prioriteras.
               </AccordionContent>
             </AccordionItem>
