@@ -164,7 +164,7 @@ const Index = () => {
                 Hur det fungerar
               </button>
               <button onClick={() => scrollToSection('proof')} className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
-                Bevis
+                Användare
               </button>
               <button onClick={() => scrollToSection('faq')} className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
                 Vanliga frågor
@@ -186,7 +186,7 @@ const Index = () => {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && <div className="md:hidden mt-4 pb-4 space-y-1 border-t border-border/30 pt-4">
-              {[['why','Varför Valora'],['how','Hur det fungerar'],['proof','Bevis'],['faq','Vanliga frågor']].map(([id, label]) => (
+              {[['why','Varför Valora'],['how','Hur det fungerar'],['proof','Användare'],['faq','Vanliga frågor']].map(([id, label]) => (
                 <button key={id} onClick={() => { scrollToSection(id); setMobileMenuOpen(false); }}
                   className="block w-full text-left py-2.5 px-1 text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
                   {label}
