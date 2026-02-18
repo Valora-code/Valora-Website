@@ -214,12 +214,16 @@ const Index = () => {
 
           {/* Truth line */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto fade-up-delay-1 mb-4 leading-relaxed">
-            Valora analyserar, förhandlar och förbättrar dina lån och försäkringar inom dina regler. Du godkänner.
+            Valora arbetar i bakgrunden och identifierar förbättringar i din ekonomi – enligt dina ramar.
           </p>
 
           {/* Supporting line */}
-          <p className="text-sm text-muted-foreground/70 fade-up-delay-2 mb-12">
-            Anslut din ekonomi. Se vad du kan spara. Godkänn på 2 minuter.
+          <p className="text-base text-muted-foreground/80 fade-up-delay-2 mb-4 font-medium">
+            Du behåller kontrollen. Vi gör arbetet.
+          </p>
+
+          <p className="text-sm text-muted-foreground/60 fade-up-delay-2 mb-12">
+            Gå med på väntelistan och se hur mycket du kan frigöra.
           </p>
 
           {/* CTAs */}
