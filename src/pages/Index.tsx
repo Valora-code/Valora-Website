@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ValoraLogo } from "@/components/ValoraLogo";
+import AnimatedOrb from "@/components/AnimatedOrb";
 import { CountUpNumber } from "@/components/CountUpNumber";
 import { SystemStatus } from "@/components/SystemStatus";
 import { InteractiveCard } from "@/components/InteractiveCard";
@@ -108,23 +109,40 @@ const Index = () => {
     });
   };
   return <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
+      {/* Noise texture overlay */}
+      <div className="noise-overlay" />
+
+      {/* Layered gradient backgrounds – matches Valora Personal Finance */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* Base gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-muted/5" />
+        {/* Radial gradient from top */}
+        <div
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[60vh]"
+          style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, hsl(220 15% 12%) 0%, transparent 100%)' }}
+        />
+        {/* Side gradients with teal */}
+        <div
+          className="absolute top-1/3 left-0 w-[40%] h-[60%]"
+          style={{ background: 'radial-gradient(ellipse at 0% 50%, hsl(172 50% 45% / 0.04) 0%, transparent 60%)' }}
+        />
+        <div
+          className="absolute top-1/4 right-0 w-[40%] h-[60%]"
+          style={{ background: 'radial-gradient(ellipse at 100% 50%, hsl(200 40% 40% / 0.03) 0%, transparent 60%)' }}
+        />
+      </div>
+
+      {/* Animated teal/emerald orbs */}
+      <AnimatedOrb />
+
       {/* Vignette overlay for depth */}
       <div className="fixed inset-0 pointer-events-none z-50">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_40%,rgba(0,0,0,0.3)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_40%,rgba(0,0,0,0.25)_100%)]" />
       </div>
-      
-      {/* Depth layer - distant background with parallax and ambient life */}
+
+      {/* Depth layer - data particles */}
       <div className="fixed inset-0 z-0">
         <DataParticles />
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background-elevated to-background opacity-60" style={bgParallax} />
-        <div className="absolute inset-0 ambient-liquid" style={{
-        willChange: 'transform',
-        transform: `${bgParallax.transform?.replace('translateY(', 'translateY(') || 'translateY(0px)'} scale(1.2)`
-      }} />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.01),transparent_60%)]" style={{
-        willChange: 'transform',
-        transform: `${bgParallax.transform?.replace('translateY(', 'translateY(') || 'translateY(0px)'} scale(1.1)`
-      }} />
       </div>
 
       {/* Fixed Navigation */}
@@ -148,7 +166,7 @@ const Index = () => {
                 VANLIGA FRÅGOR
               </button>
               <MagneticButton strength={0.3}>
-                <Button variant="glass" size="sm" onClick={() => scrollToSection('waitlist')}>
+                <Button variant="valora" size="sm" onClick={() => scrollToSection('waitlist')} className="cta-glow">
                   Gå med i väntelistan
                 </Button>
               </MagneticButton>
@@ -194,7 +212,7 @@ const Index = () => {
           }} className="block w-full text-left py-2 text-sm font-light text-secondary hover:text-foreground transition-all tracking-wide">
                 VANLIGA FRÅGOR
               </button>
-              <Button variant="glass" size="sm" className="w-full" onClick={() => {
+              <Button variant="valora" size="sm" className="w-full cta-glow" onClick={() => {
             scrollToSection('waitlist');
             setMobileMenuOpen(false);
           }}>
@@ -219,38 +237,36 @@ const Index = () => {
               <div className="space-y-6 lg:space-y-8 fade-in-up" style={{
                 animationDelay: '0.3s'
               }}>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-extralight tracking-tighter leading-[0.95] max-w-2xl">
-                  Din autonoma ekonomi.
+                <h1 className="headline-hero fade-up max-w-2xl">
+                  <span className="text-gradient-primary">Autonom</span>
+                  <br />
+                  <span className="text-foreground">personlig ekonomi.</span>
                 </h1>
                 
-                <p className="text-base sm:text-lg md:text-xl text-secondary font-light leading-relaxed max-w-xl">
+                <p className="text-base sm:text-lg md:text-xl text-muted-foreground font-normal leading-relaxed max-w-xl fade-up-delay-1">
                   Ett intelligent finansiellt system som analyserar, förhandlar och förbättrar 
                   dina lån och försäkringar – helt automatiskt, inom dina regler.
                 </p>
               </div>
               
-              <div className="space-y-4 lg:space-y-5 max-w-xl">
-                <div className="flex items-start gap-3 slide-in-left" style={{
-                  animationDelay: '0.5s'
-                }}>
-                  <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" />
-                  <p className="text-sm sm:text-base text-secondary font-light">Automatiskt bättre villkor – utan manuell jämförelse</p>
+              <div className="space-y-4 lg:space-y-5 max-w-xl fade-up-delay-2">
+                <div className="flex items-center gap-2.5 text-muted-foreground group cursor-default">
+                  <div className="p-2 rounded-lg bg-primary/5 group-hover:bg-primary/10 transition-colors">
+                    <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                  </div>
+                  <p className="text-sm sm:text-base">Automatiskt bättre villkor – utan manuell jämförelse</p>
                 </div>
-                <div className="flex items-start gap-3 slide-in-left" style={{
-                  animationDelay: '0.7s'
-                }}>
-                  <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" style={{
-                    animationDelay: '0.5s'
-                  }} />
-                  <p className="text-sm sm:text-base text-secondary font-light">Full kontroll via policyer och samtycke</p>
+                <div className="flex items-center gap-2.5 text-muted-foreground group cursor-default">
+                  <div className="p-2 rounded-lg bg-primary/5 group-hover:bg-primary/10 transition-colors">
+                    <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                  </div>
+                  <p className="text-sm sm:text-base">Full kontroll via policyer och samtycke</p>
                 </div>
-                <div className="flex items-start gap-3 slide-in-left" style={{
-                  animationDelay: '0.9s'
-                }}>
-                  <div className="w-1 h-1 rounded-full bg-foreground mt-2.5 pulse-soft" style={{
-                    animationDelay: '1s'
-                  }} />
-                  <p className="text-sm sm:text-base text-secondary font-light">Lägre kostnader, mindre mental belastning</p>
+                <div className="flex items-center gap-2.5 text-muted-foreground group cursor-default">
+                  <div className="p-2 rounded-lg bg-primary/5 group-hover:bg-primary/10 transition-colors">
+                    <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  </div>
+                  <p className="text-sm sm:text-base">Lägre kostnader, mindre mental belastning</p>
                 </div>
               </div>
               
@@ -258,16 +274,14 @@ const Index = () => {
                 animationDelay: '1.1s'
               }}>
                 <MagneticButton strength={0.4}>
-                  <button onClick={() => scrollToSection('waitlist')} onMouseMove={handleMouseMove} className="access-port group">
-                    <span className="relative z-10 text-sm font-light tracking-[0.15em] uppercase">
-                      Begär tidig tillgång
-                    </span>
-                  </button>
+                  <Button variant="valora" size="lg" onClick={() => scrollToSection('waitlist')} className="cta-glow min-w-[200px]">
+                    Begär tidig tillgång
+                  </Button>
                 </MagneticButton>
                 <MagneticButton strength={0.2}>
-                  <button onClick={() => scrollToSection('how')} className="interactive-element text-secondary hover:text-foreground transition-all text-sm tracking-wide pt-2">
-                    Så fungerar Valora →
-                  </button>
+                  <Button variant="valoraGhost" size="lg" onClick={() => scrollToSection('how')} className="min-w-[180px]">
+                    Så fungerar Valora
+                  </Button>
                 </MagneticButton>
               </div>
             </div>
@@ -281,7 +295,7 @@ const Index = () => {
         <div className="max-w-5xl mx-auto space-y-16 sm:space-y-20 lg:space-y-24">
           <ScrollReveal>
             <div className="max-w-3xl mx-auto text-center space-y-4 sm:space-y-6">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extralight tracking-tight leading-tight">Problemet är inte brist på besparingar. Det är att människor inte orkar agera.</h2>
+              <h2 className="headline-section">Problemet är inte brist på besparingar. Det är att människor inte orkar agera.</h2>
               <p className="text-base sm:text-lg text-secondary font-light leading-relaxed">
                 I både tester och enkätdata framträder samma mönster: människor vet vad de borde göra – 
                 men skjuter upp det. Inte av okunskap, utan på grund av mental belastning, friktion och prokrastinering.
@@ -346,7 +360,7 @@ const Index = () => {
       <section id="how" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 border-t border-border bg-background-elevated relative z-10 overflow-hidden">
         <div className="max-w-5xl mx-auto space-y-16 sm:space-y-20 lg:space-y-24">
           <ScrollReveal>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extralight tracking-tight text-center">
+            <h2 className="headline-section text-center">
               Så fungerar Valora
             </h2>
           </ScrollReveal>
@@ -421,7 +435,7 @@ const Index = () => {
       <section id="proof" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 border-t border-border relative z-10">
         <div className="max-w-5xl mx-auto space-y-16 sm:space-y-20 lg:space-y-24">
           <ScrollReveal>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extralight tracking-tight text-center">
+            <h2 className="headline-section text-center">
               Verifierad besparing. Verklig mental lättnad.
             </h2>
           </ScrollReveal>
@@ -460,7 +474,7 @@ const Index = () => {
       <section className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 border-t border-border bg-background-elevated relative z-10">
         <div className="max-w-6xl mx-auto space-y-12 sm:space-y-16 lg:space-y-20">
           <ScrollReveal>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extralight tracking-tight text-center">
+            <h2 className="headline-section text-center">
               För vem är Valora byggt?
             </h2>
           </ScrollReveal>
@@ -499,7 +513,7 @@ const Index = () => {
         <div className="max-w-2xl mx-auto space-y-12 sm:space-y-16">
           <ScrollReveal>
             <div className="text-center space-y-3 sm:space-y-4">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extralight tracking-tight">
+              <h2 className="headline-section">
                 Begär tidig tillgång till Valora
               </h2>
               <p className="text-base sm:text-lg text-secondary font-light">
@@ -523,7 +537,7 @@ const Index = () => {
                 <Textarea id="note" value={note} onChange={e => setNote(e.target.value)} className="bg-background-surface border-border min-h-24" placeholder="Bostadslån, privatlån, bilförsäkring, hemförsäkring" />
               </div>
               
-              <Button type="submit" variant="glass" className="w-full" size="lg">
+              <Button type="submit" variant="valora" className="w-full cta-glow" size="lg">
                 Gå med i väntelistan
               </Button>
             </form> : <div className="liquid-glass p-6 sm:p-10 rounded-xl text-center">
@@ -538,7 +552,7 @@ const Index = () => {
       <ScrollReveal delay={150}>
       <section id="faq" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 border-t border-border bg-background-elevated relative z-10">
         <div className="max-w-3xl mx-auto space-y-12 sm:space-y-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extralight tracking-tight text-center">
+          <h2 className="headline-section text-center">
             Vanliga frågor
           </h2>
           
@@ -586,24 +600,30 @@ const Index = () => {
       </section>
       </ScrollReveal>
 
-      {/* Footer */}
-      <footer className="py-12 sm:py-16 px-4 sm:px-6 border-t border-border relative z-10">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 sm:gap-8">
-            <p className="text-sm sm:text-base text-secondary font-light">
-              Valora – ett autonomt system för din privatekonomi.
-            </p>
-            
-            <div className="flex flex-wrap gap-6 sm:gap-8">
-              <a href="#" className="text-secondary hover:text-foreground transition-colors text-sm tracking-wide">
+      {/* Footer – matches Valora Personal Finance */}
+      <footer className="relative z-10 w-full mt-auto">
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-border/50 to-transparent" />
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-12">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="flex flex-col items-center md:items-start gap-2">
+              <span className="text-foreground/90 font-medium tracking-[0.2em] text-xs">VALORA</span>
+              <span className="text-muted-foreground text-sm">Autonomt finansiellt system</span>
+            </div>
+            <nav className="flex items-center gap-8">
+              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
                 Kontakt
               </a>
-              <a href="#" className="text-secondary hover:text-foreground transition-colors text-sm tracking-wide">
+              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
                 Integritet
               </a>
-              <a href="#" className="text-secondary hover:text-foreground transition-colors text-sm tracking-wide">
+              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
                 LinkedIn
               </a>
+            </nav>
+            <div className="flex items-center gap-6 text-xs text-muted-foreground/60">
+              <span>Privacy</span>
+              <span>Terms</span>
+              <span>© {new Date().getFullYear()} Valora</span>
             </div>
           </div>
         </div>
