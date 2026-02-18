@@ -7,7 +7,7 @@ import { InteractiveCard } from "@/components/InteractiveCard";
 import { ParallaxSection } from "@/components/ParallaxSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { DataParticles } from "@/components/DataParticles";
+
 import { ThreeValoraLogo } from "@/components/ThreeValoraLogo";
 import { MagneticButton } from "@/components/MagneticButton";
 import { useParallax } from "@/hooks/use-parallax";
@@ -140,10 +140,6 @@ const Index = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_40%,rgba(0,0,0,0.25)_100%)]" />
       </div>
 
-      {/* Depth layer - data particles */}
-      <div className="fixed inset-0 z-0">
-        <DataParticles />
-      </div>
 
       {/* Fixed Navigation – matches Valora PF minimal style */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/40 bg-background/85 backdrop-blur-xl">
@@ -168,7 +164,7 @@ const Index = () => {
               <button onClick={() => scrollToSection('faq')} className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
                 Vanliga frågor
               </button>
-              <Button variant="valora" size="sm" onClick={() => scrollToSection('waitlist')} className="cta-glow">
+              <Button variant="valoraGhost" size="sm" onClick={() => scrollToSection('waitlist')}>
                 Gå med i väntelistan
               </Button>
             </div>
@@ -271,7 +267,10 @@ const Index = () => {
       </section>
 
       {/* Problem Section - Diagnostic Panel */}
-      <section id="why" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 border-t border-border relative z-10">
+      {/* Section separator */}
+      <div className="relative z-10 h-px separator-sweep bg-border/30" />
+
+      <section id="why" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 relative z-10">
         <div className="max-w-5xl mx-auto space-y-16 sm:space-y-20 lg:space-y-24">
           <ScrollReveal>
             <div className="max-w-3xl mx-auto text-center space-y-4 sm:space-y-6">
@@ -338,12 +337,14 @@ const Index = () => {
       </section>
 
       {/* System Status Section */}
+      <div className="relative z-10 h-px separator-sweep bg-border/30" />
       <ScrollReveal delay={100}>
         <SystemStatus />
       </ScrollReveal>
 
       {/* How It Works - Interactive Timeline */}
-      <section id="how" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 border-t border-border bg-background-elevated relative z-10 overflow-hidden">
+      <div className="relative z-10 h-px separator-sweep bg-border/30" />
+      <section id="how" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 bg-background-elevated relative z-10 overflow-hidden">
         <div className="max-w-5xl mx-auto space-y-16 sm:space-y-20 lg:space-y-24">
           <ScrollReveal>
             <h2 className="headline-section text-center">
@@ -413,8 +414,11 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section separator */}
+      <div className="relative z-10 h-px separator-sweep bg-border/30" />
+
       {/* Proof Section */}
-      <section id="proof" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 border-t border-border relative z-10">
+      <section id="proof" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 relative z-10">
         <div className="max-w-5xl mx-auto space-y-16 sm:space-y-20 lg:space-y-24">
           <ScrollReveal>
             <h2 className="headline-section text-center">
@@ -453,7 +457,8 @@ const Index = () => {
       </section>
 
       {/* Target Audience */}
-      <section className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 border-t border-border bg-background-elevated relative z-10">
+      <div className="relative z-10 h-px separator-sweep bg-border/30" />
+      <section className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 bg-background-elevated relative z-10">
         <div className="max-w-6xl mx-auto space-y-12 sm:space-y-16 lg:space-y-20">
           <ScrollReveal>
             <h2 className="headline-section text-center">
@@ -491,7 +496,8 @@ const Index = () => {
       </section>
 
       {/* Waitlist */}
-      <section id="waitlist" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 border-t border-border relative z-10">
+      <div className="relative z-10 h-px separator-sweep bg-border/30" />
+      <section id="waitlist" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 relative z-10">
         <div className="max-w-2xl mx-auto space-y-12 sm:space-y-16">
           <ScrollReveal>
             <div className="text-center space-y-3 sm:space-y-4">
@@ -533,7 +539,8 @@ const Index = () => {
 
       {/* FAQ */}
       <ScrollReveal delay={150}>
-      <section id="faq" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 border-t border-border bg-background-elevated relative z-10">
+      <div className="relative z-10 h-px separator-sweep bg-border/30" />
+      <section id="faq" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 bg-background-elevated relative z-10">
         <div className="max-w-3xl mx-auto space-y-12 sm:space-y-16">
           <h2 className="headline-section text-center">
             Vanliga frågor
