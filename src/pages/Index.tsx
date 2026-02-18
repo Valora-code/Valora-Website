@@ -275,7 +275,7 @@ const Index = () => {
           <ScrollReveal>
             <div className="max-w-3xl mx-auto text-center space-y-4 sm:space-y-6">
               <h2 className="headline-section">Problemet är inte brist på besparingar. Det är att människor inte orkar agera.</h2>
-              <p className="text-base sm:text-lg text-secondary font-light leading-relaxed">
+              <p className="text-base sm:text-lg text-muted-foreground font-light leading-relaxed">
                 I både tester och enkätdata framträder samma mönster: människor vet vad de borde göra – 
                 men skjuter upp det. Inte av okunskap, utan på grund av mental belastning, friktion och prokrastinering.
               </p>
