@@ -258,7 +258,7 @@ const Index = () => {
             <div className="flex justify-center">
               <div className="inline-flex items-baseline gap-3 surface-glass rounded-full px-8 py-4 border border-primary/10">
                 <span className="text-muted-foreground text-sm">Totala besparingar identifierade:</span>
-                <span className="text-2xl font-serif font-medium text-primary">37 748 kr</span>
+                <span className="text-2xl font-serif font-medium text-primary">118 816 kr</span>
               </div>
             </div>
           </div>
