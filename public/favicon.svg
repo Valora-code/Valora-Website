@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="tealGradient" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="hsl(172, 70%, 60%)" />
+      <stop offset="100%" stop-color="hsl(172, 50%, 40%)" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M50 4 C52 22, 78 48, 96 50 C78 52, 52 78, 50 96 C48 78, 22 52, 4 50 C22 48, 48 22, 50 4 Z"
+    stroke="url(#tealGradient)"
+    stroke-width="4"
+    fill="none"
+    stroke-linejoin="round"
+    stroke-linecap="round"
+  />
+</svg>
