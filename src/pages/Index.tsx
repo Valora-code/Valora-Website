@@ -538,7 +538,7 @@ const Index = () => {
           
           {!submitted ? <form onSubmit={handleSubmit} className="liquid-glass p-6 sm:p-10 rounded-xl space-y-5 sm:space-y-6">
               <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-light tracking-wide text-secondary">
+                <label htmlFor="email" className="text-sm font-light tracking-wide text-foreground">
                   E-post *
                 </label>
                 <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} required className="bg-background-surface border-border" placeholder="din@email.se" />
