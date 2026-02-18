@@ -51,17 +51,34 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
+        serif: ['Playfair Display', 'Georgia', 'Times New Roman', 'serif'],
         sans: [
+          'ui-sans-serif',
+          'system-ui',
           '-apple-system',
           'BlinkMacSystemFont',
-          'SF Pro Display',
-          'SF Pro Text',
           'Segoe UI',
           'Roboto',
-          'system-ui',
-          'sans-serif'
+          'Helvetica Neue',
+          'Arial',
+          'sans-serif',
         ],
         mono: [
           'SF Mono',
@@ -69,7 +86,7 @@ export default {
           'Cascadia Code',
           'Consolas',
           'Courier New',
-          'monospace'
+          'monospace',
         ],
       },
       letterSpacing: {
@@ -77,32 +94,35 @@ export default {
         normal: '-0.01em',
         wide: '0.02em',
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "gradient-rotate": {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        "shimmer": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "gradient-rotate": "gradient-rotate 3s ease infinite",
+        "float": "float 6s ease-in-out infinite",
+        "shimmer": "shimmer 2s linear infinite",
       },
     },
   },
