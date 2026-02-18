@@ -5,9 +5,10 @@ interface CountUpNumberProps {
   duration?: number;
   suffix?: string;
   className?: string;
+  format?: (n: number) => string;
 }
 
-export const CountUpNumber = ({ end, duration = 2000, suffix = '', className = '' }: CountUpNumberProps) => {
+export const CountUpNumber = ({ end, duration = 2000, suffix = '', className = '', format }: CountUpNumberProps) => {
   const [count, setCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const elementRef = useRef<HTMLDivElement>(null);
@@ -54,7 +55,7 @@ export const CountUpNumber = ({ end, duration = 2000, suffix = '', className = '
 
   return (
     <span ref={elementRef} className={className}>
-      {count}{suffix}
+      {format ? format(count) : count}{suffix}
     </span>
   );
 };

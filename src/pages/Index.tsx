@@ -242,25 +242,13 @@ const Index = () => {
               className="relative inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 surface-glass rounded-2xl px-7 py-4 border border-primary/20"
               style={{ boxShadow: '0 0 40px hsl(172 50% 45% / 0.12), 0 0 0 1px hsl(172 50% 45% / 0.06) inset' }}
             >
-              {/* Top label */}
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-2 w-2 flex-shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
-                </span>
-                <span className="text-xs font-medium tracking-widest uppercase text-primary/70">Live · Betabesparingar</span>
-              </div>
-              {/* Divider on sm+ */}
-              <span className="hidden sm:block w-px h-6 bg-border/50" />
-              {/* Big number */}
-              <div className="flex items-baseline gap-1.5">
-                <CountUpNumber
-                  end={118816}
-                  suffix=" kr"
-                  className="text-3xl sm:text-4xl font-serif font-medium text-primary tabular-nums"
-                />
-              </div>
-              <span className="text-muted-foreground text-sm">sparade av betaanvändare</span>
+              <CountUpNumber
+                end={118816}
+                suffix=" kr"
+                format={(n) => n.toLocaleString('sv-SE')}
+                className="text-3xl sm:text-4xl font-serif font-medium text-primary tabular-nums"
+              />
+              <span className="text-muted-foreground text-sm">identifierade besparingar</span>
             </div>
           </div>
 
