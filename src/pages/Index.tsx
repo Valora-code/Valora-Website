@@ -236,42 +236,31 @@ const Index = () => {
             </MagneticButton>
           </div>
 
-          {/* Trust badges – matches Valora PF SocialProof */}
-          <div className="fade-up-delay-3 space-y-8">
-            <div className="flex flex-wrap items-center justify-center gap-8">
-              <div className="flex items-center gap-2.5 text-muted-foreground group cursor-default">
-                <div className="p-2 rounded-lg bg-primary/5 group-hover:bg-primary/10 transition-colors">
-                  <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>
-                </div>
-                <span className="text-sm">Banksäker kryptering</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-muted-foreground group cursor-default">
-                <div className="p-2 rounded-lg bg-primary/5 group-hover:bg-primary/10 transition-colors">
-                  <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
-                </div>
-                <span className="text-sm">GDPR-compliant</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-muted-foreground group cursor-default">
-                <div className="p-2 rounded-lg bg-primary/5 group-hover:bg-primary/10 transition-colors">
-                  <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
-                </div>
-                <span className="text-sm">Omedelbar analys</span>
-              </div>
-            </div>
-
-            {/* #3 – Live savings ticker */}
-            <div className="flex justify-center">
-              <div className="inline-flex items-center gap-3 surface-glass rounded-full px-6 py-3 border border-primary/15"
-                style={{ boxShadow: '0 0 24px hsl(172 50% 45% / 0.08)' }}>
-                {/* Pulsing live dot */}
+          {/* Live savings ticker – improved pill */}
+          <div className="fade-up-delay-3 flex justify-center">
+            <div
+              className="relative inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 surface-glass rounded-2xl px-7 py-4 border border-primary/20"
+              style={{ boxShadow: '0 0 40px hsl(172 50% 45% / 0.12), 0 0 0 1px hsl(172 50% 45% / 0.06) inset' }}
+            >
+              {/* Top label */}
+              <div className="flex items-center gap-2">
                 <span className="relative flex h-2 w-2 flex-shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-60" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
                 </span>
-                <span className="text-muted-foreground text-sm">Live ·</span>
-                <CountUpNumber end={118816} suffix=" kr" className="text-xl font-serif font-medium text-primary tabular-nums" />
-                <span className="text-muted-foreground/60 text-xs hidden sm:inline">sparade av betaanvändare</span>
+                <span className="text-xs font-medium tracking-widest uppercase text-primary/70">Live · Betabesparingar</span>
               </div>
+              {/* Divider on sm+ */}
+              <span className="hidden sm:block w-px h-6 bg-border/50" />
+              {/* Big number */}
+              <div className="flex items-baseline gap-1.5">
+                <CountUpNumber
+                  end={118816}
+                  suffix=" kr"
+                  className="text-3xl sm:text-4xl font-serif font-medium text-primary tabular-nums"
+                />
+              </div>
+              <span className="text-muted-foreground text-sm">sparade av betaanvändare</span>
             </div>
           </div>
 
