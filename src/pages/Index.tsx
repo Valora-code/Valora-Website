@@ -112,7 +112,7 @@ const Index = () => {
       {/* Noise texture overlay */}
       <div className="noise-overlay" />
 
-      {/* Layered gradient backgrounds – matches Valora Personal Finance */}
+      {/* Layered gradient backgrounds */}
       <div className="fixed inset-0 pointer-events-none z-0">
         {/* Base gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-muted/5" />
@@ -120,6 +120,11 @@ const Index = () => {
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[60vh]"
           style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, hsl(220 15% 12%) 0%, transparent 100%)' }}
+        />
+        {/* #1 – Teal hero glow – centrat bakom rubriken */}
+        <div
+          className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[70%] h-[50vh] pulse-soft"
+          style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 40%, hsl(172 50% 45% / 0.10) 0%, hsl(172 50% 45% / 0.04) 50%, transparent 100%)' }}
         />
         {/* Side gradients with teal */}
         <div
@@ -254,11 +259,18 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Savings counter pill */}
+            {/* #3 – Live savings ticker */}
             <div className="flex justify-center">
-              <div className="inline-flex items-baseline gap-3 surface-glass rounded-full px-8 py-4 border border-primary/10">
-                <span className="text-muted-foreground text-sm">Totala besparingar identifierade:</span>
-                <span className="text-2xl font-serif font-medium text-primary">118 816 kr</span>
+              <div className="inline-flex items-center gap-3 surface-glass rounded-full px-6 py-3 border border-primary/15"
+                style={{ boxShadow: '0 0 24px hsl(172 50% 45% / 0.08)' }}>
+                {/* Pulsing live dot */}
+                <span className="relative flex h-2 w-2 flex-shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-60" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+                </span>
+                <span className="text-muted-foreground text-sm">Live ·</span>
+                <CountUpNumber end={118816} suffix=" kr" className="text-xl font-serif font-medium text-primary tabular-nums" />
+                <span className="text-muted-foreground/60 text-xs hidden sm:inline">sparade av betaanvändare</span>
               </div>
             </div>
           </div>
@@ -323,13 +335,21 @@ const Index = () => {
           </ScrollReveal>
           </div>
           
+          {/* #5 – Quote card med dekorativt citattecken */}
           <ScrollReveal delay={400}>
             <div className="max-w-3xl mx-auto">
-              <InteractiveCard className="liquid-glass p-6 sm:p-10 rounded-xl border-l-2 border-foreground/20 system-glow group chromatic-hover">
-                <p className="text-lg sm:text-xl md:text-2xl font-light italic leading-relaxed mb-4">
-                  "Jag har vetat i två år att jag borde göra detta – men jag orkade inte."
-                </p>
-                <p className="text-secondary text-sm tracking-wide">– kvinna, 63år</p>
+              <InteractiveCard className="liquid-glass p-8 sm:p-12 rounded-xl system-glow group chromatic-hover relative overflow-hidden">
+                {/* Dekorativt bakgrunds-citattecken */}
+                <span className="absolute top-2 left-4 text-[90px] leading-none font-serif select-none pointer-events-none" style={{ color: 'hsl(172 50% 45% / 0.07)' }} aria-hidden="true">"</span>
+                <div className="relative z-10">
+                  <p className="text-xl sm:text-2xl md:text-3xl font-serif font-light italic leading-relaxed text-foreground mb-6">
+                    Jag har vetat i två år att jag borde göra detta – men jag orkade inte.
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="h-px flex-1 bg-border/40" />
+                    <p className="text-muted-foreground text-sm font-medium">Kvinna, 63 år</p>
+                  </div>
+                </div>
               </InteractiveCard>
             </div>
           </ScrollReveal>
@@ -352,19 +372,29 @@ const Index = () => {
             </h2>
           </ScrollReveal>
           
-          {/* Visual Timeline */}
-          <div className="relative">
-            {/* Connecting vertical line */}
-            <div className="absolute left-[50px] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-border to-transparent hidden md:block" />
-            
-            <div className="space-y-12 sm:space-y-16 lg:space-y-20">
+          {/* #6 & #7 – Visual Timeline med ikoner, animerad linje och kompakt spacing */}
+          <div className="relative max-w-3xl mx-auto">
+            {/* Animerad vertikal linje */}
+            <div className="absolute left-[27px] top-12 bottom-12 w-px hidden md:block overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/30 to-transparent" />
+              {/* Pulsande dot som rör sig nedåt */}
+              <div className="absolute w-1.5 h-8 left-[-3px] rounded-full bg-primary/60 blur-[1px] scan-line" />
+            </div>
+
+            <div className="space-y-6 sm:space-y-8">
               <ScrollReveal delay={100}>
-                <div className="grid md:grid-cols-[100px_1fr] gap-6 sm:gap-8 items-start relative">
-                  <div className="relative flex-shrink-0">
-                    <div className="text-4xl sm:text-5xl font-serif font-medium text-primary stat-breathe">01</div>
+                <div className="grid md:grid-cols-[56px_1fr] gap-4 sm:gap-6 items-start relative">
+                  {/* #6 – Ikon i teal-rundad ruta */}
+                  <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                    </svg>
                   </div>
                   <InteractiveCard className="liquid-glass p-5 sm:p-6 rounded-xl group chromatic-hover">
-                    <div className="space-y-3">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-medium text-primary/70 tracking-widest uppercase">Steg 01</span>
+                      </div>
                       <h3 className="headline-card">Koppla din ekonomi</h3>
                       <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                         Du ansluter banker, lån och försäkringar – och anger dina villkor och preferenser.
@@ -374,15 +404,18 @@ const Index = () => {
                 </div>
               </ScrollReveal>
 
-              <div className="h-px bg-gradient-to-r from-transparent via-border/50 to-transparent" />
-
               <ScrollReveal delay={200}>
-                <div className="grid md:grid-cols-[100px_1fr] gap-6 sm:gap-8 items-start relative">
-                  <div className="relative flex-shrink-0">
-                    <div className="text-4xl sm:text-5xl font-serif font-medium text-primary stat-breathe" style={{ animationDelay: '0.5s' }}>02</div>
+                <div className="grid md:grid-cols-[56px_1fr] gap-4 sm:gap-6 items-start relative">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                    </svg>
                   </div>
                   <InteractiveCard className="liquid-glass p-5 sm:p-6 rounded-xl group chromatic-hover">
-                    <div className="space-y-3">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-medium text-primary/70 tracking-widest uppercase">Steg 02</span>
+                      </div>
                       <h3 className="headline-card">Valora analyserar och förhandlar</h3>
                       <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                         Systemet bevakar marknaden, identifierar förbättringar och förhandlar kontinuerligt åt dig.
@@ -392,15 +425,18 @@ const Index = () => {
                 </div>
               </ScrollReveal>
 
-              <div className="h-px bg-gradient-to-r from-transparent via-border/50 to-transparent" />
-
               <ScrollReveal delay={300}>
-                <div className="grid md:grid-cols-[100px_1fr] gap-6 sm:gap-8 items-start relative">
-                  <div className="relative flex-shrink-0">
-                    <div className="text-4xl sm:text-5xl font-serif font-medium text-primary stat-breathe" style={{ animationDelay: '1s' }}>03</div>
+                <div className="grid md:grid-cols-[56px_1fr] gap-4 sm:gap-6 items-start relative">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                   </div>
                   <InteractiveCard className="liquid-glass p-5 sm:p-6 rounded-xl group chromatic-hover">
-                    <div className="space-y-3">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-medium text-primary/70 tracking-widest uppercase">Steg 03</span>
+                      </div>
                       <h3 className="headline-card">Du godkänner. Valora verkställer.</h3>
                       <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                         Ett klick. Resten sker automatiskt i bakgrunden.
@@ -428,29 +464,44 @@ const Index = () => {
           
           <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
             <ScrollReveal delay={100}>
-              <InteractiveCard className="liquid-glass p-6 sm:p-8 rounded-xl space-y-3 sm:space-y-4 group chromatic-hover">
-                <div className="text-2xl sm:text-3xl font-light">privatperson, 63år </div>
-                <div className="text-3xl sm:text-4xl font-mono font-light text-secondary tabular-nums">ca 17 000 kr/år</div>
-                <p className="text-sm sm:text-base text-secondary font-light italic pt-2 sm:pt-4">
+              <InteractiveCard className="liquid-glass p-6 sm:p-8 rounded-xl group chromatic-hover relative overflow-hidden h-full">
+                <div className="flex items-center justify-between mb-5">
+                  <span className="text-sm text-muted-foreground font-medium">Privatperson, 63 år</span>
+                  <span className="inline-flex items-center gap-1.5 text-xs text-primary bg-primary/8 border border-primary/15 rounded-full px-2.5 py-1">
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Verifierat
+                  </span>
+                </div>
+                <div className="text-4xl sm:text-5xl font-serif font-medium text-primary tabular-nums mb-1">17 000 kr</div>
+                <div className="text-xs text-muted-foreground mb-6">per år i identifierade besparingar</div>
+                <span className="absolute bottom-2 right-4 text-[72px] leading-none font-serif select-none pointer-events-none" style={{ color: 'hsl(172 50% 45% / 0.07)' }} aria-hidden="true">"</span>
+                <p className="text-sm sm:text-base text-muted-foreground font-light italic leading-relaxed">
                   "Jag hade aldrig gjort detta själv. Nu slipper jag tänka."
                 </p>
               </InteractiveCard>
             </ScrollReveal>
-            
             <ScrollReveal delay={200}>
-              <InteractiveCard className="liquid-glass p-6 sm:p-8 rounded-xl space-y-3 sm:space-y-4 group chromatic-hover">
-                <div className="text-2xl sm:text-3xl font-light">privatperson, 33år</div>
-                <div className="text-3xl sm:text-4xl font-mono font-light text-secondary tabular-nums">ca 15 000 kr/år</div>
-                <p className="text-sm sm:text-base text-secondary font-light italic pt-2 sm:pt-4">
+              <InteractiveCard className="liquid-glass p-6 sm:p-8 rounded-xl group chromatic-hover relative overflow-hidden h-full">
+                <div className="flex items-center justify-between mb-5">
+                  <span className="text-sm text-muted-foreground font-medium">Privatperson, 33 år</span>
+                  <span className="inline-flex items-center gap-1.5 text-xs text-primary bg-primary/8 border border-primary/15 rounded-full px-2.5 py-1">
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Verifierat
+                  </span>
+                </div>
+                <div className="text-4xl sm:text-5xl font-serif font-medium text-primary tabular-nums mb-1">15 000 kr</div>
+                <div className="text-xs text-muted-foreground mb-6">per år i identifierade besparingar</div>
+                <span className="absolute bottom-2 right-4 text-[72px] leading-none font-serif select-none pointer-events-none" style={{ color: 'hsl(172 50% 45% / 0.07)' }} aria-hidden="true">"</span>
+                <p className="text-sm sm:text-base text-muted-foreground font-light italic leading-relaxed">
                   "Jag betalar hellre än att behöva bära detta i huvudet."
                 </p>
               </InteractiveCard>
             </ScrollReveal>
           </div>
-          
           <ScrollReveal delay={300}>
-            <InteractiveCard className="liquid-glass p-6 sm:p-10 rounded-xl max-w-2xl mx-auto group chromatic-hover">
-              <p className="text-lg sm:text-xl font-light italic text-center">"Tidigare gav ekonomi mig konstant ångest. Nu känns det mycket enklare."</p>
+            <InteractiveCard className="liquid-glass p-8 sm:p-12 rounded-xl max-w-2xl mx-auto group chromatic-hover relative overflow-hidden">
+              <span className="absolute top-2 left-4 text-[90px] leading-none font-serif select-none pointer-events-none" style={{ color: 'hsl(172 50% 45% / 0.07)' }} aria-hidden="true">"</span>
+              <p className="relative z-10 text-xl sm:text-2xl font-serif font-light italic text-center leading-relaxed">Tidigare gav ekonomi mig konstant ångest. Nu känns det mycket enklare.</p>
             </InteractiveCard>
           </ScrollReveal>
         </div>
