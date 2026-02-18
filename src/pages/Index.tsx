@@ -545,7 +545,7 @@ const Index = () => {
               </div>
               
               <div className="space-y-2">
-                <label htmlFor="note" className="text-sm font-light tracking-wide text-secondary">
+                <label htmlFor="note" className="text-sm font-light tracking-wide text-foreground">
                   Vad vill du att Valora ska optimera åt dig?
                 </label>
                 <Textarea id="note" value={note} onChange={e => setNote(e.target.value)} className="bg-background-surface border-border min-h-24" placeholder="Bostadslån, privatlån, bilförsäkring, hemförsäkring" />
