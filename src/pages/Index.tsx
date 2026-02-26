@@ -247,7 +247,7 @@ const Index = () => {
               style={{ boxShadow: '0 0 40px hsl(172 50% 45% / 0.12), 0 0 0 1px hsl(172 50% 45% / 0.06) inset' }}
             >
               <CountUpNumber
-                end={118816}
+                end={148499}
                 suffix=" kr"
                 format={(n) => n.toLocaleString('sv-SE')}
                 className="text-3xl sm:text-4xl font-serif font-medium text-primary tabular-nums"
