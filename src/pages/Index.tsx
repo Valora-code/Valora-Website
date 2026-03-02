@@ -1,41 +1,52 @@
 import { useState } from "react";
 import { ValoraLogo } from "@/components/ValoraLogo";
+import { CountUpNumber } from "@/components/CountUpNumber";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { SpotlightCard } from "@/components/SpotlightCard";
+import { AtmosphericBackground } from "@/components/AtmosphericBackground";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
-import { ArrowRight, Shield, Lock, UserCheck, ChevronRight } from "lucide-react";
 
 const waitlistSchema = z.object({
   email: z.string().trim().email({ message: "Ogiltig e-postadress" }).max(255),
+  note: z.string().trim().max(500, { message: "Anteckningen får vara max 500 tecken" }).optional(),
 });
+
+/** Reusable section glow behind content */
+const SectionGlow = ({ color = 'hsl(172 42% 40% / 0.06)', size = 700, blur = 120 }: { color?: string; size?: number; blur?: number }) => (
+  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{ width: size, height: size * 0.65 }}>
+    <div className="w-full h-full rounded-full" style={{ background: `radial-gradient(ellipse, ${color} 0%, transparent 60%)`, filter: `blur(${blur}px)` }} />
+  </div>
+);
 
 const Index = () => {
   const [email, setEmail] = useState("");
-  const [heroEmail, setHeroEmail] = useState("");
+  const [note, setNote] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [heroSubmitted, setHeroSubmitted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = async (emailValue: string, setDone: (v: boolean) => void) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
-      const validatedData = waitlistSchema.parse({ email: emailValue });
+      const validatedData = waitlistSchema.parse({ email, note });
       const { error } = await supabase.from('waitlist').insert([{
         email: validatedData.email,
-        note: null,
+        note: validatedData.note || null,
       }]);
       if (error && error.code !== '23505') throw error;
-      setDone(true);
-      toast({ title: "You're on the list", description: "We'll be in touch when early access opens." });
+      setSubmitted(true);
+      toast({ title: "Tack", description: "Du är nu registrerad för tidig access." });
     } catch (error) {
       if (error instanceof z.ZodError) {
-        toast({ title: "Invalid email", description: error.errors[0].message, variant: "destructive" });
+        toast({ title: "Ogiltig inmatning", description: error.errors[0].message, variant: "destructive" });
       } else {
-        toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" });
+        toast({ title: "Ett fel uppstod", description: "Försök igen senare.", variant: "destructive" });
       }
     }
   };
@@ -43,455 +54,493 @@ const Index = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    setMobileMenuOpen(false);
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
+      <AtmosphericBackground />
 
-      {/* ── NAV ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
-        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <ValoraLogo size="small" />
-          <div className="hidden md:flex items-center gap-8">
-            {[
-              ['how', 'How it works'],
-              ['benefits', 'Benefits'],
-              ['trust', 'Trust & safety'],
-              ['faq', 'FAQ'],
-            ].map(([id, label]) => (
-              <button
-                key={id}
-                onClick={() => scrollToSection(id)}
-                className="text-[13px] text-muted-foreground hover:text-foreground transition-colors duration-200"
+      {/* ═══ NAVIGATION ═══ */}
+      <nav className="fixed top-0 left-0 right-0 z-50">
+        <div className="max-w-5xl mx-auto px-5 sm:px-8 pt-4 sm:pt-6">
+          <div className="flex items-center justify-between px-5 sm:px-6 py-3 rounded-2xl nav-glass">
+            <ValoraLogo size="small" />
+            <div className="hidden md:flex items-center gap-8">
+              {[
+                ['why', 'Varför'],
+                ['how', 'Hur'],
+                ['proof', 'Resultat'],
+                ['faq', 'FAQ'],
+              ].map(([id, label]) => (
+                <button
+                  key={id}
+                  onClick={() => scrollToSection(id)}
+                  className="text-[13px] text-muted-foreground hover:text-foreground transition-colors duration-200 font-light"
+                >
+                  {label}
+                </button>
+              ))}
+              <Button
+                variant="valora"
+                size="sm"
+                onClick={() => scrollToSection('waitlist')}
+                className="text-[12px] h-8 px-4 rounded-lg"
               >
-                {label}
-              </button>
-            ))}
-            <Button
-              size="sm"
-              onClick={() => scrollToSection('cta')}
-              className="h-8 px-4 text-[13px] rounded-lg"
+                Gå med
+              </Button>
+            </div>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Toggle menu"
             >
-              Join early access
-            </Button>
+              <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" stroke="currentColor">
+                {mobileMenuOpen ? <path d="M6 18L18 6M6 6l12 12" /> : <path d="M4 6h16M4 12h16M4 18h16" />}
+              </svg>
+            </button>
           </div>
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-muted-foreground"
-            aria-label="Toggle menu"
-          >
-            <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" stroke="currentColor">
-              {mobileMenuOpen ? <path d="M6 18L18 6M6 6l12 12" /> : <path d="M4 6h16M4 12h16M4 18h16" />}
-            </svg>
-          </button>
+          {mobileMenuOpen && (
+            <div className="md:hidden mt-2 rounded-2xl p-3 space-y-0.5 nav-glass">
+              {[['why','Varför Valora'],['how','Hur det fungerar'],['proof','Resultat'],['faq','FAQ']].map(([id, label]) => (
+                <button key={id} onClick={() => { scrollToSection(id); setMobileMenuOpen(false); }}
+                  className="block w-full text-left py-2.5 px-3 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-lg font-light">
+                  {label}
+                </button>
+              ))}
+              <div className="pt-1.5 px-1">
+                <Button variant="valora" size="sm" className="w-full" onClick={() => { scrollToSection('waitlist'); setMobileMenuOpen(false); }}>
+                  Gå med i väntelistan
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
-        {mobileMenuOpen && (
-          <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-xl px-6 py-4 space-y-1">
-            {[['how','How it works'],['benefits','Benefits'],['trust','Trust & safety'],['faq','FAQ']].map(([id, label]) => (
-              <button key={id} onClick={() => scrollToSection(id)}
-                className="block w-full text-left py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-                {label}
-              </button>
-            ))}
-            <Button size="sm" className="w-full mt-2" onClick={() => scrollToSection('cta')}>
-              Join early access
-            </Button>
-          </div>
-        )}
       </nav>
 
-      {/* ── HERO ── */}
-      <section className="pt-32 pb-24 sm:pt-40 sm:pb-32 lg:pt-48 lg:pb-40 px-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
-          {/* Left */}
-          <div className="space-y-8 max-w-xl">
-            <div className="fade-up space-y-6">
-              <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-semibold leading-[1.08] tracking-[-0.032em] text-foreground">
-                Autonomous personal finance, quietly running in the background.
-              </h1>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-[52ch]">
-                Valora continuously analyzes your loans and insurance and routes you to better terms via licensed partners — without adding another dashboard to your life.
-              </p>
-            </div>
+      {/* ═══════════════════════════════════════════════════════════
+          HERO — Premium editorial centerpiece
+      ═══════════════════════════════════════════════════════════ */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center px-5 sm:px-8">
+        {/* Hero halo behind headline — soft, large */}
+        <div className="absolute top-[38%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] pointer-events-none">
+          <div
+            className="w-full h-full rounded-full"
+            style={{
+              background: 'radial-gradient(ellipse 70% 55% at 50% 50%, hsl(172 45% 42% / 0.1) 0%, hsl(172 45% 42% / 0.03) 40%, transparent 65%)',
+              filter: 'blur(80px)',
+            }}
+          />
+        </div>
 
-            <div className="fade-up-delay-1 flex flex-wrap items-center gap-3">
-              {!heroSubmitted ? (
-                <form onSubmit={(e) => { e.preventDefault(); handleSubmit(heroEmail, setHeroSubmitted); }} className="flex items-center gap-2 w-full sm:w-auto">
-                  <Input
-                    type="email"
-                    value={heroEmail}
-                    onChange={e => setHeroEmail(e.target.value)}
-                    required
-                    className="h-11 w-full sm:w-64 rounded-lg bg-secondary border-border text-sm placeholder:text-muted-foreground/50"
-                    placeholder="you@email.com"
-                  />
-                  <Button type="submit" className="h-11 px-5 rounded-lg text-sm shrink-0">
-                    Join early access
-                    <ArrowRight className="w-4 h-4 ml-1" />
-                  </Button>
-                </form>
-              ) : (
-                <p className="text-sm text-primary font-medium">✓ You're on the list. We'll be in touch.</p>
-              )}
-            </div>
+        {/* Hero arc glow — cinematic bottom light */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200%] sm:w-[150%] pointer-events-none">
+          <div
+            className="w-full aspect-[2/1] rounded-full hero-arc-glow"
+            style={{
+              background: 'radial-gradient(ellipse at 50% 0%, hsl(172 45% 42% / 0.16) 0%, hsl(172 45% 42% / 0.06) 18%, transparent 42%)',
+              transform: 'translateY(65%)',
+            }}
+          />
+        </div>
 
-            <div className="fade-up-delay-2 flex items-center gap-2">
-              <button
-                onClick={() => scrollToSection('how')}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
-              >
-                See how it works <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-
-            <p className="fade-up-delay-3 text-xs text-muted-foreground/60 leading-relaxed">
-              Built with licensed partners. You stay in control of every change.
-            </p>
+        <div className="relative z-10 max-w-3xl mx-auto w-full text-center space-y-10 sm:space-y-14">
+          {/* Status badge */}
+          <div className="fade-up">
+            <span
+              className="inline-flex items-center gap-2.5 text-[10px] font-medium tracking-[0.2em] uppercase px-5 py-2.5 rounded-full shimmer-sweep"
+              style={{
+                background: 'hsl(0 0% 100% / 0.025)',
+                border: '1px solid hsl(0 0% 100% / 0.06)',
+                color: 'hsl(0 0% 55%)',
+              }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-primary/60 machine-pulse" />
+              Autonom finansiell optimering
+            </span>
           </div>
 
-          {/* Right — Abstract system visualization */}
-          <div className="fade-up-delay-2 hidden lg:block">
-            <div className="relative w-full aspect-square max-w-md mx-auto">
-              {/* Abstract routing visualization */}
-              <svg viewBox="0 0 400 400" fill="none" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                {/* You node */}
-                <rect x="30" y="170" width="80" height="60" rx="8" className="fill-secondary stroke-border" strokeWidth="1" />
-                <text x="70" y="205" textAnchor="middle" className="fill-foreground text-[13px] font-medium">You</text>
-
-                {/* Valora node — center */}
-                <rect x="160" y="155" width="80" height="90" rx="12" className="fill-primary/10 stroke-primary/30" strokeWidth="1" />
-                <text x="200" y="195" textAnchor="middle" className="fill-primary text-[12px] font-medium">Valora</text>
-                <text x="200" y="215" textAnchor="middle" className="fill-muted-foreground text-[9px]">analyzes</text>
-                <text x="200" y="228" textAnchor="middle" className="fill-muted-foreground text-[9px]">continuously</text>
-
-                {/* Partner nodes */}
-                <rect x="290" y="80" width="80" height="48" rx="6" className="fill-secondary stroke-border" strokeWidth="1" />
-                <text x="330" y="108" textAnchor="middle" className="fill-muted-foreground text-[10px]">Lender A</text>
-
-                <rect x="290" y="176" width="80" height="48" rx="6" className="fill-secondary stroke-border" strokeWidth="1" />
-                <text x="330" y="204" textAnchor="middle" className="fill-muted-foreground text-[10px]">Insurer B</text>
-
-                <rect x="290" y="272" width="80" height="48" rx="6" className="fill-secondary stroke-border" strokeWidth="1" />
-                <text x="330" y="300" textAnchor="middle" className="fill-muted-foreground text-[10px]">Lender C</text>
-
-                {/* Connecting lines */}
-                <line x1="110" y1="200" x2="160" y2="200" className="stroke-border" strokeWidth="1" strokeDasharray="4 4" />
-                <line x1="240" y1="180" x2="290" y2="104" className="stroke-primary/20" strokeWidth="1" />
-                <line x1="240" y1="200" x2="290" y2="200" className="stroke-primary/20" strokeWidth="1" />
-                <line x1="240" y1="220" x2="290" y2="296" className="stroke-primary/20" strokeWidth="1" />
-
-                {/* Flow dots */}
-                <circle cx="135" cy="200" r="2" className="fill-muted-foreground/40" />
-                <circle cx="265" cy="140" r="2" className="fill-primary/30" />
-                <circle cx="265" cy="200" r="2" className="fill-primary/30" />
-                <circle cx="265" cy="260" r="2" className="fill-primary/30" />
-              </svg>
-            </div>
+          {/* Headline */}
+          <div className="fade-up-delay-1 space-y-3">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-serif font-medium leading-[0.9] tracking-[-0.035em]">
+              <span className="text-gradient-primary">Din ekonomi.</span>
+              <br />
+              <span className="text-foreground/90">Alltid </span>
+              <span className="italic font-normal text-foreground/55">optimerad.</span>
+            </h1>
           </div>
-        </div>
-      </section>
 
-      {/* ── HOW VALORA WORKS ── */}
-      <section id="how" className="py-24 sm:py-32 lg:py-40 px-6 border-t border-border/30">
-        <div className="max-w-6xl mx-auto">
-          <ScrollReveal>
-            <div className="max-w-2xl mb-16 sm:mb-20">
-              <p className="text-xs font-medium text-primary tracking-widest uppercase mb-4">How it works</p>
-              <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.025em] leading-tight">
-                Three steps to autonomous optimization.
-              </h2>
-            </div>
-          </ScrollReveal>
+          {/* Subtext */}
+          <p className="fade-up-delay-2 text-sm sm:text-[15px] text-muted-foreground/70 max-w-[30rem] mx-auto leading-relaxed font-light">
+            Valora identifierar och genomför förbättringar i din ekonomi — automatiskt, enligt dina villkor.
+          </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border/30 rounded-2xl overflow-hidden">
-            {[
-              {
-                step: '01',
-                title: 'Connect your financial data',
-                desc: 'Link your loans, insurance, and accounts securely. Set your preferences and constraints.',
-              },
-              {
-                step: '02',
-                title: 'Valora continuously analyzes',
-                desc: 'The system monitors rates, coverage gaps, and market conditions around the clock.',
-              },
-              {
-                step: '03',
-                title: 'Approve and execute',
-                desc: 'You review recommendations and approve with one click. Valora executes via licensed partners.',
-              },
-            ].map((item, i) => (
-              <ScrollReveal key={item.step} delay={i * 100}>
-                <div className="bg-card p-8 sm:p-10 h-full flex flex-col gap-6">
-                  <span className="text-xs font-medium text-primary tracking-wider">{item.step}</span>
-                  <div className="space-y-3 mt-auto">
-                    <h3 className="text-base font-semibold text-foreground tracking-tight">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── WHAT VALORA DOES ── */}
-      <section id="benefits" className="py-24 sm:py-32 lg:py-40 px-6">
-        <div className="max-w-6xl mx-auto">
-          <ScrollReveal>
-            <div className="max-w-2xl mb-16 sm:mb-20">
-              <p className="text-xs font-medium text-primary tracking-widest uppercase mb-4">Benefits</p>
-              <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.025em] leading-tight">
-                What Valora does for you.
-              </h2>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                title: 'Lower your interest costs over time',
-                desc: 'Valora continuously scans for better loan terms and refinancing opportunities across licensed partners.',
-              },
-              {
-                title: 'Close coverage gaps without over-insuring',
-                desc: 'Your insurance portfolio is analyzed for redundancies and gaps — adjustments happen only with your approval.',
-              },
-              {
-                title: 'Replace manual comparisons with continuous optimization',
-                desc: 'No more spreadsheets or comparison sites. Valora runs in the background, every day.',
-              },
-            ].map((item, i) => (
-              <ScrollReveal key={i} delay={i * 100}>
-                <div className="p-8 rounded-2xl bg-card border border-border/50 hover:border-border transition-colors duration-300 h-full flex flex-col gap-4">
-                  <h3 className="text-base font-semibold text-foreground tracking-tight leading-snug">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SAFETY, TRUST, CONTROL ── */}
-      <section id="trust" className="py-24 sm:py-32 lg:py-40 px-6 bg-secondary/30">
-        <div className="max-w-6xl mx-auto">
-          <ScrollReveal>
-            <div className="max-w-2xl mb-16 sm:mb-20">
-              <p className="text-xs font-medium text-primary tracking-widest uppercase mb-4">Trust & safety</p>
-              <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.025em] leading-tight">
-                Built for trust. Designed for control.
-              </h2>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: Lock,
-                title: 'Bank-grade security',
-                desc: 'All data is encrypted at rest and in transit. We follow best-in-class security practices.',
-              },
-              {
-                icon: Shield,
-                title: 'Licensed partners only',
-                desc: 'Valora operates through regulated, licensed financial partners. We never hold your money.',
-              },
-              {
-                icon: UserCheck,
-                title: 'You approve every change',
-                desc: 'Valora cannot move money or change terms without your explicit confirmation. Full autonomy, full control.',
-              },
-            ].map((item, i) => (
-              <ScrollReveal key={i} delay={i * 100}>
-                <div className="p-8 rounded-2xl bg-card border border-border/50 h-full flex flex-col gap-5">
-                  <item.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
-                  <div className="space-y-3">
-                    <h3 className="text-base font-semibold text-foreground tracking-tight">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── WHO VALORA IS FOR ── */}
-      <section className="py-24 sm:py-32 lg:py-40 px-6">
-        <div className="max-w-6xl mx-auto">
-          <ScrollReveal>
-            <div className="max-w-2xl mb-16 sm:mb-20">
-              <p className="text-xs font-medium text-primary tracking-widest uppercase mb-4">Who it's for</p>
-              <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.025em] leading-tight">
-                Built for ambitious professionals who want fewer financial decisions, not more dashboards.
-              </h2>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                title: 'Founders & operators',
-                desc: 'Who want their loans and insurance continuously optimized while they build.',
-              },
-              {
-                title: 'Busy professionals',
-                desc: 'Who know they should refinance and compare, but never find the time.',
-              },
-              {
-                title: 'Families with complex finances',
-                desc: 'Multiple loans, multiple policies — Valora keeps everything optimized.',
-              },
-            ].map((item, i) => (
-              <ScrollReveal key={i} delay={i * 100}>
-                <div className="p-8 rounded-2xl border border-border/30 hover:border-border/60 transition-colors duration-300 h-full">
-                  <h3 className="text-base font-semibold text-foreground tracking-tight mb-3">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── CURRENT STAGE & ROADMAP ── */}
-      <section className="py-24 sm:py-32 lg:py-40 px-6 border-t border-border/30">
-        <div className="max-w-3xl mx-auto">
-          <ScrollReveal>
-            <div className="mb-12 sm:mb-16">
-              <p className="text-xs font-medium text-primary tracking-widest uppercase mb-4">Current stage</p>
-              <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.025em] leading-tight mb-6">
-                Currently in private beta.
-              </h2>
-              <p className="text-base text-muted-foreground leading-relaxed max-w-xl">
-                We're working with a small group of early users to refine the experience before opening up.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={100}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-              <div>
-                <h3 className="text-sm font-semibold text-foreground mb-4 tracking-tight">What works today</h3>
-                <ul className="space-y-3">
-                  {[
-                    'Loan monitoring and comparison',
-                    'Insurance gap analysis',
-                    'Automated partner matching',
-                    'One-click approval flow',
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-foreground mb-4 tracking-tight">Coming next</h3>
-                <ul className="space-y-3">
-                  {[
-                    'Expanded partner network',
-                    'Savings and investment optimization',
-                    'BankID integration',
-                    'Open beta launch',
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-border shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ── FAQ ── */}
-      <section id="faq" className="py-24 sm:py-32 lg:py-40 px-6">
-        <div className="max-w-3xl mx-auto">
-          <ScrollReveal>
-            <div className="mb-12 sm:mb-16">
-              <p className="text-xs font-medium text-primary tracking-widest uppercase mb-4">FAQ</p>
-              <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.025em] leading-tight">
-                Common questions.
-              </h2>
-            </div>
-          </ScrollReveal>
-
-          <Accordion type="single" collapsible>
-            {[
-              { q: 'Is Valora a bank?', a: 'No. Valora is an autonomous optimization layer that works on top of your existing banks and insurance providers. We never hold your money.' },
-              { q: 'Do I need to switch banks?', a: 'No. Valora works with your existing financial setup. If switching a provider is recommended, it only happens with your explicit approval.' },
-              { q: 'How does Valora make money?', a: 'Valora earns a fee from partner institutions when a successful optimization is executed. You never pay extra.' },
-              { q: 'Is my data safe?', a: 'Yes. All data is encrypted, access is consent-based, and we follow strict regulatory standards.' },
-              { q: 'What does early access cost?', a: 'Pricing will be finalized at launch. Early access users will be prioritized and receive preferential terms.' },
-            ].map((item, i) => (
-              <AccordionItem
-                key={i}
-                value={`item-${i + 1}`}
-                className="border-b border-border/40"
-              >
-                <AccordionTrigger className="text-left text-sm sm:text-[15px] font-medium hover:no-underline py-6 text-foreground/90 hover:text-foreground transition-colors">
-                  {item.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-6">
-                  {item.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </section>
-
-      {/* ── FINAL CTA ── */}
-      <section id="cta" className="py-24 sm:py-32 lg:py-40 px-6 bg-secondary/30 border-t border-border/30">
-        <div className="max-w-2xl mx-auto text-center">
-          <ScrollReveal>
-            <div className="space-y-6 mb-10">
-              <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.025em] leading-tight">
-                Let Valora handle the financial maintenance work.
-              </h2>
-              <p className="text-base text-muted-foreground leading-relaxed max-w-lg mx-auto">
-                Join the early access list and be among the first to run your loans and insurance on autopilot.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={100}>
+          {/* CTA — glass capsule */}
+          <div className="fade-up-delay-3 max-w-md mx-auto">
             {!submitted ? (
-              <form onSubmit={(e) => { e.preventDefault(); handleSubmit(email, setSubmitted); }} className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
-                <Input
-                  type="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  required
-                  className="h-11 w-full sm:flex-1 rounded-lg bg-card border-border text-sm placeholder:text-muted-foreground/50"
-                  placeholder="you@email.com"
+              <div className="space-y-3">
+                <SpotlightCard variant="elevated">
+                  <form onSubmit={handleSubmit} className="p-2">
+                    <div className="flex items-center gap-1.5">
+                      <Input
+                        type="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        required
+                        className="flex-1 bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 text-sm placeholder:text-muted-foreground/30 h-12 px-4 font-light rounded-xl"
+                        placeholder="din@email.se"
+                      />
+                      <Button type="submit" variant="valora" className="rounded-xl h-10 px-6 text-[12px] font-medium shrink-0 cta-glow">
+                        Gå med
+                      </Button>
+                    </div>
+                  </form>
+                </SpotlightCard>
+                <Textarea
+                  value={note}
+                  onChange={e => setNote(e.target.value)}
+                  className="bg-transparent border border-border/10 focus-visible:ring-primary/15 min-h-[52px] text-sm placeholder:text-muted-foreground/20 resize-none rounded-xl font-light input-glow"
+                  placeholder="Valfritt: Vad vill du optimera?"
                 />
-                <Button type="submit" className="h-11 px-6 rounded-lg text-sm w-full sm:w-auto shrink-0">
-                  Join early access
-                  <ArrowRight className="w-4 h-4 ml-1" />
-                </Button>
-              </form>
+              </div>
             ) : (
-              <p className="text-sm text-primary font-medium">✓ You're on the list. We'll be in touch soon.</p>
+              <SpotlightCard variant="elevated">
+                <div className="p-10 text-center space-y-4">
+                  <div className="w-11 h-11 rounded-full bg-primary/10 border border-primary/15 flex items-center justify-center mx-auto">
+                    <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                  </div>
+                  <p className="text-foreground font-serif text-xl">Tack.</p>
+                  <p className="text-muted-foreground text-xs font-light">Du är registrerad för tidig access.</p>
+                </div>
+              </SpotlightCard>
             )}
+          </div>
+
+          {/* Trust strip */}
+          <div className="fade-up-delay-4 flex flex-wrap items-center justify-center gap-x-7 gap-y-2 text-[10px] text-muted-foreground/30 font-light tracking-[0.2em] uppercase">
+            <span>BankID</span>
+            <span className="w-px h-3 bg-border/15" />
+            <span>PSD2</span>
+            <span className="w-px h-3 bg-border/15" />
+            <span>Licensierade partners</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          PROBLEM — Editorial with premium metric strip
+      ═══════════════════════════════════════════════════════════ */}
+      <section id="why" className="py-32 sm:py-40 lg:py-48 px-5 sm:px-8 relative z-10">
+        <div className="max-w-3xl mx-auto space-y-20 sm:space-y-28">
+          <ScrollReveal>
+            <div className="max-w-[52ch] mx-auto text-center space-y-6">
+              <p className="caption text-primary/40">Problemet</p>
+              <h2 className="headline-section">
+                Det handlar inte om<br className="hidden sm:block" /> brist på besparingar.
+              </h2>
+              <p className="text-sm sm:text-[15px] text-muted-foreground/60 font-light leading-relaxed max-w-[46ch] mx-auto">
+                Människor vet vad de borde göra — men skjuter upp det. Inte av okunskap, utan av mental belastning.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          {/* Metric strip — glass backed with under-glow */}
+          <ScrollReveal delay={100}>
+            <div className="relative">
+              {/* Under-glow pocket behind stats */}
+              <div className="absolute -inset-x-8 -inset-y-6 pointer-events-none">
+                <div className="w-full h-full rounded-3xl" style={{
+                  background: 'radial-gradient(ellipse 80% 70% at 50% 50%, hsl(172 40% 40% / 0.05) 0%, transparent 60%)',
+                  filter: 'blur(60px)',
+                }} />
+              </div>
+              <SpotlightCard variant="elevated">
+                <div className="grid grid-cols-1 sm:grid-cols-3">
+                  {[
+                    { num: 88, label: 'har skjutit upp byte av lån eller försäkring' },
+                    { num: 79, label: 'känner dåligt samvete över sin ekonomi' },
+                    { num: 56, label: 'upplever hög mental belastning' },
+                  ].map((stat, i) => (
+                    <div key={i} className="p-8 sm:p-10 text-center relative">
+                      {i > 0 && <div className="hidden sm:block absolute left-0 top-[20%] bottom-[20%] w-px" style={{ background: 'linear-gradient(180deg, transparent 0%, hsl(0 0% 100% / 0.06) 50%, transparent 100%)' }} />}
+                      {i > 0 && <div className="sm:hidden absolute top-0 left-[15%] right-[15%] h-px" style={{ background: 'linear-gradient(90deg, transparent 0%, hsl(0 0% 100% / 0.06) 50%, transparent 100%)' }} />}
+                      <CountUpNumber
+                        end={stat.num}
+                        suffix="%"
+                        className="text-3xl sm:text-4xl font-serif font-medium tracking-tight stat-accent tabular-nums"
+                      />
+                      <p className="text-xs text-muted-foreground/50 font-light mt-3 leading-relaxed max-w-[20ch] mx-auto">
+                        {stat.label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </SpotlightCard>
+            </div>
+          </ScrollReveal>
+
+          {/* Quote */}
+          <ScrollReveal delay={200}>
+            <div className="text-center py-4">
+              <p className="text-lg sm:text-xl md:text-2xl font-serif font-light italic leading-relaxed text-foreground/40 max-w-[38ch] mx-auto">
+                "Jag har vetat i två år att jag borde göra detta — men jag orkade inte."
+              </p>
+              <p className="text-muted-foreground/30 text-[11px] font-light mt-6 tracking-wider">Kvinna, 63 år</p>
+            </div>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer className="border-t border-border/30">
-        <div className="max-w-6xl mx-auto px-6 py-10 sm:py-14">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-            <span className="font-medium text-foreground/60 tracking-wider uppercase text-[11px]">Valora</span>
+      {/* ═══════════════════════════════════════════════════════════
+          HOW IT WORKS — 3 numbered glass tiles
+      ═══════════════════════════════════════════════════════════ */}
+      <section id="how" className="py-32 sm:py-40 lg:py-48 px-5 sm:px-8 relative z-10">
+        {/* Section glow */}
+        <SectionGlow color="hsl(172 40% 38% / 0.05)" size={800} blur={140} />
+
+        <div className="max-w-3xl mx-auto space-y-20 sm:space-y-28 relative z-10">
+          <ScrollReveal>
+            <div className="text-center space-y-4">
+              <p className="caption text-primary/40">Process</p>
+              <h2 className="headline-section">
+                Tre steg.
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+            {[
+              { num: '01', title: 'Anslut', desc: 'Koppla banker, lån och försäkringar. Ange dina villkor.' },
+              { num: '02', title: 'Analys', desc: 'Valora bevakar marknaden och identifierar förbättringar kontinuerligt.' },
+              { num: '03', title: 'Godkänn', desc: 'Ett klick. Resten sker automatiskt. Du behåller kontrollen.' },
+            ].map((item, i) => (
+              <ScrollReveal key={item.num} delay={(i + 1) * 120}>
+                <SpotlightCard className="h-full">
+                  <div className="p-8 sm:p-10 flex flex-col gap-6 min-h-[240px]">
+                    <span className="text-2xl font-serif font-medium text-primary/25 tracking-tight">
+                      {item.num}
+                    </span>
+                    <div className="space-y-3 mt-auto">
+                      <h3 className="headline-card text-foreground">{item.title}</h3>
+                      <p className="text-sm text-muted-foreground/60 leading-relaxed font-light">{item.desc}</p>
+                    </div>
+                  </div>
+                </SpotlightCard>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          PROOF — Testimonials with luxury card treatment
+      ═══════════════════════════════════════════════════════════ */}
+      <section id="proof" className="py-32 sm:py-40 lg:py-48 px-5 sm:px-8 relative z-10">
+        <SectionGlow color="hsl(172 42% 38% / 0.04)" size={600} blur={100} />
+
+        <div className="max-w-3xl mx-auto space-y-20 sm:space-y-28 relative z-10">
+          <ScrollReveal>
+            <div className="text-center space-y-4">
+              <p className="caption text-primary/40">Resultat</p>
+              <h2 className="headline-section">
+                Verifierad besparing.
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+            {[
+              { person: 'Privatperson, 63 år', amount: '17 000 kr', period: '/år', quote: '"Jag hade aldrig gjort detta själv. Nu slipper jag tänka."' },
+              { person: 'Privatperson, 33 år', amount: '15 000 kr', period: '/år', quote: '"Jag betalar hellre än att bära detta i huvudet."' },
+            ].map((item, i) => (
+              <ScrollReveal key={i} delay={(i + 1) * 120}>
+                <div className="relative">
+                  {/* Card under-glow — subtle teal behind top-left */}
+                  <div className="absolute -top-6 -left-6 w-40 h-40 pointer-events-none" style={{
+                    background: 'radial-gradient(circle, hsl(172 45% 42% / 0.06) 0%, transparent 65%)',
+                    filter: 'blur(40px)',
+                  }} />
+                  <SpotlightCard className="h-full relative">
+                    <div className="p-8 sm:p-10 space-y-6">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] text-muted-foreground/40 font-light tracking-wide">{item.person}</span>
+                        <span className="inline-flex items-center gap-1.5 text-[10px] text-primary/50 font-light">
+                          <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                          Verifierat
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-3xl sm:text-4xl font-serif font-medium text-foreground tabular-nums">{item.amount}</span>
+                        <span className="text-muted-foreground/35 text-xs font-light ml-2">{item.period}</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground/50 font-light italic leading-relaxed pt-5" style={{ borderTop: '1px solid hsl(0 0% 100% / 0.05)' }}>
+                        {item.quote}
+                      </p>
+                    </div>
+                  </SpotlightCard>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <ScrollReveal delay={300}>
+            <div className="text-center py-4">
+              <p className="text-base sm:text-lg font-serif font-light italic leading-relaxed text-foreground/35 max-w-[36ch] mx-auto">
+                "Tidigare gav ekonomi mig konstant ångest. Nu känns det enklare."
+              </p>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          TARGET AUDIENCE — Quiet luxury list
+      ═══════════════════════════════════════════════════════════ */}
+      <section className="py-32 sm:py-40 lg:py-48 px-5 sm:px-8 relative z-10">
+        <div className="max-w-3xl mx-auto space-y-20 sm:space-y-28">
+          <ScrollReveal>
+            <div className="text-center space-y-4">
+              <p className="caption text-primary/40">Målgrupp</p>
+              <h2 className="headline-section">
+                Byggt för dig.
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <div className="space-y-1 max-w-2xl mx-auto">
+            {[
+              { title: 'Den upptagna', desc: 'Du har inte tid att jämföra och förhandla. Valora gör det åt dig.' },
+              { title: 'Familjen med komplex ekonomi', desc: 'Flera lån och försäkringar. Valora håller allt optimerat.' },
+              { title: 'Den som vill ha kontroll utan stress', desc: 'Du vill göra rätt — men slippa bära ansvaret mentalt.' },
+            ].map((item, i) => (
+              <ScrollReveal key={i} delay={(i + 1) * 100}>
+                <div
+                  className="flex items-start gap-6 p-6 sm:p-7 rounded-2xl transition-all duration-500 group hover:bg-[hsl(0_0%_100%/0.015)] border border-transparent hover:border-[hsl(0_0%_100%/0.04)]"
+                >
+                  <span className="text-primary/20 text-sm font-serif mt-1 shrink-0 group-hover:text-primary/35 transition-colors duration-500">✦</span>
+                  <div className="space-y-1.5">
+                    <h3 className="text-sm sm:text-[15px] font-medium text-foreground/90 tracking-tight">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground/50 font-light leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          WAITLIST — Secondary CTA
+      ═══════════════════════════════════════════════════════════ */}
+      <section id="waitlist" className="relative z-10 py-32 sm:py-40 lg:py-48 px-5 sm:px-8">
+        {/* Section glow */}
+        <SectionGlow color="hsl(172 45% 42% / 0.08)" size={650} blur={110} />
+
+        <ScrollReveal>
+          <div className="max-w-md mx-auto text-center relative z-10 space-y-10">
+            <div className="space-y-5">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-medium text-foreground leading-tight tracking-[-0.02em]">
+                Gå med i <span className="italic font-normal text-foreground/50">väntelistan</span>
+              </h2>
+              <p className="text-xs sm:text-sm text-muted-foreground/40 font-light leading-relaxed max-w-xs mx-auto">
+                Få tidig tillgång och bli bland de första att optimera din ekonomi autonomt.
+              </p>
+            </div>
+
+            {!submitted ? (
+              <div className="space-y-3">
+                <SpotlightCard variant="elevated">
+                  <form onSubmit={handleSubmit} className="p-2">
+                    <div className="flex items-center gap-1.5">
+                      <Input
+                        type="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        required
+                        className="flex-1 bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 text-sm placeholder:text-muted-foreground/25 h-12 px-4 font-light rounded-xl"
+                        placeholder="din@email.se"
+                      />
+                      <Button type="submit" variant="valora" className="rounded-xl h-10 px-6 text-[12px] font-medium shrink-0 cta-glow">
+                        Begär tillgång
+                      </Button>
+                    </div>
+                  </form>
+                </SpotlightCard>
+              </div>
+            ) : (
+              <SpotlightCard variant="elevated">
+                <div className="p-10 text-center space-y-4">
+                  <div className="w-11 h-11 rounded-full bg-primary/10 border border-primary/15 flex items-center justify-center mx-auto">
+                    <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                  </div>
+                  <p className="text-foreground font-serif text-xl">Tack.</p>
+                  <p className="text-muted-foreground text-xs font-light">Du är registrerad för tidig access.</p>
+                </div>
+              </SpotlightCard>
+            )}
+
+            <div className="flex items-center justify-center gap-2.5 text-xs text-muted-foreground/25 font-light">
+              <div className="w-1.5 h-1.5 rounded-full bg-primary/30 machine-pulse" />
+              <span>
+                <CountUpNumber end={247} className="text-foreground/35 tabular-nums" duration={1500} /> väntar på tillgång
+              </span>
+            </div>
+          </div>
+        </ScrollReveal>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          FAQ — Premium accordion
+      ═══════════════════════════════════════════════════════════ */}
+      <ScrollReveal delay={80}>
+        <section id="faq" className="py-32 sm:py-40 lg:py-48 px-5 sm:px-8 relative z-10">
+          <div className="max-w-2xl mx-auto space-y-16 sm:space-y-24">
+            <div className="text-center space-y-4">
+              <p className="caption text-primary/40">Frågor</p>
+              <h2 className="headline-section">
+                Vanliga frågor
+              </h2>
+            </div>
+
+            <Accordion type="single" collapsible className="space-y-0">
+              {[
+                { q: 'Är Valora en bank?', a: 'Nej. Valora är ett autonomt finansiellt system som optimerar din ekonomi ovanpå befintliga banker och försäkringsbolag.' },
+                { q: 'Behöver jag byta bank?', a: 'Nej – och ibland, ja. Du behöver aldrig byta bank för att använda Valora. Systemet analyserar och optimerar ovanpå dina befintliga aktörer. Om ett byte rekommenderas sker det först efter ditt godkännande.' },
+                { q: 'Är det säkert?', a: 'Ja. All åtkomst sker med samtycke och enligt bankstandard.' },
+                { q: 'Vad kostar det?', a: 'Prissättning fastställs vid lansering. Tidiga användare prioriteras.' },
+              ].map((item, i) => (
+                <AccordionItem
+                  key={i}
+                  value={`item-${i + 1}`}
+                  className="border-b last:border-0"
+                  style={{ borderColor: 'hsl(0 0% 100% / 0.04)' }}
+                >
+                  <AccordionTrigger className="text-left font-light text-sm sm:text-[15px] hover:no-underline py-7 sm:py-8 text-foreground/75 hover:text-foreground transition-colors duration-300">
+                    {item.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-muted-foreground/50 font-light leading-relaxed pb-7">
+                    {item.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </section>
+      </ScrollReveal>
+
+      {/* ═══ FOOTER ═══ */}
+      <footer className="relative z-10 w-full">
+        <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent 10%, hsl(0 0% 100% / 0.04) 50%, transparent 90%)' }} />
+        <div className="max-w-5xl mx-auto px-6 py-10 sm:py-14">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-muted-foreground/20 font-light">
+            <span className="tracking-[0.25em] uppercase text-foreground/25 text-[10px]">Valora</span>
             <div className="flex items-center gap-6">
-              <a href="#" className="hover:text-foreground transition-colors">Contact</a>
-              <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
+              {['Kontakt', 'Integritet'].map((label) => (
+                <a key={label} href="#" className="hover:text-foreground/40 transition-colors duration-300">{label}</a>
+              ))}
               <span>© {new Date().getFullYear()}</span>
             </div>
           </div>
