@@ -522,43 +522,136 @@ const Index = () => {
 
       {/* Waitlist */}
       <div className="relative z-10 h-px separator-sweep bg-border/30" />
-      <section id="waitlist" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 relative z-10">
-        <div className="max-w-2xl mx-auto space-y-12 sm:space-y-16">
-          <ScrollReveal>
-            <div className="text-center space-y-3 sm:space-y-4">
-              <p className="text-xs text-primary font-medium tracking-[0.2em] uppercase mb-3">Begränsad tidig tillgång</p>
-              <h2 className="headline-section">
-                Begär tidig tillgång till Valora
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground">
-                Vi öppnar Valora successivt för ett begränsat antal användare.
-              </p>
-            </div>
-          </ScrollReveal>
-          
-          {!submitted ? <form onSubmit={handleSubmit} className="liquid-glass p-6 sm:p-10 rounded-xl space-y-5 sm:space-y-6">
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-light tracking-wide text-foreground">
-                  E-post *
-                </label>
-                <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} required className="bg-background-surface border-border" placeholder="din@email.se" />
+      <section id="waitlist" className="relative z-10 overflow-hidden">
+        {/* Dramatic glowing arc background */}
+        <div className="absolute inset-0 flex items-end justify-center pointer-events-none">
+          <div
+            className="w-[140%] sm:w-[120%] aspect-[2/1] rounded-[50%] relative -mb-[40%] sm:-mb-[30%]"
+            style={{
+              background: 'radial-gradient(ellipse at 50% 0%, hsl(172 50% 45% / 0.18) 0%, hsl(172 50% 45% / 0.06) 40%, transparent 70%)',
+              boxShadow: '0 -40px 120px 40px hsl(172 50% 45% / 0.08), 0 0 80px 20px hsl(172 50% 45% / 0.04)',
+            }}
+          />
+          {/* Arc edge glow line */}
+          <div
+            className="absolute w-[140%] sm:w-[120%] aspect-[2/1] rounded-[50%] -mb-[40%] sm:-mb-[30%]"
+            style={{
+              border: '1px solid hsl(172 50% 45% / 0.15)',
+              borderBottom: 'none',
+              maskImage: 'linear-gradient(to bottom, white 0%, transparent 60%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, white 0%, transparent 60%)',
+            }}
+          />
+        </div>
+
+        <div className="relative z-10 py-24 sm:py-36 lg:py-44 px-4 sm:px-6 flex flex-col items-center justify-center min-h-[80vh]">
+          <div className="max-w-xl w-full mx-auto">
+            {!submitted ? (
+              <div
+                className="relative rounded-2xl p-8 sm:p-10 md:p-12 text-center space-y-6 sm:space-y-8"
+                style={{
+                  background: 'hsl(220 14% 9% / 0.7)',
+                  backdropFilter: 'blur(24px)',
+                  border: '1px solid hsl(0 0% 100% / 0.08)',
+                  boxShadow: '0 8px 60px -12px hsl(0 0% 0% / 0.5), 0 0 0 1px hsl(0 0% 100% / 0.03) inset',
+                }}
+              >
+                {/* Heading */}
+                <div className="space-y-3">
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium tracking-tight leading-tight text-foreground">
+                    Gå med i väntelistan
+                  </h2>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-md mx-auto">
+                    Få exklusiv tidig tillgång till Valora och bli bland de första att optimera din ekonomi autonomt.
+                  </p>
+                </div>
+
+                {/* Inline email form */}
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div
+                    className="flex items-center gap-0 rounded-xl overflow-hidden"
+                    style={{
+                      background: 'hsl(220 14% 7% / 0.9)',
+                      border: '1px solid hsl(0 0% 100% / 0.1)',
+                    }}
+                  >
+                    <Input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      required
+                      className="flex-1 bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 text-sm sm:text-base placeholder:text-muted-foreground/50 h-12 sm:h-14 px-4 sm:px-5"
+                      placeholder="din@email.se"
+                    />
+                    <Button
+                      type="submit"
+                      variant="valora"
+                      className="rounded-lg h-10 sm:h-11 mr-1.5 sm:mr-2 px-5 sm:px-6 text-sm font-medium shrink-0"
+                    >
+                      Begär tillgång
+                    </Button>
+                  </div>
+
+                  {/* Optional note */}
+                  <div className="pt-1">
+                    <Textarea
+                      id="note"
+                      value={note}
+                      onChange={e => setNote(e.target.value)}
+                      className="bg-transparent border border-border/40 focus-visible:ring-primary/30 min-h-[72px] text-sm placeholder:text-muted-foreground/40 resize-none rounded-xl"
+                      placeholder="Valfritt: Vad vill du att Valora ska optimera? (lån, försäkringar...)"
+                    />
+                  </div>
+                </form>
+
+                {/* Social proof / counter */}
+                <div className="flex flex-col items-center gap-4 pt-2">
+                  <div className="flex items-center gap-3">
+                    {/* Avatar stack */}
+                    <div className="flex -space-x-2">
+                      {[
+                        'hsl(172 50% 45%)',
+                        'hsl(200 50% 50%)',
+                        'hsl(260 40% 55%)',
+                      ].map((color, i) => (
+                        <div
+                          key={i}
+                          className="w-7 h-7 rounded-full border-2 border-background"
+                          style={{ background: color }}
+                        />
+                      ))}
+                    </div>
+                    <span className="text-xs sm:text-sm text-muted-foreground">
+                      Över <span className="text-foreground font-medium">200+</span> har redan gått med
+                    </span>
+                  </div>
+                </div>
               </div>
-              
-              <div className="space-y-2">
-                <label htmlFor="note" className="text-sm font-light tracking-wide text-foreground">
-                  Vad vill du att Valora ska optimera åt dig?
-                </label>
-                <Textarea id="note" value={note} onChange={e => setNote(e.target.value)} className="bg-background-surface border-border min-h-24" placeholder="Bostadslån, privatlån, bilförsäkring, hemförsäkring" />
+            ) : (
+              <div
+                className="relative rounded-2xl p-10 sm:p-14 text-center"
+                style={{
+                  background: 'hsl(220 14% 9% / 0.7)',
+                  backdropFilter: 'blur(24px)',
+                  border: '1px solid hsl(0 0% 100% / 0.08)',
+                  boxShadow: '0 8px 60px -12px hsl(0 0% 0% / 0.5)',
+                }}
+              >
+                <div className="space-y-3">
+                  <div className="w-14 h-14 rounded-full bg-primary/15 border border-primary/25 flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-serif font-medium text-foreground">Tack!</h3>
+                  <p className="text-muted-foreground text-base">
+                    Du är nu registrerad för tidig access till Valora.
+                  </p>
+                </div>
               </div>
-              
-              <Button type="submit" variant="valora" className="w-full cta-glow" size="lg">
-                Gå med i väntelistan
-              </Button>
-            </form> : <div className="liquid-glass p-6 sm:p-10 rounded-xl text-center">
-              <p className="text-lg sm:text-xl font-light">
-                Tack. Du är nu registrerad för tidig access.
-              </p>
-            </div>}
+            )}
+          </div>
         </div>
       </section>
 
