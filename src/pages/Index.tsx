@@ -17,6 +17,13 @@ const waitlistSchema = z.object({
   note: z.string().trim().max(500, { message: "Anteckningen får vara max 500 tecken" }).optional(),
 });
 
+/** Reusable section glow behind content */
+const SectionGlow = ({ color = 'hsl(172 42% 40% / 0.06)', size = 700, blur = 120 }: { color?: string; size?: number; blur?: number }) => (
+  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{ width: size, height: size * 0.65 }}>
+    <div className="w-full h-full rounded-full" style={{ background: `radial-gradient(ellipse, ${color} 0%, transparent 60%)`, filter: `blur(${blur}px)` }} />
+  </div>
+);
+
 const Index = () => {
   const [email, setEmail] = useState("");
   const [note, setNote] = useState("");
@@ -114,13 +121,13 @@ const Index = () => {
           HERO — Premium editorial centerpiece
       ═══════════════════════════════════════════════════════════ */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-5 sm:px-8">
-        {/* Hero glow behind headline */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] w-[600px] h-[400px] pointer-events-none">
+        {/* Hero halo behind headline — soft, large */}
+        <div className="absolute top-[38%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] pointer-events-none">
           <div
             className="w-full h-full rounded-full"
             style={{
-              background: 'radial-gradient(ellipse, hsl(172 45% 45% / 0.08) 0%, transparent 55%)',
-              filter: 'blur(100px)',
+              background: 'radial-gradient(ellipse 70% 55% at 50% 50%, hsl(172 45% 42% / 0.1) 0%, hsl(172 45% 42% / 0.03) 40%, transparent 65%)',
+              filter: 'blur(80px)',
             }}
           />
         </div>
@@ -130,7 +137,7 @@ const Index = () => {
           <div
             className="w-full aspect-[2/1] rounded-full hero-arc-glow"
             style={{
-              background: 'radial-gradient(ellipse at 50% 0%, hsl(172 45% 42% / 0.14) 0%, hsl(172 45% 42% / 0.05) 20%, transparent 45%)',
+              background: 'radial-gradient(ellipse at 50% 0%, hsl(172 45% 42% / 0.16) 0%, hsl(172 45% 42% / 0.06) 18%, transparent 42%)',
               transform: 'translateY(65%)',
             }}
           />
@@ -171,7 +178,7 @@ const Index = () => {
           <div className="fade-up-delay-3 max-w-md mx-auto">
             {!submitted ? (
               <div className="space-y-3">
-                <SpotlightCard>
+                <SpotlightCard variant="elevated">
                   <form onSubmit={handleSubmit} className="p-2">
                     <div className="flex items-center gap-1.5">
                       <Input
@@ -179,10 +186,10 @@ const Index = () => {
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         required
-                        className="flex-1 bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 text-sm placeholder:text-muted-foreground/25 h-12 px-4 font-light rounded-xl"
+                        className="flex-1 bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 text-sm placeholder:text-muted-foreground/30 h-12 px-4 font-light rounded-xl"
                         placeholder="din@email.se"
                       />
-                      <Button type="submit" variant="valora" className="rounded-xl h-10 px-6 text-[12px] font-medium shrink-0">
+                      <Button type="submit" variant="valora" className="rounded-xl h-10 px-6 text-[12px] font-medium shrink-0 cta-glow">
                         Gå med
                       </Button>
                     </div>
@@ -191,12 +198,12 @@ const Index = () => {
                 <Textarea
                   value={note}
                   onChange={e => setNote(e.target.value)}
-                  className="bg-transparent border border-border/10 focus-visible:ring-primary/15 min-h-[52px] text-sm placeholder:text-muted-foreground/18 resize-none rounded-xl font-light input-glow"
+                  className="bg-transparent border border-border/10 focus-visible:ring-primary/15 min-h-[52px] text-sm placeholder:text-muted-foreground/20 resize-none rounded-xl font-light input-glow"
                   placeholder="Valfritt: Vad vill du optimera?"
                 />
               </div>
             ) : (
-              <SpotlightCard>
+              <SpotlightCard variant="elevated">
                 <div className="p-10 text-center space-y-4">
                   <div className="w-11 h-11 rounded-full bg-primary/10 border border-primary/15 flex items-center justify-center mx-auto">
                     <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -238,39 +245,39 @@ const Index = () => {
             </div>
           </ScrollReveal>
 
-          {/* Metric strip — glass backed */}
+          {/* Metric strip — glass backed with under-glow */}
           <ScrollReveal delay={100}>
-            <SpotlightCard>
-              <div className="grid grid-cols-1 sm:grid-cols-3">
-                {[
-                  { num: 88, label: 'har skjutit upp byte av lån eller försäkring' },
-                  { num: 79, label: 'känner dåligt samvete över sin ekonomi' },
-                  { num: 56, label: 'upplever hög mental belastning' },
-                ].map((stat, i) => (
-                  <div
-                    key={i}
-                    className="p-8 sm:p-10 text-center relative"
-                  >
-                    {/* Vertical separator */}
-                    {i > 0 && (
-                      <div className="hidden sm:block absolute left-0 top-[20%] bottom-[20%] w-px" style={{ background: 'hsl(0 0% 100% / 0.05)' }} />
-                    )}
-                    {/* Horizontal separator (mobile) */}
-                    {i > 0 && (
-                      <div className="sm:hidden absolute top-0 left-[15%] right-[15%] h-px" style={{ background: 'hsl(0 0% 100% / 0.05)' }} />
-                    )}
-                    <CountUpNumber
-                      end={stat.num}
-                      suffix="%"
-                      className="text-3xl sm:text-4xl font-serif font-medium tracking-tight stat-accent tabular-nums"
-                    />
-                    <p className="text-xs text-muted-foreground/50 font-light mt-3 leading-relaxed max-w-[20ch] mx-auto">
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
+            <div className="relative">
+              {/* Under-glow pocket behind stats */}
+              <div className="absolute -inset-x-8 -inset-y-6 pointer-events-none">
+                <div className="w-full h-full rounded-3xl" style={{
+                  background: 'radial-gradient(ellipse 80% 70% at 50% 50%, hsl(172 40% 40% / 0.05) 0%, transparent 60%)',
+                  filter: 'blur(60px)',
+                }} />
               </div>
-            </SpotlightCard>
+              <SpotlightCard variant="elevated">
+                <div className="grid grid-cols-1 sm:grid-cols-3">
+                  {[
+                    { num: 88, label: 'har skjutit upp byte av lån eller försäkring' },
+                    { num: 79, label: 'känner dåligt samvete över sin ekonomi' },
+                    { num: 56, label: 'upplever hög mental belastning' },
+                  ].map((stat, i) => (
+                    <div key={i} className="p-8 sm:p-10 text-center relative">
+                      {i > 0 && <div className="hidden sm:block absolute left-0 top-[20%] bottom-[20%] w-px" style={{ background: 'linear-gradient(180deg, transparent 0%, hsl(0 0% 100% / 0.06) 50%, transparent 100%)' }} />}
+                      {i > 0 && <div className="sm:hidden absolute top-0 left-[15%] right-[15%] h-px" style={{ background: 'linear-gradient(90deg, transparent 0%, hsl(0 0% 100% / 0.06) 50%, transparent 100%)' }} />}
+                      <CountUpNumber
+                        end={stat.num}
+                        suffix="%"
+                        className="text-3xl sm:text-4xl font-serif font-medium tracking-tight stat-accent tabular-nums"
+                      />
+                      <p className="text-xs text-muted-foreground/50 font-light mt-3 leading-relaxed max-w-[20ch] mx-auto">
+                        {stat.label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </SpotlightCard>
+            </div>
           </ScrollReveal>
 
           {/* Quote */}
@@ -290,15 +297,7 @@ const Index = () => {
       ═══════════════════════════════════════════════════════════ */}
       <section id="how" className="py-32 sm:py-40 lg:py-48 px-5 sm:px-8 relative z-10">
         {/* Section glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] pointer-events-none">
-          <div
-            className="w-full h-full rounded-full"
-            style={{
-              background: 'radial-gradient(ellipse, hsl(172 40% 40% / 0.04) 0%, transparent 60%)',
-              filter: 'blur(120px)',
-            }}
-          />
-        </div>
+        <SectionGlow color="hsl(172 40% 38% / 0.05)" size={800} blur={140} />
 
         <div className="max-w-3xl mx-auto space-y-20 sm:space-y-28 relative z-10">
           <ScrollReveal>
@@ -335,10 +334,12 @@ const Index = () => {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          PROOF — Testimonials
+          PROOF — Testimonials with luxury card treatment
       ═══════════════════════════════════════════════════════════ */}
       <section id="proof" className="py-32 sm:py-40 lg:py-48 px-5 sm:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto space-y-20 sm:space-y-28">
+        <SectionGlow color="hsl(172 42% 38% / 0.04)" size={600} blur={100} />
+
+        <div className="max-w-3xl mx-auto space-y-20 sm:space-y-28 relative z-10">
           <ScrollReveal>
             <div className="text-center space-y-4">
               <p className="caption text-primary/40">Resultat</p>
@@ -354,24 +355,31 @@ const Index = () => {
               { person: 'Privatperson, 33 år', amount: '15 000 kr', period: '/år', quote: '"Jag betalar hellre än att bära detta i huvudet."' },
             ].map((item, i) => (
               <ScrollReveal key={i} delay={(i + 1) * 120}>
-                <SpotlightCard className="h-full">
-                  <div className="p-8 sm:p-10 space-y-6">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[11px] text-muted-foreground/40 font-light tracking-wide">{item.person}</span>
-                      <span className="inline-flex items-center gap-1.5 text-[10px] text-primary/50 font-light">
-                        <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-                        Verifierat
-                      </span>
+                <div className="relative">
+                  {/* Card under-glow — subtle teal behind top-left */}
+                  <div className="absolute -top-6 -left-6 w-40 h-40 pointer-events-none" style={{
+                    background: 'radial-gradient(circle, hsl(172 45% 42% / 0.06) 0%, transparent 65%)',
+                    filter: 'blur(40px)',
+                  }} />
+                  <SpotlightCard className="h-full relative">
+                    <div className="p-8 sm:p-10 space-y-6">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] text-muted-foreground/40 font-light tracking-wide">{item.person}</span>
+                        <span className="inline-flex items-center gap-1.5 text-[10px] text-primary/50 font-light">
+                          <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                          Verifierat
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-3xl sm:text-4xl font-serif font-medium text-foreground tabular-nums">{item.amount}</span>
+                        <span className="text-muted-foreground/35 text-xs font-light ml-2">{item.period}</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground/50 font-light italic leading-relaxed pt-5" style={{ borderTop: '1px solid hsl(0 0% 100% / 0.05)' }}>
+                        {item.quote}
+                      </p>
                     </div>
-                    <div>
-                      <span className="text-3xl sm:text-4xl font-serif font-medium text-foreground tabular-nums">{item.amount}</span>
-                      <span className="text-muted-foreground/35 text-xs font-light ml-2">{item.period}</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground/50 font-light italic leading-relaxed pt-5" style={{ borderTop: '1px solid hsl(0 0% 100% / 0.05)' }}>
-                      {item.quote}
-                    </p>
-                  </div>
-                </SpotlightCard>
+                  </SpotlightCard>
+                </div>
               </ScrollReveal>
             ))}
           </div>
@@ -408,18 +416,7 @@ const Index = () => {
             ].map((item, i) => (
               <ScrollReveal key={i} delay={(i + 1) * 100}>
                 <div
-                  className="flex items-start gap-6 p-6 sm:p-7 rounded-2xl transition-all duration-500 group"
-                  style={{
-                    border: '1px solid transparent',
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.background = 'hsl(0 0% 100% / 0.015)';
-                    e.currentTarget.style.borderColor = 'hsl(0 0% 100% / 0.04)';
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.background = 'transparent';
-                    e.currentTarget.style.borderColor = 'transparent';
-                  }}
+                  className="flex items-start gap-6 p-6 sm:p-7 rounded-2xl transition-all duration-500 group hover:bg-[hsl(0_0%_100%/0.015)] border border-transparent hover:border-[hsl(0_0%_100%/0.04)]"
                 >
                   <span className="text-primary/20 text-sm font-serif mt-1 shrink-0 group-hover:text-primary/35 transition-colors duration-500">✦</span>
                   <div className="space-y-1.5">
@@ -438,15 +435,7 @@ const Index = () => {
       ═══════════════════════════════════════════════════════════ */}
       <section id="waitlist" className="relative z-10 py-32 sm:py-40 lg:py-48 px-5 sm:px-8">
         {/* Section glow */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full"
-            style={{
-              background: 'radial-gradient(ellipse, hsl(172 45% 42% / 0.08) 0%, transparent 60%)',
-              filter: 'blur(100px)',
-            }}
-          />
-        </div>
+        <SectionGlow color="hsl(172 45% 42% / 0.08)" size={650} blur={110} />
 
         <ScrollReveal>
           <div className="max-w-md mx-auto text-center relative z-10 space-y-10">
@@ -461,7 +450,7 @@ const Index = () => {
 
             {!submitted ? (
               <div className="space-y-3">
-                <SpotlightCard>
+                <SpotlightCard variant="elevated">
                   <form onSubmit={handleSubmit} className="p-2">
                     <div className="flex items-center gap-1.5">
                       <Input
@@ -469,10 +458,10 @@ const Index = () => {
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         required
-                        className="flex-1 bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 text-sm placeholder:text-muted-foreground/20 h-12 px-4 font-light rounded-xl"
+                        className="flex-1 bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 text-sm placeholder:text-muted-foreground/25 h-12 px-4 font-light rounded-xl"
                         placeholder="din@email.se"
                       />
-                      <Button type="submit" variant="valora" className="rounded-xl h-10 px-6 text-[12px] font-medium shrink-0">
+                      <Button type="submit" variant="valora" className="rounded-xl h-10 px-6 text-[12px] font-medium shrink-0 cta-glow">
                         Begär tillgång
                       </Button>
                     </div>
@@ -480,7 +469,7 @@ const Index = () => {
                 </SpotlightCard>
               </div>
             ) : (
-              <SpotlightCard>
+              <SpotlightCard variant="elevated">
                 <div className="p-10 text-center space-y-4">
                   <div className="w-11 h-11 rounded-full bg-primary/10 border border-primary/15 flex items-center justify-center mx-auto">
                     <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
