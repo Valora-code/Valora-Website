@@ -1,69 +1,108 @@
 /**
- * 5-layer atmospheric background stack:
- * 1. Base vignette (dark edges)
- * 2. Atmospheric haze (center fog)
- * 3. Radial glows (teal, slow drift)
+ * 5-layer atmospheric background stack with bloom:
+ * 1. Base vignette (dark edges, lighter center)
+ * 2. Atmospheric haze (depth fog)
+ * 3. Radial glows with bloom (teal, slow drift)
  * 4. Noise/grain overlay
- * 5. Micro dust particles (CSS only)
+ * 5. Micro dust particles
  */
 export const AtmosphericBackground = () => {
   return (
     <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
-      {/* Layer 1 — Base vignette: darker edges, lighter center */}
+      {/* Layer 1 — Deep vignette: heavy dark edges */}
       <div
         className="absolute inset-0"
         style={{
           background: `
-            radial-gradient(ellipse 80% 60% at 50% 40%, 
-              hsl(220 18% 7% / 0) 0%, 
-              hsl(220 20% 4% / 0.6) 70%, 
-              hsl(220 22% 3% / 0.9) 100%)
+            radial-gradient(ellipse 70% 55% at 50% 40%, 
+              transparent 0%, 
+              hsl(222 22% 5% / 0.4) 50%, 
+              hsl(222 24% 3% / 0.85) 75%, 
+              hsl(222 26% 2%) 100%)
           `,
         }}
       />
 
-      {/* Layer 2 — Atmospheric haze: soft central fog */}
+      {/* Layer 2 — Atmospheric haze: depth fog in center */}
       <div
         className="absolute inset-0"
         style={{
           background: `
-            radial-gradient(ellipse 60% 40% at 50% 35%, 
-              hsl(200 15% 20% / 0.04) 0%, 
-              transparent 70%)
+            radial-gradient(ellipse 55% 35% at 50% 30%, 
+              hsl(200 12% 18% / 0.06) 0%, 
+              transparent 70%),
+            radial-gradient(ellipse 40% 30% at 60% 70%, 
+              hsl(172 15% 15% / 0.03) 0%, 
+              transparent 60%)
           `,
         }}
       />
 
-      {/* Layer 3a — Primary teal glow (top-right) */}
+      {/* Layer 3a — Primary teal glow (top-right) with bloom */}
       <div
-        className="absolute w-[900px] h-[900px] rounded-full ambient-glow"
+        className="absolute ambient-glow"
         style={{
-          top: '-10%',
-          right: '-15%',
-          background: 'radial-gradient(circle, hsl(172 40% 38% / 0.07) 0%, hsl(172 40% 38% / 0.02) 40%, transparent 70%)',
+          width: '1000px',
+          height: '1000px',
+          top: '-15%',
+          right: '-18%',
+          background: 'radial-gradient(circle, hsl(172 42% 40% / 0.1) 0%, hsl(172 42% 40% / 0.04) 30%, transparent 65%)',
+          filter: 'blur(100px)',
+          borderRadius: '50%',
+        }}
+      />
+      {/* Bloom layer for 3a */}
+      <div
+        className="absolute ambient-glow"
+        style={{
+          width: '1400px',
+          height: '1400px',
+          top: '-25%',
+          right: '-25%',
+          background: 'radial-gradient(circle, hsl(172 45% 45% / 0.04) 0%, transparent 50%)',
+          filter: 'blur(180px)',
+          borderRadius: '50%',
+        }}
+      />
+
+      {/* Layer 3b — Secondary glow (left-center) with bloom */}
+      <div
+        className="absolute ambient-glow-alt"
+        style={{
+          width: '800px',
+          height: '800px',
+          top: '35%',
+          left: '-15%',
+          background: 'radial-gradient(circle, hsl(172 38% 38% / 0.08) 0%, transparent 60%)',
           filter: 'blur(120px)',
+          borderRadius: '50%',
         }}
       />
-
-      {/* Layer 3b — Secondary glow (left-center) */}
+      {/* Bloom layer for 3b */}
       <div
-        className="absolute w-[700px] h-[700px] rounded-full ambient-glow-alt"
+        className="absolute ambient-glow-alt"
         style={{
-          top: '40%',
-          left: '-12%',
-          background: 'radial-gradient(circle, hsl(172 35% 35% / 0.05) 0%, transparent 65%)',
-          filter: 'blur(140px)',
+          width: '1200px',
+          height: '1200px',
+          top: '30%',
+          left: '-22%',
+          background: 'radial-gradient(circle, hsl(172 40% 42% / 0.03) 0%, transparent 50%)',
+          filter: 'blur(160px)',
+          borderRadius: '50%',
         }}
       />
 
       {/* Layer 3c — Deep glow (bottom-center) */}
       <div
-        className="absolute w-[600px] h-[600px] rounded-full ambient-glow-slow"
+        className="absolute ambient-glow-slow"
         style={{
-          bottom: '-5%',
-          left: '30%',
-          background: 'radial-gradient(circle, hsl(172 45% 40% / 0.04) 0%, transparent 60%)',
-          filter: 'blur(130px)',
+          width: '700px',
+          height: '700px',
+          bottom: '-8%',
+          left: '25%',
+          background: 'radial-gradient(circle, hsl(172 48% 42% / 0.06) 0%, transparent 55%)',
+          filter: 'blur(110px)',
+          borderRadius: '50%',
         }}
       />
 
@@ -72,10 +111,10 @@ export const AtmosphericBackground = () => {
 
       {/* Layer 5 — Micro dust (subtle dot pattern for depth) */}
       <div
-        className="absolute inset-0 opacity-[0.015]"
+        className="absolute inset-0 opacity-[0.02]"
         style={{
-          backgroundImage: `radial-gradient(circle, hsl(0 0% 100%) 0.5px, transparent 0.5px)`,
-          backgroundSize: '48px 48px',
+          backgroundImage: `radial-gradient(circle, hsl(0 0% 100%) 0.4px, transparent 0.4px)`,
+          backgroundSize: '52px 52px',
         }}
       />
     </div>

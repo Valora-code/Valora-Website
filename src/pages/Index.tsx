@@ -51,7 +51,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
-      {/* 5-layer atmospheric background */}
       <AtmosphericBackground />
 
       {/* ═══ NAVIGATION ═══ */}
@@ -115,18 +114,29 @@ const Index = () => {
           HERO — Premium editorial centerpiece
       ═══════════════════════════════════════════════════════════ */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-5 sm:px-8">
+        {/* Hero glow behind headline */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] w-[600px] h-[400px] pointer-events-none">
+          <div
+            className="w-full h-full rounded-full"
+            style={{
+              background: 'radial-gradient(ellipse, hsl(172 45% 45% / 0.08) 0%, transparent 55%)',
+              filter: 'blur(100px)',
+            }}
+          />
+        </div>
+
         {/* Hero arc glow — cinematic bottom light */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200%] sm:w-[150%] pointer-events-none">
           <div
             className="w-full aspect-[2/1] rounded-full hero-arc-glow"
             style={{
-              background: 'radial-gradient(ellipse at 50% 0%, hsl(172 45% 42% / 0.12) 0%, hsl(172 45% 42% / 0.04) 20%, transparent 45%)',
+              background: 'radial-gradient(ellipse at 50% 0%, hsl(172 45% 42% / 0.14) 0%, hsl(172 45% 42% / 0.05) 20%, transparent 45%)',
               transform: 'translateY(65%)',
             }}
           />
         </div>
 
-        <div className="relative z-10 max-w-3xl mx-auto w-full text-center space-y-10 sm:space-y-12">
+        <div className="relative z-10 max-w-3xl mx-auto w-full text-center space-y-10 sm:space-y-14">
           {/* Status badge */}
           <div className="fade-up">
             <span
@@ -142,18 +152,18 @@ const Index = () => {
             </span>
           </div>
 
-          {/* Headline — large editorial serif */}
-          <div className="fade-up-delay-1 space-y-2">
+          {/* Headline */}
+          <div className="fade-up-delay-1 space-y-3">
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-serif font-medium leading-[0.9] tracking-[-0.035em]">
               <span className="text-gradient-primary">Din ekonomi.</span>
               <br />
               <span className="text-foreground/90">Alltid </span>
-              <span className="italic font-normal text-foreground/60">optimerad.</span>
+              <span className="italic font-normal text-foreground/55">optimerad.</span>
             </h1>
           </div>
 
-          {/* Subtext — private banking tone */}
-          <p className="fade-up-delay-2 text-sm sm:text-[15px] text-muted-foreground max-w-[28rem] mx-auto leading-relaxed font-light">
+          {/* Subtext */}
+          <p className="fade-up-delay-2 text-sm sm:text-[15px] text-muted-foreground/70 max-w-[30rem] mx-auto leading-relaxed font-light">
             Valora identifierar och genomför förbättringar i din ekonomi — automatiskt, enligt dina villkor.
           </p>
 
@@ -212,69 +222,89 @@ const Index = () => {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          PROBLEM — Editorial with metric strip
+          PROBLEM — Editorial with premium metric strip
       ═══════════════════════════════════════════════════════════ */}
-      <section id="why" className="py-28 sm:py-36 lg:py-44 px-5 sm:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto space-y-20 sm:space-y-24">
+      <section id="why" className="py-32 sm:py-40 lg:py-48 px-5 sm:px-8 relative z-10">
+        <div className="max-w-3xl mx-auto space-y-20 sm:space-y-28">
           <ScrollReveal>
             <div className="max-w-[52ch] mx-auto text-center space-y-6">
               <p className="caption text-primary/40">Problemet</p>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium leading-[0.92] tracking-[-0.025em]">
+              <h2 className="headline-section">
                 Det handlar inte om<br className="hidden sm:block" /> brist på besparingar.
               </h2>
-              <p className="text-sm sm:text-[15px] text-muted-foreground font-light leading-relaxed max-w-[46ch] mx-auto">
+              <p className="text-sm sm:text-[15px] text-muted-foreground/60 font-light leading-relaxed max-w-[46ch] mx-auto">
                 Människor vet vad de borde göra — men skjuter upp det. Inte av okunskap, utan av mental belastning.
               </p>
             </div>
           </ScrollReveal>
 
-          {/* Metric strip — thin, premium, horizontal */}
+          {/* Metric strip — glass backed */}
           <ScrollReveal delay={100}>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-px rounded-2xl overflow-hidden" style={{ background: 'hsl(0 0% 100% / 0.03)' }}>
-              {[
-                { num: 88, label: 'har skjutit upp byte av lån eller försäkring' },
-                { num: 79, label: 'känner dåligt samvete över sin ekonomi' },
-                { num: 56, label: 'upplever hög mental belastning' },
-              ].map((stat, i) => (
-                <div
-                  key={i}
-                  className="p-8 sm:p-10 text-center"
-                  style={{ background: 'hsl(var(--background))' }}
-                >
-                  <CountUpNumber
-                    end={stat.num}
-                    suffix="%"
-                    className="text-3xl sm:text-4xl font-serif font-medium tracking-tight stat-accent tabular-nums"
-                  />
-                  <p className="text-xs text-muted-foreground/60 font-light mt-3 leading-relaxed max-w-[20ch] mx-auto">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <SpotlightCard>
+              <div className="grid grid-cols-1 sm:grid-cols-3">
+                {[
+                  { num: 88, label: 'har skjutit upp byte av lån eller försäkring' },
+                  { num: 79, label: 'känner dåligt samvete över sin ekonomi' },
+                  { num: 56, label: 'upplever hög mental belastning' },
+                ].map((stat, i) => (
+                  <div
+                    key={i}
+                    className="p-8 sm:p-10 text-center relative"
+                  >
+                    {/* Vertical separator */}
+                    {i > 0 && (
+                      <div className="hidden sm:block absolute left-0 top-[20%] bottom-[20%] w-px" style={{ background: 'hsl(0 0% 100% / 0.05)' }} />
+                    )}
+                    {/* Horizontal separator (mobile) */}
+                    {i > 0 && (
+                      <div className="sm:hidden absolute top-0 left-[15%] right-[15%] h-px" style={{ background: 'hsl(0 0% 100% / 0.05)' }} />
+                    )}
+                    <CountUpNumber
+                      end={stat.num}
+                      suffix="%"
+                      className="text-3xl sm:text-4xl font-serif font-medium tracking-tight stat-accent tabular-nums"
+                    />
+                    <p className="text-xs text-muted-foreground/50 font-light mt-3 leading-relaxed max-w-[20ch] mx-auto">
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </SpotlightCard>
           </ScrollReveal>
 
           {/* Quote */}
           <ScrollReveal delay={200}>
             <div className="text-center py-4">
-              <p className="text-lg sm:text-xl md:text-2xl font-serif font-light italic leading-relaxed text-foreground/50 max-w-[38ch] mx-auto">
+              <p className="text-lg sm:text-xl md:text-2xl font-serif font-light italic leading-relaxed text-foreground/40 max-w-[38ch] mx-auto">
                 "Jag har vetat i två år att jag borde göra detta — men jag orkade inte."
               </p>
-              <p className="text-muted-foreground/35 text-[11px] font-light mt-6 tracking-wider">Kvinna, 63 år</p>
+              <p className="text-muted-foreground/30 text-[11px] font-light mt-6 tracking-wider">Kvinna, 63 år</p>
             </div>
           </ScrollReveal>
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          HOW IT WORKS — 3 numbered glass tiles, generous spacing
+          HOW IT WORKS — 3 numbered glass tiles
       ═══════════════════════════════════════════════════════════ */}
-      <section id="how" className="py-28 sm:py-36 lg:py-44 px-5 sm:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto space-y-20 sm:space-y-24">
+      <section id="how" className="py-32 sm:py-40 lg:py-48 px-5 sm:px-8 relative z-10">
+        {/* Section glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] pointer-events-none">
+          <div
+            className="w-full h-full rounded-full"
+            style={{
+              background: 'radial-gradient(ellipse, hsl(172 40% 40% / 0.04) 0%, transparent 60%)',
+              filter: 'blur(120px)',
+            }}
+          />
+        </div>
+
+        <div className="max-w-3xl mx-auto space-y-20 sm:space-y-28 relative z-10">
           <ScrollReveal>
             <div className="text-center space-y-4">
               <p className="caption text-primary/40">Process</p>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium leading-[0.92] tracking-[-0.025em]">
+              <h2 className="headline-section">
                 Tre steg.
               </h2>
             </div>
@@ -288,13 +318,13 @@ const Index = () => {
             ].map((item, i) => (
               <ScrollReveal key={item.num} delay={(i + 1) * 120}>
                 <SpotlightCard className="h-full">
-                  <div className="p-8 sm:p-9 flex flex-col gap-6 min-h-[220px]">
-                    <span className="text-2xl font-serif font-medium text-primary/20 tracking-tight">
+                  <div className="p-8 sm:p-10 flex flex-col gap-6 min-h-[240px]">
+                    <span className="text-2xl font-serif font-medium text-primary/25 tracking-tight">
                       {item.num}
                     </span>
                     <div className="space-y-3 mt-auto">
-                      <h3 className="text-base sm:text-lg font-serif font-medium text-foreground tracking-tight">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground/70 leading-relaxed font-light">{item.desc}</p>
+                      <h3 className="headline-card text-foreground">{item.title}</h3>
+                      <p className="text-sm text-muted-foreground/60 leading-relaxed font-light">{item.desc}</p>
                     </div>
                   </div>
                 </SpotlightCard>
@@ -307,12 +337,12 @@ const Index = () => {
       {/* ═══════════════════════════════════════════════════════════
           PROOF — Testimonials
       ═══════════════════════════════════════════════════════════ */}
-      <section id="proof" className="py-28 sm:py-36 lg:py-44 px-5 sm:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto space-y-20 sm:space-y-24">
+      <section id="proof" className="py-32 sm:py-40 lg:py-48 px-5 sm:px-8 relative z-10">
+        <div className="max-w-3xl mx-auto space-y-20 sm:space-y-28">
           <ScrollReveal>
             <div className="text-center space-y-4">
               <p className="caption text-primary/40">Resultat</p>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium leading-[0.92] tracking-[-0.025em]">
+              <h2 className="headline-section">
                 Verifierad besparing.
               </h2>
             </div>
@@ -327,17 +357,17 @@ const Index = () => {
                 <SpotlightCard className="h-full">
                   <div className="p-8 sm:p-10 space-y-6">
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] text-muted-foreground/50 font-light tracking-wide">{item.person}</span>
-                      <span className="inline-flex items-center gap-1.5 text-[10px] text-primary/60 font-light">
+                      <span className="text-[11px] text-muted-foreground/40 font-light tracking-wide">{item.person}</span>
+                      <span className="inline-flex items-center gap-1.5 text-[10px] text-primary/50 font-light">
                         <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
                         Verifierat
                       </span>
                     </div>
                     <div>
                       <span className="text-3xl sm:text-4xl font-serif font-medium text-foreground tabular-nums">{item.amount}</span>
-                      <span className="text-muted-foreground/40 text-xs font-light ml-2">{item.period}</span>
+                      <span className="text-muted-foreground/35 text-xs font-light ml-2">{item.period}</span>
                     </div>
-                    <p className="text-sm text-muted-foreground/60 font-light italic leading-relaxed border-t border-border/8 pt-5">
+                    <p className="text-sm text-muted-foreground/50 font-light italic leading-relaxed pt-5" style={{ borderTop: '1px solid hsl(0 0% 100% / 0.05)' }}>
                       {item.quote}
                     </p>
                   </div>
@@ -348,7 +378,7 @@ const Index = () => {
 
           <ScrollReveal delay={300}>
             <div className="text-center py-4">
-              <p className="text-base sm:text-lg font-serif font-light italic leading-relaxed text-foreground/45 max-w-[36ch] mx-auto">
+              <p className="text-base sm:text-lg font-serif font-light italic leading-relaxed text-foreground/35 max-w-[36ch] mx-auto">
                 "Tidigare gav ekonomi mig konstant ångest. Nu känns det enklare."
               </p>
             </div>
@@ -359,18 +389,18 @@ const Index = () => {
       {/* ═══════════════════════════════════════════════════════════
           TARGET AUDIENCE — Quiet luxury list
       ═══════════════════════════════════════════════════════════ */}
-      <section className="py-28 sm:py-36 lg:py-44 px-5 sm:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto space-y-20 sm:space-y-24">
+      <section className="py-32 sm:py-40 lg:py-48 px-5 sm:px-8 relative z-10">
+        <div className="max-w-3xl mx-auto space-y-20 sm:space-y-28">
           <ScrollReveal>
             <div className="text-center space-y-4">
               <p className="caption text-primary/40">Målgrupp</p>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium leading-[0.92] tracking-[-0.025em]">
+              <h2 className="headline-section">
                 Byggt för dig.
               </h2>
             </div>
           </ScrollReveal>
 
-          <div className="space-y-2 max-w-2xl mx-auto">
+          <div className="space-y-1 max-w-2xl mx-auto">
             {[
               { title: 'Den upptagna', desc: 'Du har inte tid att jämföra och förhandla. Valora gör det åt dig.' },
               { title: 'Familjen med komplex ekonomi', desc: 'Flera lån och försäkringar. Valora håller allt optimerat.' },
@@ -378,13 +408,23 @@ const Index = () => {
             ].map((item, i) => (
               <ScrollReveal key={i} delay={(i + 1) * 100}>
                 <div
-                  className="flex items-start gap-6 p-6 sm:p-7 rounded-2xl transition-all duration-400 group hover:bg-muted/4"
-                  style={{ border: '1px solid transparent' }}
+                  className="flex items-start gap-6 p-6 sm:p-7 rounded-2xl transition-all duration-500 group"
+                  style={{
+                    border: '1px solid transparent',
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = 'hsl(0 0% 100% / 0.015)';
+                    e.currentTarget.style.borderColor = 'hsl(0 0% 100% / 0.04)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.borderColor = 'transparent';
+                  }}
                 >
-                  <span className="text-primary/25 text-sm font-serif mt-1 shrink-0 group-hover:text-primary/40 transition-colors duration-400">✦</span>
+                  <span className="text-primary/20 text-sm font-serif mt-1 shrink-0 group-hover:text-primary/35 transition-colors duration-500">✦</span>
                   <div className="space-y-1.5">
-                    <h3 className="text-sm sm:text-[15px] font-medium text-foreground tracking-tight">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground/60 font-light leading-relaxed">{item.desc}</p>
+                    <h3 className="text-sm sm:text-[15px] font-medium text-foreground/90 tracking-tight">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground/50 font-light leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               </ScrollReveal>
@@ -396,14 +436,14 @@ const Index = () => {
       {/* ═══════════════════════════════════════════════════════════
           WAITLIST — Secondary CTA
       ═══════════════════════════════════════════════════════════ */}
-      <section id="waitlist" className="relative z-10 py-28 sm:py-36 lg:py-44 px-5 sm:px-8">
-        {/* Subtle focused glow */}
+      <section id="waitlist" className="relative z-10 py-32 sm:py-40 lg:py-48 px-5 sm:px-8">
+        {/* Section glow */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[350px] rounded-full"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full"
             style={{
-              background: 'radial-gradient(ellipse, hsl(172 45% 42% / 0.07) 0%, transparent 65%)',
-              filter: 'blur(90px)',
+              background: 'radial-gradient(ellipse, hsl(172 45% 42% / 0.08) 0%, transparent 60%)',
+              filter: 'blur(100px)',
             }}
           />
         </div>
@@ -412,9 +452,9 @@ const Index = () => {
           <div className="max-w-md mx-auto text-center relative z-10 space-y-10">
             <div className="space-y-5">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-medium text-foreground leading-tight tracking-[-0.02em]">
-                Gå med i <span className="italic font-normal text-foreground/60">väntelistan</span>
+                Gå med i <span className="italic font-normal text-foreground/50">väntelistan</span>
               </h2>
-              <p className="text-xs sm:text-sm text-muted-foreground/50 font-light leading-relaxed max-w-xs mx-auto">
+              <p className="text-xs sm:text-sm text-muted-foreground/40 font-light leading-relaxed max-w-xs mx-auto">
                 Få tidig tillgång och bli bland de första att optimera din ekonomi autonomt.
               </p>
             </div>
@@ -453,10 +493,10 @@ const Index = () => {
               </SpotlightCard>
             )}
 
-            <div className="flex items-center justify-center gap-2.5 text-xs text-muted-foreground/30 font-light">
+            <div className="flex items-center justify-center gap-2.5 text-xs text-muted-foreground/25 font-light">
               <div className="w-1.5 h-1.5 rounded-full bg-primary/30 machine-pulse" />
               <span>
-                <CountUpNumber end={247} className="text-foreground/40 tabular-nums" duration={1500} /> väntar på tillgång
+                <CountUpNumber end={247} className="text-foreground/35 tabular-nums" duration={1500} /> väntar på tillgång
               </span>
             </div>
           </div>
@@ -464,14 +504,14 @@ const Index = () => {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          FAQ — Premium accordion with hairline separators
+          FAQ — Premium accordion
       ═══════════════════════════════════════════════════════════ */}
       <ScrollReveal delay={80}>
-        <section id="faq" className="py-28 sm:py-36 lg:py-44 px-5 sm:px-8 relative z-10">
-          <div className="max-w-2xl mx-auto space-y-16 sm:space-y-20">
+        <section id="faq" className="py-32 sm:py-40 lg:py-48 px-5 sm:px-8 relative z-10">
+          <div className="max-w-2xl mx-auto space-y-16 sm:space-y-24">
             <div className="text-center space-y-4">
               <p className="caption text-primary/40">Frågor</p>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium leading-[0.92] tracking-[-0.025em]">
+              <h2 className="headline-section">
                 Vanliga frågor
               </h2>
             </div>
@@ -486,12 +526,13 @@ const Index = () => {
                 <AccordionItem
                   key={i}
                   value={`item-${i + 1}`}
-                  className="border-b border-border/6 last:border-0"
+                  className="border-b last:border-0"
+                  style={{ borderColor: 'hsl(0 0% 100% / 0.04)' }}
                 >
-                  <AccordionTrigger className="text-left font-light text-sm sm:text-[15px] hover:no-underline py-6 sm:py-7 text-foreground/80 hover:text-foreground transition-colors duration-300">
+                  <AccordionTrigger className="text-left font-light text-sm sm:text-[15px] hover:no-underline py-7 sm:py-8 text-foreground/75 hover:text-foreground transition-colors duration-300">
                     {item.q}
                   </AccordionTrigger>
-                  <AccordionContent className="text-sm text-muted-foreground/60 font-light leading-relaxed pb-6">
+                  <AccordionContent className="text-sm text-muted-foreground/50 font-light leading-relaxed pb-7">
                     {item.a}
                   </AccordionContent>
                 </AccordionItem>
@@ -501,15 +542,15 @@ const Index = () => {
         </section>
       </ScrollReveal>
 
-      {/* ═══ FOOTER — Apple-minimal ═══ */}
+      {/* ═══ FOOTER ═══ */}
       <footer className="relative z-10 w-full">
         <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent 10%, hsl(0 0% 100% / 0.04) 50%, transparent 90%)' }} />
-        <div className="max-w-5xl mx-auto px-6 py-10 sm:py-12">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-muted-foreground/25 font-light">
-            <span className="tracking-[0.25em] uppercase text-foreground/30 text-[10px]">Valora</span>
+        <div className="max-w-5xl mx-auto px-6 py-10 sm:py-14">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-muted-foreground/20 font-light">
+            <span className="tracking-[0.25em] uppercase text-foreground/25 text-[10px]">Valora</span>
             <div className="flex items-center gap-6">
               {['Kontakt', 'Integritet'].map((label) => (
-                <a key={label} href="#" className="hover:text-foreground/50 transition-colors duration-300">{label}</a>
+                <a key={label} href="#" className="hover:text-foreground/40 transition-colors duration-300">{label}</a>
               ))}
               <span>© {new Date().getFullYear()}</span>
             </div>
