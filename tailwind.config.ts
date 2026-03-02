@@ -68,7 +68,7 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        serif: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['Playfair Display', 'Georgia', 'Times New Roman', 'serif'],
         sans: [
           'ui-sans-serif',
           'system-ui',

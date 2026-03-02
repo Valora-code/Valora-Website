@@ -1,9 +1,16 @@
 import { useState } from "react";
 import { ValoraLogo } from "@/components/ValoraLogo";
+import AnimatedOrb from "@/components/AnimatedOrb";
 import { CountUpNumber } from "@/components/CountUpNumber";
+import { SystemStatus } from "@/components/SystemStatus";
+import { InteractiveCard } from "@/components/InteractiveCard";
+import { ParallaxSection } from "@/components/ParallaxSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { SpotlightCard } from "@/components/SpotlightCard";
-import { AtmosphericBackground } from "@/components/AtmosphericBackground";
+import { ThemeToggle } from "@/components/ThemeToggle";
+
+import { ThreeValoraLogo } from "@/components/ThreeValoraLogo";
+import { MagneticButton } from "@/components/MagneticButton";
+import { useParallax } from "@/hooks/use-parallax";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,638 +18,631 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
-
 const waitlistSchema = z.object({
-  email: z.string().trim().email({ message: "Ogiltig e-postadress" }).max(255),
-  note: z.string().trim().max(500, { message: "Anteckningen får vara max 500 tecken" }).optional(),
+  email: z.string().trim().email({
+    message: "Ogiltig e-postadress"
+  }).max(255),
+  note: z.string().trim().max(500, {
+    message: "Anteckningen får vara max 500 tecken"
+  }).optional()
 });
-
 const Index = () => {
   const [email, setEmail] = useState("");
   const [note, setNote] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
 
+  // Parallax effects - enhanced for more pronounced depth
+  const bgParallax = useParallax({
+    speed: 0.04,
+    direction: 'down'
+  });
+  const logoParallax = useParallax({
+    speed: 0.03,
+    direction: 'up'
+  });
+
+  // Mouse tracking for access port light refraction
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const button = e.currentTarget;
+    const rect = button.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width * 100;
+    const y = (e.clientY - rect.top) / rect.height * 100;
+    button.style.setProperty('--mouse-x', `${x}%`);
+    button.style.setProperty('--mouse-y', `${y}%`);
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const validatedData = waitlistSchema.parse({ email, note });
-      const { error } = await supabase.from('waitlist').insert([{
+      // Validate input
+      const validatedData = waitlistSchema.parse({
+        email,
+        note
+      });
+
+      // Save to Supabase
+      const {
+        error
+      } = await supabase.from('waitlist').insert([{
         email: validatedData.email,
-        note: validatedData.note || null,
+        note: validatedData.note || null
       }]);
-      if (error && error.code !== '23505') throw error;
+
+      // Anti-enumeration protection: Always show success to prevent timing attacks
+      // Even if the email already exists (duplicate key error), we show success
+      // This prevents attackers from determining which emails are in the waitlist
+      if (error && error.code !== '23505') {
+        // Only show error for non-duplicate database errors
+        throw error;
+      }
       setSubmitted(true);
-      toast({ title: "Tack", description: "Du är nu registrerad för tidig access." });
+      toast({
+        title: "Tack",
+        description: "Du är nu registrerad för tidig access."
+      });
     } catch (error) {
       if (error instanceof z.ZodError) {
-        toast({ title: "Ogiltig inmatning", description: error.errors[0].message, variant: "destructive" });
+        toast({
+          title: "Ogiltig inmatning",
+          description: error.errors[0].message,
+          variant: "destructive"
+        });
       } else {
-        toast({ title: "Ett fel uppstod", description: "Försök igen senare.", variant: "destructive" });
+        // Generic error message for all database errors
+        // to prevent timing attacks and email enumeration
+        toast({
+          title: "Ett fel uppstod",
+          description: "Försök igen senare.",
+          variant: "destructive"
+        });
       }
     }
   };
-
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    element?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
   };
+  return <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
+      {/* Noise texture overlay */}
+      <div className="noise-overlay" />
 
-  return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
-      <AtmosphericBackground />
+      {/* Layered gradient backgrounds */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* Base gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-muted/5" />
+        {/* Radial gradient from top */}
+        <div
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[60vh]"
+          style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, hsl(220 15% 12%) 0%, transparent 100%)' }}
+        />
+        {/* #1 – Teal hero glow – centrat bakom rubriken */}
+        <div
+          className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[70%] h-[50vh] pulse-soft"
+          style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 40%, hsl(172 50% 45% / 0.10) 0%, hsl(172 50% 45% / 0.04) 50%, transparent 100%)' }}
+        />
+        {/* Side gradients with teal */}
+        <div
+          className="absolute top-1/3 left-0 w-[40%] h-[60%]"
+          style={{ background: 'radial-gradient(ellipse at 0% 50%, hsl(172 50% 45% / 0.04) 0%, transparent 60%)' }}
+        />
+        <div
+          className="absolute top-1/4 right-0 w-[40%] h-[60%]"
+          style={{ background: 'radial-gradient(ellipse at 100% 50%, hsl(200 40% 40% / 0.03) 0%, transparent 60%)' }}
+        />
+      </div>
 
-      {/* ═══ NAVIGATION ═══ */}
-      <nav className="fixed top-0 left-0 right-0 z-50">
-        <div className="max-w-[1120px] mx-auto px-5 sm:px-8 pt-4 sm:pt-5">
-          <div className="flex items-center justify-between px-5 sm:px-6 py-3 rounded-2xl nav-glass">
-            <ValoraLogo size="small" />
+      {/* Animated teal/emerald orbs */}
+      <AnimatedOrb />
+
+      {/* Vignette overlay for depth */}
+      <div className="fixed inset-0 pointer-events-none z-50">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_40%,rgba(0,0,0,0.25)_100%)]" />
+      </div>
+
+
+      {/* Fixed Navigation – matches Valora PF minimal style */}
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/40 bg-background/85 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-5">
+          <div className="flex items-center justify-between">
+            {/* Logo – minimal text-only style */}
+            <span className="text-foreground/90 font-medium tracking-[0.2em] text-xs flex items-center gap-2">
+              <ValoraLogo size="small" />
+            </span>
+
+            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
-              {[
-                ['problem', 'Problem'],
-                ['how', 'Process'],
-                ['proof', 'Results'],
-                ['faq', 'FAQ'],
-              ].map(([id, label]) => (
-                <button
-                  key={id}
-                  onClick={() => scrollToSection(id)}
-                  className="text-[13px] text-muted-foreground/60 hover:text-foreground/90 transition-colors duration-300 tracking-[-0.01em]"
-                >
-                  {label}
-                </button>
-              ))}
-              <Button
-                variant="valora"
-                size="sm"
-                onClick={() => scrollToSection('waitlist')}
-                className="text-[12px] h-8 px-5 rounded-lg"
-              >
-                Tidig access
+              <button onClick={() => scrollToSection('why')} className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
+                Varför Valora
+              </button>
+              <button onClick={() => scrollToSection('how')} className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
+                Hur det fungerar
+              </button>
+              <button onClick={() => scrollToSection('proof')} className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
+                Användare
+              </button>
+              <button onClick={() => scrollToSection('faq')} className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
+                Vanliga frågor
+              </button>
+              <Button variant="valoraGhost" size="sm" onClick={() => scrollToSection('waitlist')}>
+                Gå med i väntelistan
               </Button>
             </div>
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="Toggle menu"
-            >
-              <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" stroke="currentColor">
-                {mobileMenuOpen ? <path d="M6 18L18 6M6 6l12 12" /> : <path d="M4 6h16M4 12h16M4 18h16" />}
-              </svg>
-            </button>
+
+            {/* Mobile Menu Button */}
+            <div className="flex md:hidden items-center gap-4">
+              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-muted-foreground hover:text-foreground transition-colors" aria-label="Toggle menu">
+                <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" stroke="currentColor">
+                  {mobileMenuOpen ? <path d="M6 18L18 6M6 6l12 12" /> : <path d="M4 6h16M4 12h16M4 18h16" />}
+                </svg>
+              </button>
+            </div>
           </div>
-          {mobileMenuOpen && (
-            <div className="md:hidden mt-2 rounded-2xl p-3 space-y-0.5 nav-glass">
-              {[['problem','Problemet'],['how','Process'],['proof','Resultat'],['faq','FAQ']].map(([id, label]) => (
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && <div className="md:hidden mt-4 pb-4 space-y-1 border-t border-border/30 pt-4">
+              {[['why','Varför Valora'],['how','Hur det fungerar'],['proof','Användare'],['faq','Vanliga frågor']].map(([id, label]) => (
                 <button key={id} onClick={() => { scrollToSection(id); setMobileMenuOpen(false); }}
-                  className="block w-full text-left py-2.5 px-3 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-lg">
+                  className="block w-full text-left py-2.5 px-1 text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
                   {label}
                 </button>
               ))}
-              <div className="pt-1.5 px-1">
-                <Button variant="valora" size="sm" className="w-full" onClick={() => { scrollToSection('waitlist'); setMobileMenuOpen(false); }}>
-                  Tidig access
+              <div className="pt-3">
+                <Button variant="valora" size="sm" className="w-full cta-glow" onClick={() => { scrollToSection('waitlist'); setMobileMenuOpen(false); }}>
+                  Gå med i väntelistan
                 </Button>
               </div>
-            </div>
-          )}
+            </div>}
         </div>
       </nav>
 
-      {/* ═══════════════════════════════════════════════════════════
-          HERO — Split layout: editorial left, product viz right
-      ═══════════════════════════════════════════════════════════ */}
-      <section className="relative min-h-screen flex items-center px-5 sm:px-8">
-        <div className="max-w-[1120px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center pt-28 sm:pt-32 lg:pt-0">
+      {/* Hero Section – centered layout matching Valora Personal Finance */}
+      <section className="min-h-screen flex flex-col items-center justify-center px-6 md:px-12 pt-24 pb-16 relative z-10">
+        <div className="max-w-3xl mx-auto text-center">
+
+          {/* Headline with gradient text and serif font */}
+          <h1 className="headline-hero fade-up mb-6">
+            <span className="text-gradient-primary">Autonom</span>
+            <br />
+            <span className="text-foreground">personlig ekonomi.</span>
+          </h1>
+
+          {/* Truth line */}
+          <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto fade-up-delay-1 mb-4 leading-relaxed">
+            Valora arbetar i bakgrunden och identifierar förbättringar i din ekonomi – enligt dina ramar.
+          </p>
+
+          {/* Supporting line */}
+          <p className="text-base text-muted-foreground/80 fade-up-delay-2 mb-4 font-medium">
+            Du behåller kontrollen. Vi gör arbetet.
+          </p>
+
+          <p className="text-sm text-muted-foreground/60 fade-up-delay-2 mb-12">
+            Gå med på väntelistan och se hur mycket du kan frigöra.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 fade-up-delay-3 mb-16">
+            <MagneticButton strength={0.4}>
+              <Button variant="valora" size="lg" onClick={() => scrollToSection('waitlist')} className="cta-glow min-w-[200px]">
+                Begär tidig tillgång
+              </Button>
+            </MagneticButton>
+            <MagneticButton strength={0.2}>
+              <Button variant="valoraGhost" size="lg" onClick={() => scrollToSection('how')} className="min-w-[180px]">
+                Så fungerar Valora
+              </Button>
+            </MagneticButton>
+          </div>
+
+          {/* Live savings ticker – improved pill */}
+          <div className="fade-up-delay-3 flex justify-center">
+            <div
+              className="relative inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 surface-glass rounded-2xl px-7 py-4 border border-primary/20"
+              style={{ boxShadow: '0 0 40px hsl(172 50% 45% / 0.12), 0 0 0 1px hsl(172 50% 45% / 0.06) inset' }}
+            >
+              <CountUpNumber
+                end={148499}
+                suffix=" kr"
+                format={(n) => n.toLocaleString('sv-SE')}
+                className="text-3xl sm:text-4xl font-serif font-medium text-primary tabular-nums"
+              />
+              <span className="text-muted-foreground text-sm">identifierade besparingar</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Problem Section - Diagnostic Panel */}
+      {/* Section separator */}
+      <div className="relative z-10 h-px separator-sweep bg-border/30" />
+
+      <section id="why" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 relative z-10">
+        <div className="max-w-5xl mx-auto space-y-16 sm:space-y-20 lg:space-y-24">
+          <ScrollReveal>
+            <div className="max-w-3xl mx-auto text-center space-y-4 sm:space-y-6">
+              <h2 className="headline-section">Problemet är inte brist på besparingar. Det är att människor inte orkar agera.</h2>
+              <p className="text-base sm:text-lg text-muted-foreground font-light leading-relaxed">
+                I både tester och enkätdata framträder samma mönster: människor vet vad de borde göra – 
+                men skjuter upp det. Inte av okunskap, utan på grund av mental belastning, friktion och prokrastinering.
+              </p>
+            </div>
+          </ScrollReveal>
           
-          {/* Left — Editorial copy */}
-          <div className="space-y-8 sm:space-y-10 max-w-xl">
-            {/* Status badge */}
-            <div className="fade-up">
-              <span
-                className="inline-flex items-center gap-2.5 text-[10px] tracking-[0.18em] uppercase px-4 py-2 rounded-full"
-                style={{
-                  background: 'hsl(0 0% 100% / 0.03)',
-                  border: '1px solid hsl(0 0% 100% / 0.06)',
-                  color: 'hsl(0 0% 50%)',
-                }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/50 machine-pulse" />
-                Nu i tidig access
-              </span>
-            </div>
-
-            {/* Headline */}
-            <div className="fade-up-delay-1 space-y-5">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[3.75rem] font-medium leading-[1.05] tracking-[-0.035em] text-foreground">
-                Autonom
-                <br />
-                personlig finans.
-              </h1>
-              <p className="text-[15px] sm:text-base text-muted-foreground/55 leading-[1.7] max-w-[38ch] tracking-[-0.01em]">
-                Valora analyserar, jämför, optimerar och genomför — lån och försäkringar, automatiskt.
-              </p>
-            </div>
-
-            {/* CTA — glass capsule */}
-            <div className="fade-up-delay-2 max-w-[420px]">
-              {!submitted ? (
-                <div className="space-y-3">
-                  <SpotlightCard variant="elevated">
-                    <form onSubmit={handleSubmit} className="p-1.5">
-                      <div className="flex items-center gap-1.5">
-                        <Input
-                          type="email"
-                          value={email}
-                          onChange={e => setEmail(e.target.value)}
-                          required
-                          className="flex-1 bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 text-sm placeholder:text-muted-foreground/25 h-11 px-4 rounded-xl tracking-[-0.01em]"
-                          placeholder="din@email.se"
-                        />
-                        <Button type="submit" variant="valora" className="rounded-xl h-9 px-5 text-[12px] font-medium shrink-0 cta-glow">
-                          Begär access
-                        </Button>
-                      </div>
-                    </form>
-                  </SpotlightCard>
-                  <Textarea
-                    value={note}
-                    onChange={e => setNote(e.target.value)}
-                    className="bg-transparent border border-border/8 focus-visible:ring-primary/15 min-h-[48px] text-sm placeholder:text-muted-foreground/18 resize-none rounded-xl input-glow tracking-[-0.01em]"
-                    placeholder="Valfritt: Vad vill du optimera?"
-                  />
+          <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
+          <ScrollReveal delay={100}>
+            <InteractiveCard className="liquid-glass p-6 sm:p-8 rounded-xl group chromatic-hover">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-start sm:items-center">
+                <CountUpNumber end={88} suffix="%" className="text-5xl sm:text-6xl font-serif font-medium tracking-tighter text-primary whitespace-nowrap" />
+                <div>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    har skjutit upp att byta lån eller försäkring – trots att de vet att de borde.
+                  </p>
                 </div>
-              ) : (
-                <SpotlightCard variant="elevated">
-                  <div className="p-8 text-center space-y-3">
-                    <div className="w-10 h-10 rounded-full bg-primary/8 border border-primary/12 flex items-center justify-center mx-auto">
-                      <svg className="w-4.5 h-4.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                      </svg>
-                    </div>
-                    <p className="text-foreground text-base font-medium">Registrerad.</p>
-                    <p className="text-muted-foreground/50 text-xs">Du får tidig access vid lansering.</p>
+              </div>
+            </InteractiveCard>
+          </ScrollReveal>
+            
+          <ScrollReveal delay={200}>
+            <InteractiveCard className="liquid-glass p-6 sm:p-8 rounded-xl group chromatic-hover">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-start sm:items-center">
+                <CountUpNumber end={79} suffix="%" className="text-5xl sm:text-6xl font-serif font-medium tracking-tighter text-primary whitespace-nowrap" />
+                <div>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    känner ibland eller ofta dåligt samvete över att inte ta tag i sin ekonomi.
+                  </p>
+                </div>
+              </div>
+            </InteractiveCard>
+          </ScrollReveal>
+            
+          <ScrollReveal delay={300}>
+            <InteractiveCard className="liquid-glass p-6 sm:p-8 rounded-xl group chromatic-hover">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-start sm:items-center">
+                <CountUpNumber end={56} suffix="%" className="text-5xl sm:text-6xl font-serif font-medium tracking-tighter text-primary whitespace-nowrap" />
+                <div>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    upplever hög mental belastning när de tänker på lån, försäkringar och ekonomi.
+                  </p>
+                </div>
+              </div>
+            </InteractiveCard>
+          </ScrollReveal>
+          </div>
+          
+          {/* #5 – Quote card med dekorativt citattecken */}
+          <ScrollReveal delay={400}>
+            <div className="max-w-3xl mx-auto">
+              <InteractiveCard className="liquid-glass p-8 sm:p-12 rounded-xl system-glow group chromatic-hover relative overflow-hidden">
+                {/* Dekorativt bakgrunds-citattecken */}
+                <span className="absolute top-2 left-4 text-[90px] leading-none font-serif select-none pointer-events-none" style={{ color: 'hsl(172 50% 45% / 0.07)' }} aria-hidden="true">"</span>
+                <div className="relative z-10">
+                  <p className="text-xl sm:text-2xl md:text-3xl font-serif font-light italic leading-relaxed text-foreground mb-6">
+                    Jag har vetat i två år att jag borde göra detta – men jag orkade inte.
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="h-px flex-1 bg-border/40" />
+                    <p className="text-muted-foreground text-sm font-medium">Kvinna, 63 år</p>
                   </div>
-                </SpotlightCard>
-              )}
+                </div>
+              </InteractiveCard>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* System Status Section */}
+      <div className="relative z-10 h-px separator-sweep bg-border/30" />
+      <ScrollReveal delay={100}>
+        <SystemStatus />
+      </ScrollReveal>
+
+      {/* How It Works - Interactive Timeline */}
+      <div className="relative z-10 h-px separator-sweep bg-border/30" />
+      <section id="how" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 bg-background-elevated relative z-10 overflow-hidden">
+        <div className="max-w-5xl mx-auto space-y-16 sm:space-y-20 lg:space-y-24">
+          <ScrollReveal>
+            <h2 className="headline-section text-center">
+              Så fungerar Valora
+            </h2>
+          </ScrollReveal>
+          
+          {/* #6 & #7 – Visual Timeline med ikoner, animerad linje och kompakt spacing */}
+          <div className="relative max-w-3xl mx-auto">
+            {/* Animerad vertikal linje */}
+            <div className="absolute left-[27px] top-12 bottom-12 w-px hidden md:block overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/30 to-transparent" />
+              {/* Pulsande dot som rör sig nedåt */}
+              <div className="absolute w-1.5 h-8 left-[-3px] rounded-full bg-primary/60 blur-[1px] scan-line" />
             </div>
 
-            {/* Trust strip */}
-            <div className="fade-up-delay-3 flex items-center gap-6 text-[10px] text-muted-foreground/25 tracking-[0.15em] uppercase">
-              <span>BankID</span>
-              <span className="w-px h-3 bg-border/10" />
-              <span>PSD2</span>
-              <span className="w-px h-3 bg-border/10" />
-              <span>Licensierade partners</span>
+            <div className="space-y-6 sm:space-y-8">
+              <ScrollReveal delay={100}>
+                <div className="grid md:grid-cols-[56px_1fr] gap-4 sm:gap-6 items-start relative">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                    <span className="text-xl font-serif font-medium text-primary">1</span>
+                  </div>
+                  <InteractiveCard className="liquid-glass p-5 sm:p-6 rounded-xl group chromatic-hover">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-medium text-primary/70 tracking-widest uppercase">Steg 01</span>
+                      </div>
+                      <h3 className="headline-card">Koppla din ekonomi</h3>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        Du ansluter banker, lån och försäkringar – och anger dina villkor och preferenser.
+                      </p>
+                    </div>
+                  </InteractiveCard>
+                </div>
+              </ScrollReveal>
+
+              <ScrollReveal delay={200}>
+                <div className="grid md:grid-cols-[56px_1fr] gap-4 sm:gap-6 items-start relative">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                    <span className="text-xl font-serif font-medium text-primary">2</span>
+                  </div>
+                  <InteractiveCard className="liquid-glass p-5 sm:p-6 rounded-xl group chromatic-hover">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-medium text-primary/70 tracking-widest uppercase">Steg 02</span>
+                      </div>
+                      <h3 className="headline-card">Valora analyserar och förhandlar</h3>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        Systemet bevakar marknaden, identifierar förbättringar och förhandlar kontinuerligt åt dig.
+                      </p>
+                    </div>
+                  </InteractiveCard>
+                </div>
+              </ScrollReveal>
+
+              <ScrollReveal delay={300}>
+                <div className="grid md:grid-cols-[56px_1fr] gap-4 sm:gap-6 items-start relative">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                    <span className="text-xl font-serif font-medium text-primary">3</span>
+                  </div>
+                  <InteractiveCard className="liquid-glass p-5 sm:p-6 rounded-xl group chromatic-hover">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-medium text-primary/70 tracking-widest uppercase">Steg 03</span>
+                      </div>
+                      <h3 className="headline-card">Du godkänner. Valora verkställer.</h3>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        Ett klick. Resten sker automatiskt i bakgrunden.
+                      </p>
+                    </div>
+                  </InteractiveCard>
+                </div>
+              </ScrollReveal>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Right — Product visualization (abstract glass UI) */}
-          <div className="fade-up-delay-2 relative hidden lg:block">
-            <div className="relative">
-              {/* Ambient glow behind visualization */}
-              <div className="absolute -inset-16 pointer-events-none">
-                <div className="w-full h-full rounded-full" style={{
-                  background: 'radial-gradient(ellipse 70% 60% at 50% 45%, hsl(172 42% 40% / 0.1) 0%, transparent 65%)',
-                  filter: 'blur(60px)',
-                }} />
+      {/* Section separator */}
+      <div className="relative z-10 h-px separator-sweep bg-border/30" />
+
+      {/* Proof Section */}
+      <section id="proof" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 relative z-10">
+        <div className="max-w-5xl mx-auto space-y-16 sm:space-y-20 lg:space-y-24">
+          <ScrollReveal>
+            <h2 className="headline-section text-center">
+              Verifierad besparing. Verklig mental lättnad.
+            </h2>
+          </ScrollReveal>
+          
+          <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+            <ScrollReveal delay={100}>
+              <InteractiveCard className="liquid-glass p-6 sm:p-8 rounded-xl group chromatic-hover relative overflow-hidden h-full">
+                <div className="flex items-center justify-between mb-5">
+                  <span className="text-sm text-muted-foreground font-medium">Privatperson, 63 år</span>
+                  <span className="inline-flex items-center gap-1.5 text-xs text-primary bg-primary/8 border border-primary/15 rounded-full px-2.5 py-1">
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Verifierat
+                  </span>
+                </div>
+                <div className="text-4xl sm:text-5xl font-serif font-medium text-primary tabular-nums mb-1">17 000 kr</div>
+                <div className="text-xs text-muted-foreground mb-6">per år i identifierade besparingar</div>
+                <span className="absolute bottom-2 right-4 text-[72px] leading-none font-serif select-none pointer-events-none" style={{ color: 'hsl(172 50% 45% / 0.07)' }} aria-hidden="true">"</span>
+                <p className="text-sm sm:text-base text-muted-foreground font-light italic leading-relaxed">
+                  "Jag hade aldrig gjort detta själv. Nu slipper jag tänka."
+                </p>
+              </InteractiveCard>
+            </ScrollReveal>
+            <ScrollReveal delay={200}>
+              <InteractiveCard className="liquid-glass p-6 sm:p-8 rounded-xl group chromatic-hover relative overflow-hidden h-full">
+                <div className="flex items-center justify-between mb-5">
+                  <span className="text-sm text-muted-foreground font-medium">Privatperson, 33 år</span>
+                  <span className="inline-flex items-center gap-1.5 text-xs text-primary bg-primary/8 border border-primary/15 rounded-full px-2.5 py-1">
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Verifierat
+                  </span>
+                </div>
+                <div className="text-4xl sm:text-5xl font-serif font-medium text-primary tabular-nums mb-1">15 000 kr</div>
+                <div className="text-xs text-muted-foreground mb-6">per år i identifierade besparingar</div>
+                <span className="absolute bottom-2 right-4 text-[72px] leading-none font-serif select-none pointer-events-none" style={{ color: 'hsl(172 50% 45% / 0.07)' }} aria-hidden="true">"</span>
+                <p className="text-sm sm:text-base text-muted-foreground font-light italic leading-relaxed">
+                  "Jag betalar hellre än att behöva bära detta i huvudet."
+                </p>
+              </InteractiveCard>
+            </ScrollReveal>
+          </div>
+          <ScrollReveal delay={300}>
+            <InteractiveCard className="liquid-glass p-8 sm:p-12 rounded-xl max-w-2xl mx-auto group chromatic-hover relative overflow-hidden">
+              <span className="absolute top-2 left-4 text-[90px] leading-none font-serif select-none pointer-events-none" style={{ color: 'hsl(172 50% 45% / 0.07)' }} aria-hidden="true">"</span>
+              <p className="relative z-10 text-xl sm:text-2xl font-serif font-light italic text-center leading-relaxed">Tidigare gav ekonomi mig konstant ångest. Nu känns det mycket enklare.</p>
+            </InteractiveCard>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Target Audience */}
+      <div className="relative z-10 h-px separator-sweep bg-border/30" />
+      <section className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 bg-background-elevated relative z-10">
+        <div className="max-w-6xl mx-auto space-y-12 sm:space-y-16 lg:space-y-20">
+          <ScrollReveal>
+            <h2 className="headline-section text-center">
+              För vem är Valora byggt?
+            </h2>
+          </ScrollReveal>
+          
+          <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
+            <ScrollReveal delay={100}>
+              <InteractiveCard className="surface-elevated p-6 sm:p-8 rounded-xl space-y-3 sm:space-y-4 group chromatic-hover">
+                <h3 className="headline-card">Den upptagna yrkespersonen</h3>
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                  Du har inte tid att förhandla, jämföra och bevaka. Valora gör det åt dig.
+                </p>
+              </InteractiveCard>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={200}>
+              <InteractiveCard className="surface-elevated p-6 sm:p-8 rounded-xl space-y-3 sm:space-y-4 group chromatic-hover">
+                <h3 className="headline-card">Familjen med komplex ekonomi</h3>
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">Flera lån och försäkringar. Valora håller allt optimerat i bakgrunden.</p>
+              </InteractiveCard>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={300}>
+              <InteractiveCard className="surface-elevated p-6 sm:p-8 rounded-xl space-y-3 sm:space-y-4 group chromatic-hover">
+                <h3 className="headline-card">Den som vill ha kontroll utan stress</h3>
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                  Du vill göra rätt – men slippa bära ansvaret mentalt. Valora tar över.
+                </p>
+              </InteractiveCard>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Waitlist */}
+      <div className="relative z-10 h-px separator-sweep bg-border/30" />
+      <section id="waitlist" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 relative z-10">
+        <div className="max-w-2xl mx-auto space-y-12 sm:space-y-16">
+          <ScrollReveal>
+            <div className="text-center space-y-3 sm:space-y-4">
+              <p className="text-xs text-primary font-medium tracking-[0.2em] uppercase mb-3">Begränsad tidig tillgång</p>
+              <h2 className="headline-section">
+                Begär tidig tillgång till Valora
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground">
+                Vi öppnar Valora successivt för ett begränsat antal användare.
+              </p>
+            </div>
+          </ScrollReveal>
+          
+          {!submitted ? <form onSubmit={handleSubmit} className="liquid-glass p-6 sm:p-10 rounded-xl space-y-5 sm:space-y-6">
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-light tracking-wide text-foreground">
+                  E-post *
+                </label>
+                <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} required className="bg-background-surface border-border" placeholder="din@email.se" />
               </div>
               
-              {/* Main product card */}
-              <SpotlightCard variant="elevated">
-                <div className="p-8 space-y-6">
-                  {/* Header row */}
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-1">
-                      <p className="text-[10px] text-muted-foreground/30 tracking-[0.15em] uppercase">Portfolio</p>
-                      <p className="text-2xl font-medium text-foreground tracking-[-0.02em] tabular-nums">847 200 kr</p>
-                    </div>
-                    <div className="flex items-center gap-1.5 text-primary/60 text-xs">
-                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" /></svg>
-                      <span className="tabular-nums">Optimerad</span>
-                    </div>
-                  </div>
-                  
-                  {/* Metric rows */}
-                  <div className="space-y-0">
-                    {[
-                      { label: 'Bolån', value: '1.89%', status: 'Optimalt' },
-                      { label: 'Hemförsäkring', value: '189 kr/mån', status: 'Byte möjligt' },
-                      { label: 'Bilförsäkring', value: '312 kr/mån', status: 'Optimalt' },
-                    ].map((row, i) => (
-                      <div key={i} className="flex items-center justify-between py-4" style={{
-                        borderTop: i > 0 ? '1px solid hsl(0 0% 100% / 0.04)' : 'none',
-                      }}>
-                        <span className="text-sm text-muted-foreground/50 tracking-[-0.01em]">{row.label}</span>
-                        <div className="flex items-center gap-4">
-                          <span className="text-sm text-foreground/80 tabular-nums tracking-[-0.01em]">{row.value}</span>
-                          <span className={`text-[10px] tracking-[0.05em] px-2 py-0.5 rounded-md ${
-                            row.status === 'Optimalt' 
-                              ? 'text-primary/50 bg-primary/5' 
-                              : 'text-muted-foreground/40 bg-muted/20'
-                          }`}>
-                            {row.status}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  {/* Bottom summary */}
-                  <div className="pt-2" style={{ borderTop: '1px solid hsl(0 0% 100% / 0.04)' }}>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground/30">Potentiell besparing</span>
-                      <span className="text-primary/70 text-sm font-medium tabular-nums tracking-[-0.01em]">+17 400 kr/år</span>
-                    </div>
-                  </div>
-                </div>
-              </SpotlightCard>
+              <div className="space-y-2">
+                <label htmlFor="note" className="text-sm font-light tracking-wide text-foreground">
+                  Vad vill du att Valora ska optimera åt dig?
+                </label>
+                <Textarea id="note" value={note} onChange={e => setNote(e.target.value)} className="bg-background-surface border-border min-h-24" placeholder="Bostadslån, privatlån, bilförsäkring, hemförsäkring" />
+              </div>
               
-              {/* Floating secondary card */}
-              <div className="absolute -bottom-8 -left-6 w-52">
-                <SpotlightCard>
-                  <div className="p-4 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
-                        <svg className="w-2.5 h-2.5 text-primary/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-                      </div>
-                      <span className="text-[11px] text-foreground/60">Automatisk analys</span>
-                    </div>
-                    <p className="text-[10px] text-muted-foreground/30 leading-relaxed">3 optimeringar identifierade</p>
-                  </div>
-                </SpotlightCard>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════
-          THE PROBLEM — Behavioral framing
-      ═══════════════════════════════════════════════════════════ */}
-      <section id="problem" className="py-36 sm:py-44 lg:py-52 px-5 sm:px-8 relative z-10">
-        <div className="max-w-[1120px] mx-auto">
-          <ScrollReveal>
-            <div className="max-w-[52ch] space-y-5">
-              <p className="text-[10px] text-primary/40 tracking-[0.2em] uppercase font-medium">Problemet</p>
-              <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-medium leading-[1.1] tracking-[-0.03em] text-foreground">
-                Människor vet vad de borde göra.
-                <br />
-                <span className="text-foreground/35">De gör det bara inte.</span>
-              </h2>
-              <p className="text-[15px] text-muted-foreground/45 leading-[1.7] max-w-[44ch] tracking-[-0.01em]">
-                Inte av okunskap — av mental belastning. Att jämföra, förhandla och byta kräver tid och energi som de flesta inte har.
+              <Button type="submit" variant="valora" className="w-full cta-glow" size="lg">
+                Gå med i väntelistan
+              </Button>
+            </form> : <div className="liquid-glass p-6 sm:p-10 rounded-xl text-center">
+              <p className="text-lg sm:text-xl font-light">
+                Tack. Du är nu registrerad för tidig access.
               </p>
-            </div>
-          </ScrollReveal>
-
-          {/* Stats */}
-          <ScrollReveal delay={150}>
-            <div className="mt-20 sm:mt-28">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-0">
-                {[
-                  { num: 88, label: 'har skjutit upp byte av lån eller försäkring' },
-                  { num: 79, label: 'känner dåligt samvete kring sin ekonomi' },
-                  { num: 56, label: 'upplever hög mental belastning' },
-                ].map((stat, i) => (
-                  <div key={i} className="py-8 sm:py-0 sm:pr-12 lg:pr-16" style={{
-                    borderTop: i > 0 ? '1px solid hsl(0 0% 100% / 0.04)' : 'none',
-                    ...(i > 0 ? { borderTopWidth: '1px' } : {}),
-                  }}>
-                    <div className="hidden sm:block" style={{
-                      borderLeft: i > 0 ? '1px solid hsl(0 0% 100% / 0.04)' : 'none',
-                      paddingLeft: i > 0 ? '3rem' : '0',
-                    }}>
-                      <CountUpNumber
-                        end={stat.num}
-                        suffix="%"
-                        className="text-4xl sm:text-5xl font-medium tracking-[-0.03em] text-foreground tabular-nums"
-                      />
-                      <p className="text-[13px] text-muted-foreground/35 mt-3 leading-[1.6] max-w-[22ch] tracking-[-0.01em]">
-                        {stat.label}
-                      </p>
-                    </div>
-                    <div className="sm:hidden">
-                      <CountUpNumber
-                        end={stat.num}
-                        suffix="%"
-                        className="text-4xl font-medium tracking-[-0.03em] text-foreground tabular-nums"
-                      />
-                      <p className="text-[13px] text-muted-foreground/35 mt-3 leading-[1.6] tracking-[-0.01em]">
-                        {stat.label}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {/* Quote */}
-          <ScrollReveal delay={250}>
-            <div className="mt-20 sm:mt-28 max-w-[38ch]">
-              <p className="text-lg sm:text-xl text-foreground/30 leading-[1.6] tracking-[-0.015em]">
-                "Jag har vetat i två år att jag borde göra det här. Jag orkade inte."
-              </p>
-              <p className="text-muted-foreground/20 text-[11px] mt-5 tracking-[0.1em] uppercase">— Kvinna, 63</p>
-            </div>
-          </ScrollReveal>
+            </div>}
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════════
-          THE SHIFT — From manual to autonomous
-      ═══════════════════════════════════════════════════════════ */}
-      <section className="py-36 sm:py-44 lg:py-52 px-5 sm:px-8 relative z-10">
-        <div className="max-w-[1120px] mx-auto">
-          <ScrollReveal>
-            <div className="max-w-[52ch] mx-auto text-center space-y-5">
-              <p className="text-[10px] text-primary/40 tracking-[0.2em] uppercase font-medium">Skiftet</p>
-              <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-medium leading-[1.1] tracking-[-0.03em] text-foreground">
-                Från manuellt
-                <br />
-                <span className="text-foreground/35">till autonomt.</span>
-              </h2>
-              <p className="text-[15px] text-muted-foreground/45 leading-[1.7] max-w-[42ch] mx-auto tracking-[-0.01em]">
-                Valora tar bort friktionen. Du anger villkoren — systemet bevakar, analyserar och agerar.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={150}>
-            <div className="mt-20 sm:mt-28 grid grid-cols-1 sm:grid-cols-2 gap-px max-w-2xl mx-auto" style={{ background: 'hsl(0 0% 100% / 0.04)' }}>
-              {[
-                { before: 'Jämföra räntor manuellt', after: 'Automatisk bevakning' },
-                { before: 'Ring försäkringsbolag', after: 'Ett klick för att byta' },
-                { before: 'Oro och uppskjutning', after: 'Lugn och kontroll' },
-                { before: 'Timmar av research', after: 'Kontinuerlig optimering' },
-              ].map((item, i) => (
-                <div key={i} className="bg-background p-6 sm:p-8">
-                  <p className="text-[13px] text-muted-foreground/25 line-through decoration-muted-foreground/10 tracking-[-0.01em]">{item.before}</p>
-                  <p className="text-[14px] text-foreground/70 mt-2 tracking-[-0.01em]">{item.after}</p>
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════
-          HOW IT WORKS — 3-step flow
-      ═══════════════════════════════════════════════════════════ */}
-      <section id="how" className="py-36 sm:py-44 lg:py-52 px-5 sm:px-8 relative z-10">
-        <div className="max-w-[1120px] mx-auto">
-          <ScrollReveal>
-            <div className="space-y-5">
-              <p className="text-[10px] text-primary/40 tracking-[0.2em] uppercase font-medium">Process</p>
-              <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-medium leading-[1.1] tracking-[-0.03em] text-foreground">
-                Tre steg. Ingen friktion.
-              </h2>
-            </div>
-          </ScrollReveal>
-
-          <div className="mt-16 sm:mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {[
-              { num: '01', title: 'Anslut', desc: 'Koppla dina banker, lån och försäkringar. Ange dina villkor och preferenser.' },
-              { num: '02', title: 'Analys', desc: 'Valora bevakar marknaden och identifierar förbättringar kontinuerligt i bakgrunden.' },
-              { num: '03', title: 'Godkänn', desc: 'Ett klick. Resten sker automatiskt. Du behåller full kontroll.' },
-            ].map((item, i) => (
-              <ScrollReveal key={item.num} delay={(i + 1) * 100}>
-                <SpotlightCard className="h-full">
-                  <div className="p-7 sm:p-8 flex flex-col min-h-[220px]">
-                    <span className="text-[11px] text-primary/30 tracking-[0.15em] uppercase font-medium">
-                      Steg {item.num}
-                    </span>
-                    <div className="mt-auto space-y-3">
-                      <h3 className="text-lg font-medium text-foreground tracking-[-0.02em]">{item.title}</h3>
-                      <p className="text-[13px] text-muted-foreground/40 leading-[1.7] tracking-[-0.01em]">{item.desc}</p>
-                    </div>
-                  </div>
-                </SpotlightCard>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════
-          TRUST & CONTROL
-      ═══════════════════════════════════════════════════════════ */}
-      <section className="py-36 sm:py-44 lg:py-52 px-5 sm:px-8 relative z-10">
-        <div className="max-w-[1120px] mx-auto">
-          <ScrollReveal>
-            <div className="max-w-[52ch] space-y-5">
-              <p className="text-[10px] text-primary/40 tracking-[0.2em] uppercase font-medium">Trygghet</p>
-              <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-medium leading-[1.1] tracking-[-0.03em] text-foreground">
-                Du behåller kontrollen.
-                <br />
-                <span className="text-foreground/35">Alltid.</span>
-              </h2>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={150}>
-            <div className="mt-16 sm:mt-24 grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
-              {[
-                { icon: '🔐', title: 'BankID-verifierad', desc: 'Alla åtgärder kräver ditt aktiva samtycke via BankID.' },
-                { icon: '🛡', title: 'Licensierade partners', desc: 'Valora samarbetar enbart med reglerade aktörer.' },
-                { icon: '⚙', title: 'Full transparens', desc: 'Du ser exakt vad som händer, varje steg i processen.' },
-              ].map((item, i) => (
-                <ScrollReveal key={i} delay={(i + 1) * 80}>
-                  <div className="space-y-4 p-1">
-                    <span className="text-lg">{item.icon}</span>
-                    <h3 className="text-[15px] font-medium text-foreground/85 tracking-[-0.015em]">{item.title}</h3>
-                    <p className="text-[13px] text-muted-foreground/35 leading-[1.7] tracking-[-0.01em]">{item.desc}</p>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════
-          PROOF — Verified results
-      ═══════════════════════════════════════════════════════════ */}
-      <section id="proof" className="py-36 sm:py-44 lg:py-52 px-5 sm:px-8 relative z-10">
-        <div className="max-w-[1120px] mx-auto">
-          <ScrollReveal>
-            <div className="space-y-5">
-              <p className="text-[10px] text-primary/40 tracking-[0.2em] uppercase font-medium">Resultat</p>
-              <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-medium leading-[1.1] tracking-[-0.03em] text-foreground">
-                Verifierad besparing.
-              </h2>
-            </div>
-          </ScrollReveal>
-
-          <div className="mt-16 sm:mt-24 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-            {[
-              { person: 'Privatperson, 63 år', amount: '17 000 kr', period: '/år', quote: '"Jag hade aldrig gjort detta själv. Nu slipper jag tänka på det."' },
-              { person: 'Privatperson, 33 år', amount: '15 000 kr', period: '/år', quote: '"Jag betalar hellre för lugnet än att bära det i huvudet."' },
-            ].map((item, i) => (
-              <ScrollReveal key={i} delay={(i + 1) * 120}>
-                <SpotlightCard className="h-full">
-                  <div className="p-7 sm:p-8 space-y-6">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[11px] text-muted-foreground/30 tracking-[0.05em]">{item.person}</span>
-                      <span className="inline-flex items-center gap-1.5 text-[10px] text-primary/40 tracking-[0.05em]">
-                        <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-                        Verifierat
-                      </span>
-                    </div>
-                    <div>
-                      <span className="text-3xl sm:text-4xl font-medium text-foreground tabular-nums tracking-[-0.02em]">{item.amount}</span>
-                      <span className="text-muted-foreground/25 text-xs ml-1.5">{item.period}</span>
-                    </div>
-                    <div style={{ borderTop: '1px solid hsl(0 0% 100% / 0.04)' }} className="pt-5">
-                      <p className="text-[13px] text-muted-foreground/35 leading-[1.7] tracking-[-0.01em]">
-                        {item.quote}
-                      </p>
-                    </div>
-                  </div>
-                </SpotlightCard>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════
-          EMOTIONAL OUTCOME
-      ═══════════════════════════════════════════════════════════ */}
-      <section className="py-36 sm:py-44 lg:py-52 px-5 sm:px-8 relative z-10">
-        <div className="max-w-[1120px] mx-auto">
-          <ScrollReveal>
-            <div className="max-w-[48ch] mx-auto text-center space-y-5">
-              <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-medium leading-[1.1] tracking-[-0.03em] text-foreground">
-                Lugnet av att veta
-                <br />
-                <span className="text-foreground/35">att allt är optimerat.</span>
-              </h2>
-              <p className="text-[15px] text-muted-foreground/40 leading-[1.7] max-w-[40ch] mx-auto tracking-[-0.01em]">
-                Tidigare: ångest, uppskjutning, dåligt samvete. Nu: kontroll utan ansträngning.
-              </p>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════
-          WAITLIST CTA — Minimal, strong
-      ═══════════════════════════════════════════════════════════ */}
-      <section id="waitlist" className="relative z-10 py-36 sm:py-44 lg:py-52 px-5 sm:px-8">
-        <ScrollReveal>
-          <div className="max-w-sm mx-auto text-center space-y-8">
-            <div className="space-y-4">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-foreground leading-[1.1] tracking-[-0.03em]">
-                Tidig access.
-              </h2>
-              <p className="text-[13px] text-muted-foreground/35 leading-[1.7] tracking-[-0.01em]">
-                Bli bland de första att automatisera din ekonomi.
-              </p>
-            </div>
-
-            {!submitted ? (
-              <div className="space-y-3">
-                <SpotlightCard variant="elevated">
-                  <form onSubmit={handleSubmit} className="p-1.5">
-                    <div className="flex items-center gap-1.5">
-                      <Input
-                        type="email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        required
-                        className="flex-1 bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 text-sm placeholder:text-muted-foreground/20 h-11 px-4 rounded-xl tracking-[-0.01em]"
-                        placeholder="din@email.se"
-                      />
-                      <Button type="submit" variant="valora" className="rounded-xl h-9 px-5 text-[12px] font-medium shrink-0 cta-glow">
-                        Begär access
-                      </Button>
-                    </div>
-                  </form>
-                </SpotlightCard>
-              </div>
-            ) : (
-              <SpotlightCard variant="elevated">
-                <div className="p-8 text-center space-y-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/8 border border-primary/12 flex items-center justify-center mx-auto">
-                    <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                  </div>
-                  <p className="text-foreground text-base font-medium">Registrerad.</p>
-                  <p className="text-muted-foreground/50 text-xs">Du får tidig access vid lansering.</p>
-                </div>
-              </SpotlightCard>
-            )}
-
-            <div className="flex items-center justify-center gap-2 text-[11px] text-muted-foreground/20">
-              <div className="w-1.5 h-1.5 rounded-full bg-primary/25 machine-pulse" />
-              <span>
-                <CountUpNumber end={247} className="text-foreground/25 tabular-nums" duration={1500} /> väntar
-              </span>
-            </div>
-          </div>
-        </ScrollReveal>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════
-          FAQ
-      ═══════════════════════════════════════════════════════════ */}
-      <section id="faq" className="py-36 sm:py-44 lg:py-52 px-5 sm:px-8 relative z-10">
-        <div className="max-w-xl mx-auto">
-          <ScrollReveal>
-            <div className="space-y-5 mb-16 sm:mb-20">
-              <p className="text-[10px] text-primary/40 tracking-[0.2em] uppercase font-medium">FAQ</p>
-              <h2 className="text-3xl sm:text-4xl font-medium leading-[1.1] tracking-[-0.03em] text-foreground">
-                Vanliga frågor
-              </h2>
-            </div>
-          </ScrollReveal>
-
-          <Accordion type="single" collapsible className="space-y-0">
-            {[
-              { q: 'Är Valora en bank?', a: 'Nej. Valora är ett autonomt system som optimerar din ekonomi ovanpå befintliga banker och försäkringsbolag.' },
-              { q: 'Behöver jag byta bank?', a: 'Nej. Systemet analyserar och optimerar ovanpå dina befintliga aktörer. Om ett byte rekommenderas sker det först efter ditt godkännande.' },
-              { q: 'Är det säkert?', a: 'Ja. All åtkomst sker med samtycke och enligt bankstandard via BankID.' },
-              { q: 'Vad kostar det?', a: 'Prissättning fastställs vid lansering. Tidiga användare prioriteras.' },
-            ].map((item, i) => (
-              <AccordionItem
-                key={i}
-                value={`item-${i + 1}`}
-                className="border-b-0"
-                style={{ borderBottom: '1px solid hsl(0 0% 100% / 0.04)' }}
-              >
-                <AccordionTrigger className="text-left text-[14px] sm:text-[15px] hover:no-underline py-6 sm:py-7 text-foreground/65 hover:text-foreground/90 transition-colors duration-300 tracking-[-0.01em]">
-                  {item.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-[13px] text-muted-foreground/35 leading-[1.7] pb-6 tracking-[-0.01em]">
-                  {item.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
+      {/* FAQ */}
+      <ScrollReveal delay={150}>
+      <div className="relative z-10 h-px separator-sweep bg-border/30" />
+      <section id="faq" className="py-20 sm:py-32 lg:py-40 px-4 sm:px-6 bg-background-elevated relative z-10">
+        <div className="max-w-3xl mx-auto space-y-12 sm:space-y-16">
+          <h2 className="headline-section text-center">
+            Vanliga frågor
+          </h2>
+          
+          <Accordion type="single" collapsible className="space-y-4">
+            <AccordionItem value="item-1" className="liquid-glass px-5 sm:px-8 rounded-xl border-none">
+              <AccordionTrigger className="text-left font-light text-base sm:text-lg hover:no-underline">
+                Är Valora en bank?
+              </AccordionTrigger>
+              <AccordionContent className="text-sm sm:text-base text-foreground/80 font-light leading-relaxed">
+                Nej. Valora är ett autonomt finansiellt system som optimerar din ekonomi ovanpå banker och försäkringsbolag.
+              </AccordionContent>
+            </AccordionItem>
+            
+            <AccordionItem value="item-2" className="liquid-glass px-5 sm:px-8 rounded-xl border-none">
+              <AccordionTrigger className="text-left font-light text-base sm:text-lg hover:no-underline">
+                Behöver jag byta bank?
+              </AccordionTrigger>
+              <AccordionContent className="text-sm sm:text-base text-foreground/80 font-light leading-relaxed">
+                Nej – och ibland, ja.
+                Du behöver aldrig byta bank för att använda Valora. Systemet analyserar och optimerar din ekonomi ovanpå dina befintliga aktörer.
+                <br /><br />
+                Om Valora identifierar ett förbättringsförslag som kräver ett faktiskt byte av långivare, sker det först efter att du uttryckligen har godkänt det. Inget sker automatiskt utan ditt samtycke.
+              </AccordionContent>
+            </AccordionItem>
+            
+            <AccordionItem value="item-3" className="liquid-glass px-5 sm:px-8 rounded-xl border-none">
+              <AccordionTrigger className="text-left font-light text-base sm:text-lg hover:no-underline">
+                Är det säkert?
+              </AccordionTrigger>
+              <AccordionContent className="text-sm sm:text-base text-foreground/80 font-light leading-relaxed">
+                Ja. All åtkomst sker med samtycke och enligt bankstandard.
+              </AccordionContent>
+            </AccordionItem>
+            
+            <AccordionItem value="item-4" className="liquid-glass px-5 sm:px-8 rounded-xl border-none">
+              <AccordionTrigger className="text-left font-light text-base sm:text-lg hover:no-underline">
+                Vad kostar det?
+              </AccordionTrigger>
+              <AccordionContent className="text-sm sm:text-base text-foreground/80 font-light leading-relaxed">
+                Prissättning fastställs vid lansering. Tidiga användare prioriteras.
+              </AccordionContent>
+            </AccordionItem>
           </Accordion>
         </div>
       </section>
+      </ScrollReveal>
 
-      {/* ═══ FOOTER ═══ */}
-      <footer className="relative z-10 w-full">
-        <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent 15%, hsl(0 0% 100% / 0.04) 50%, transparent 85%)' }} />
-        <div className="max-w-[1120px] mx-auto px-6 py-10 sm:py-14">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-muted-foreground/18">
-            <span className="tracking-[0.25em] uppercase text-foreground/20 text-[10px]">Valora</span>
-            <div className="flex items-center gap-6">
-              {['Kontakt', 'Integritet'].map((label) => (
-                <a key={label} href="#" className="hover:text-foreground/35 transition-colors duration-300">{label}</a>
-              ))}
-              <span>© {new Date().getFullYear()}</span>
+      {/* Footer – matches Valora Personal Finance */}
+      <footer className="relative z-10 w-full mt-auto">
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-border/50 to-transparent" />
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-12">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="flex flex-col items-center md:items-start gap-2">
+              <span className="text-foreground/90 font-medium tracking-[0.2em] text-xs">VALORA</span>
+              <span className="text-muted-foreground text-sm">Autonomt finansiellt system</span>
+            </div>
+            <nav className="flex items-center gap-8">
+              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
+                Kontakt
+              </a>
+              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
+                Integritet
+              </a>
+              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
+                LinkedIn
+              </a>
+            </nav>
+            <div className="flex items-center gap-6 text-xs text-muted-foreground/60">
+              <span>Privacy</span>
+              <span>Terms</span>
+              <span>© {new Date().getFullYear()} Valora</span>
             </div>
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
