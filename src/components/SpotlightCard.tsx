@@ -4,36 +4,36 @@ import { useCursorSpotlight } from '@/hooks/use-cursor-spotlight';
 interface SpotlightCardProps {
   children: ReactNode;
   className?: string;
-  variant?: 'default' | 'large';
 }
 
-export const SpotlightCard = ({ children, className = '', variant = 'default' }: SpotlightCardProps) => {
+export const SpotlightCard = ({ children, className = '' }: SpotlightCardProps) => {
   const { ref, spotlightStyle } = useCursorSpotlight();
 
   return (
     <div
       ref={ref}
-      className={`group relative rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:-translate-y-1 ${className}`}
+      className={`group relative rounded-[20px] overflow-hidden transition-all duration-500 ease-out hover:-translate-y-0.5 ${className}`}
       style={{
-        background: 'linear-gradient(145deg, hsl(220 14% 10% / 0.8), hsl(220 14% 7% / 0.6))',
-        border: '1px solid hsl(0 0% 100% / 0.06)',
-        backdropFilter: 'blur(24px)',
+        background: 'linear-gradient(160deg, hsl(0 0% 100% / 0.035), hsl(0 0% 100% / 0.015))',
+        border: '1px solid hsl(0 0% 100% / 0.05)',
+        backdropFilter: 'blur(30px)',
+        boxShadow: 'inset 0 1px 0 0 hsl(0 0% 100% / 0.04), inset 0 -1px 0 0 hsl(0 0% 0% / 0.08), 0 8px 40px -12px hsl(0 0% 0% / 0.4)',
       }}
     >
       {/* Cursor spotlight */}
       <div style={spotlightStyle} />
       
-      {/* Top edge highlight */}
+      {/* Top edge highlight — subtle refraction line */}
       <div
-        className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent 10%, hsl(0 0% 100% / 0.08) 50%, transparent 90%)' }}
+        className="absolute top-0 left-[10%] right-[10%] h-px pointer-events-none"
+        style={{ background: 'linear-gradient(90deg, transparent, hsl(0 0% 100% / 0.08), transparent)' }}
       />
 
-      {/* Refraction edge glow on hover */}
+      {/* Subtle hover glow */}
       <div
-        className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+        className="absolute inset-0 rounded-[20px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
         style={{
-          background: 'linear-gradient(135deg, hsl(172 60% 55% / 0.04) 0%, transparent 30%, transparent 70%, hsl(200 60% 55% / 0.03) 100%)',
+          background: 'radial-gradient(ellipse at 50% 0%, hsl(172 45% 50% / 0.03) 0%, transparent 60%)',
         }}
       />
 
