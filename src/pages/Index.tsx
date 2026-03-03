@@ -206,7 +206,7 @@ const Index = () => {
           <div className="fade-up-delay-3">
             <div className="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-5 border border-border/30 rounded-2xl px-8 py-5 bg-background-elevated/50 backdrop-blur-sm transition-all duration-500 hover:border-border/50 hover:bg-background-elevated">
               <CountUpNumber
-                end={148499}
+                end={163415}
                 suffix=" kr"
                 format={(n) => n.toLocaleString('sv-SE')}
                 className="text-3xl sm:text-4xl font-serif font-normal text-primary tabular-nums"
