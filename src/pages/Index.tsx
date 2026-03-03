@@ -167,6 +167,16 @@ const Index = () => {
 
       {/* ─── HERO ─── */}
       <section className="min-h-[100vh] flex flex-col items-center justify-center px-6 md:px-12 pt-24 pb-20 relative z-10">
+        {/* Vignette gradient overlay */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <div className="absolute inset-0" style={{
+            background: `
+              radial-gradient(ellipse 80% 60% at 50% 40%, hsl(172 50% 45% / 0.08) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 80% at 50% 0%, hsl(172 55% 50% / 0.06) 0%, transparent 50%),
+              radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, hsl(220 14% 3% / 0.7) 100%)
+            `
+          }} />
+        </div>
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8 fade-up">
             <span className="inline-block text-[11px] font-medium tracking-[0.15em] uppercase text-muted-foreground border border-border/50 rounded-full px-4 py-1.5 transition-colors duration-300 hover:border-border hover:text-foreground/70 cursor-default">
