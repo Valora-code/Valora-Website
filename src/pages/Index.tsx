@@ -178,11 +178,6 @@ const Index = () => {
           }} />
         </div>
         <div className="max-w-4xl mx-auto text-center">
-          <div className="mb-8 fade-up">
-            <span className="inline-block text-[11px] font-medium tracking-[0.15em] uppercase text-muted-foreground border border-border/50 rounded-full px-4 py-1.5 transition-colors duration-300 hover:border-border hover:text-foreground/70 cursor-default">
-              Begränsad tidig tillgång
-            </span>
-          </div>
 
           <h1 className="headline-hero fade-up mb-8">
             <span className="text-foreground">Autonom</span>
