@@ -487,13 +487,21 @@ const Index = () => {
               <span className="text-muted-foreground text-sm font-light">Autonomt finansiellt system</span>
             </div>
             <nav className="flex items-center gap-6">
-              {['Kontakt', 'Integritet', 'LinkedIn'].map(label => (
-                <a key={label} href="#"
+              {[
+                { label: 'Integritetspolicy', to: '/integritetspolicy' },
+                { label: 'Användarvillkor', to: '/anvandarvillkor' },
+              ].map(({ label, to }) => (
+                <Link key={label} to={to}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light relative group">
                   {label}
                   <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-foreground/30 transition-all duration-300 group-hover:w-full" />
-                </a>
+                </Link>
               ))}
+              <a href="mailto:info@valora.se"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light relative group">
+                Kontakt
+                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-foreground/30 transition-all duration-300 group-hover:w-full" />
+              </a>
             </nav>
             <span className="text-xs text-muted-foreground/40">© {new Date().getFullYear()} Valora</span>
           </div>
