@@ -23,7 +23,7 @@ const PrivacyPolicy = () => {
           <section>
             <h2 className="headline-card mb-3">1. Personuppgiftsansvarig</h2>
             <p>
-              Valora AB (org.nr xxx-xxx) ("Valora", "vi", "oss") är personuppgiftsansvarig
+              Valora Technologies AB (org.nr 559573-0341) ("Valora", "vi", "oss") är personuppgiftsansvarig
               för behandlingen av dina personuppgifter. Du kan kontakta oss via e-post på{" "}
               <a href="mailto:privacy@valora.se" className="text-primary hover:underline">privacy@valora.se</a>.
             </p>
