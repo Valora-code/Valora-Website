@@ -88,7 +88,7 @@ const TermsOfService = () => {
             <h2 className="headline-card mb-3">7. Immateriella rättigheter</h2>
             <p>
               Allt innehåll, varumärken, programvara och tekniska lösningar som ingår i Tjänsten
-              tillhör Valora AB eller dess licensgivare. Du får inte kopiera, modifiera, distribuera
+              tillhör Valora Technologies AB eller dess licensgivare. Du får inte kopiera, modifiera, distribuera
               eller bakåtkompilera någon del av Tjänsten utan vårt skriftliga samtycke.
             </p>
           </section>
