@@ -23,7 +23,7 @@ const TermsOfService = () => {
           <section>
             <h2 className="headline-card mb-3">1. Om tjänsten</h2>
             <p>
-              Valora ("Tjänsten") tillhandahålls av Valora AB (org.nr xxx-xxx). Tjänsten är ett autonomt
+              Valora ("Tjänsten") tillhandahålls av Valora Technologies AB (org.nr 559573-0341). Tjänsten är ett autonomt
               finansiellt system som analyserar och optimerar din personliga ekonomi genom att använda
               data från öppen bankdata (Open Banking / PSD2), försäkringsbolag och andra finansiella
               aktörer. Genom att använda Tjänsten accepterar du dessa villkor.
