@@ -34,7 +34,7 @@ const CursorGlow = () => {
       currentX += (targetX - currentX) * 0.08;
       currentY += (targetY - currentY) * 0.08;
       if (ref.current) {
-        ref.current.style.background = `radial-gradient(600px circle at ${currentX}px ${currentY}px, hsl(172 50% 45% / 0.035), transparent 60%)`;
+        ref.current.style.background = `radial-gradient(600px circle at ${currentX}px ${currentY}px, hsl(335 100% 83% / 0.035), transparent 60%)`;
       }
       rafId = requestAnimationFrame(animate);
     };
@@ -172,8 +172,8 @@ const Index = () => {
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           <div className="absolute inset-0" style={{
             background: `
-              radial-gradient(ellipse 80% 60% at 50% 40%, hsl(172 50% 45% / 0.08) 0%, transparent 70%),
-              radial-gradient(ellipse 60% 80% at 50% 0%, hsl(172 55% 50% / 0.06) 0%, transparent 50%),
+              radial-gradient(ellipse 80% 60% at 50% 40%, hsl(335 100% 83% / 0.08) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 80% at 50% 0%, hsl(335 100% 85% / 0.06) 0%, transparent 50%),
               radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, hsl(220 14% 3% / 0.7) 100%)
             `
           }} />
@@ -290,7 +290,7 @@ const Index = () => {
             ].map((item, i) => (
               <ScrollReveal key={i} delay={item.delay}>
                 <div className="flex items-center gap-5 py-5 border-b border-border/15 last:border-0 group">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary/60 group-hover:bg-primary group-hover:shadow-[0_0_8px_hsl(172_50%_45%/0.4)] transition-all duration-500 flex-shrink-0" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary/60 group-hover:bg-primary group-hover:shadow-[0_0_8px_hsl(335_100%_83%/0.4)] transition-all duration-500 flex-shrink-0" />
                   <span className="text-sm sm:text-base text-foreground/70 group-hover:text-foreground/90 transition-colors duration-300">
                     {item.label}
                   </span>

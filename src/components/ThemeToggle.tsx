@@ -12,8 +12,8 @@ const themes = [{
   color: 'hsl(210, 30%, 12%)'
 }, {
   id: 'emerald',
-  name: 'Emerald',
-  color: 'hsl(160, 25%, 12%)'
+  name: 'Klarna Pink',
+  color: 'hsl(335, 100%, 83%)'
 }, {
   id: 'violet',
   name: 'Violet',
