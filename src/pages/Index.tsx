@@ -172,8 +172,8 @@ const Index = () => {
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           <div className="absolute inset-0" style={{
             background: `
-              radial-gradient(ellipse 80% 60% at 50% 40%, hsl(172 50% 45% / 0.08) 0%, transparent 70%),
-              radial-gradient(ellipse 60% 80% at 50% 0%, hsl(172 55% 50% / 0.06) 0%, transparent 50%),
+              radial-gradient(ellipse 80% 60% at 50% 40%, hsl(335 100% 83% / 0.08) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 80% at 50% 0%, hsl(335 100% 85% / 0.06) 0%, transparent 50%),
               radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, hsl(220 14% 3% / 0.7) 100%)
             `
           }} />
