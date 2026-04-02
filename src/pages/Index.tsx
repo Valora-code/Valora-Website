@@ -34,7 +34,7 @@ const CursorGlow = () => {
       currentX += (targetX - currentX) * 0.08;
       currentY += (targetY - currentY) * 0.08;
       if (ref.current) {
-        ref.current.style.background = `radial-gradient(600px circle at ${currentX}px ${currentY}px, hsl(172 50% 45% / 0.035), transparent 60%)`;
+        ref.current.style.background = `radial-gradient(600px circle at ${currentX}px ${currentY}px, hsl(335 100% 83% / 0.035), transparent 60%)`;
       }
       rafId = requestAnimationFrame(animate);
     };
