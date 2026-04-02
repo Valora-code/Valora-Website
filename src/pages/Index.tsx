@@ -290,7 +290,7 @@ const Index = () => {
             ].map((item, i) => (
               <ScrollReveal key={i} delay={item.delay}>
                 <div className="flex items-center gap-5 py-5 border-b border-border/15 last:border-0 group">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary/60 group-hover:bg-primary group-hover:shadow-[0_0_8px_hsl(172_50%_45%/0.4)] transition-all duration-500 flex-shrink-0" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary/60 group-hover:bg-primary group-hover:shadow-[0_0_8px_hsl(335_100%_83%/0.4)] transition-all duration-500 flex-shrink-0" />
                   <span className="text-sm sm:text-base text-foreground/70 group-hover:text-foreground/90 transition-colors duration-300">
                     {item.label}
                   </span>

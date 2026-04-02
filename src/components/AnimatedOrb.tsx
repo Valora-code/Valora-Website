@@ -34,7 +34,7 @@ const AnimatedOrb = () => {
       <div
         className="absolute bottom-0 left-1/2 w-[800px] h-[400px] rounded-full"
         style={{
-          background: 'radial-gradient(ellipse at center, hsl(172 50% 45% / 0.06) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, hsl(335 100% 83% / 0.06) 0%, transparent 70%)',
           transform: 'translateX(-50%)',
           filter: 'blur(60px)',
         }}
