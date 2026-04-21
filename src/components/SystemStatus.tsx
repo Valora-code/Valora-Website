@@ -24,7 +24,7 @@ const StatusIndicator = ({
   }, [delay]);
   return <div ref={elementRef} className="flex items-center gap-4 sm:gap-6 py-5 sm:py-6 border-b border-border/20 last:border-0 group">
       <div className="relative flex items-center">
-        <div className={`w-2 h-2 rounded-full transition-all duration-1000 ${isActive ? 'bg-primary shadow-[0_0_10px_hsl(335_100%_83%/0.6)] machine-pulse' : 'bg-border/40'}`} />
+        <div className={`w-2 h-2 rounded-full transition-all duration-1000 ${isActive ? 'bg-primary shadow-[0_0_10px_hsl(172_50%_45%/0.55)] machine-pulse' : 'bg-border/40'}`} />
       </div>
       <span className={`text-sm sm:text-base font-normal leading-relaxed transition-all duration-1000 ${isActive ? 'text-foreground' : 'text-muted-foreground/50'}`}>
         {label}

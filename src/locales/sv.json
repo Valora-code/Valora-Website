@@ -1,0 +1,170 @@
+{
+  "shell": {
+    "language": {
+      "label": "Språk"
+    }
+  },
+  "marketing": {
+    "nav": {
+      "why": "Varför Valora",
+      "how": "Hur det fungerar",
+      "proof": "Användare",
+      "faq": "Frågor",
+      "signup": "Skapa konto",
+      "menuAria": "Meny"
+    },
+    "hero": {
+      "title1": "Autonom",
+      "title2": "personlig ekonomi.",
+      "subtitle": "Valora arbetar i bakgrunden och optimerar din ekonomi — enligt dina villkor.",
+      "ctaWaitlist": "Begär tidig tillgång",
+      "ctaHow": "Så fungerar det"
+    },
+    "savings": {
+      "suffix": " kr",
+      "caption": "identifierade besparingar"
+    },
+    "problem": {
+      "headline1": "Problemet är inte brist på besparingar.",
+      "headline2": "Det är att ingen orkar agera.",
+      "body": "Människor vet vad de borde göra – men skjuter upp det. Inte av okunskap, utan på grund av friktion.",
+      "stats": [
+        {
+          "end": 88,
+          "text": "har skjutit upp att byta lån eller försäkring — trots att de vet att de borde."
+        },
+        {
+          "end": 79,
+          "text": "känner dåligt samvete över att inte ta tag i sin ekonomi."
+        },
+        {
+          "end": 56,
+          "text": "upplever hög mental belastning kring lån, försäkringar och ekonomi."
+        }
+      ],
+      "quote": "\"Jag har vetat i två år att jag borde göra detta – men jag orkade inte.\"",
+      "quoteAttribution": "Kvinna, 63 år"
+    },
+    "industry": {
+      "caption": "Branschproblem",
+      "headline1": "Marknaden är manuell.",
+      "headline2": "Belastningen hamnar på individen.",
+      "items": [
+        { "label": "Manuell jämförelse mellan aktörer", "delay": 100 },
+        { "label": "Prokrastinering vid varje livsbeslut", "delay": 200 },
+        { "label": "Kognitiv överbelastning vid komplex ekonomi", "delay": 300 }
+      ]
+    },
+    "how": {
+      "title": "Så fungerar Valora",
+      "steps": [
+        {
+          "step": "01",
+          "title": "Koppla din ekonomi",
+          "desc": "Du ansluter banker, lån och försäkringar — och anger dina villkor."
+        },
+        {
+          "step": "02",
+          "title": "Valora analyserar",
+          "desc": "Systemet bevakar marknaden och identifierar förbättringar kontinuerligt."
+        },
+        {
+          "step": "03",
+          "title": "Du godkänner",
+          "desc": "Ett klick. Resten sker automatiskt i bakgrunden."
+        }
+      ]
+    },
+    "proof": {
+      "headline1": "Verifierad besparing.",
+      "headline2": "Verklig mental lättnad.",
+      "privatePerson": "Privatperson",
+      "verified": "Verifierat",
+      "perYear": "per år i identifierade besparingar",
+      "quoteBottom": "\"Tidigare gav ekonomi mig konstant ångest. Nu känns det mycket enklare.\"",
+      "cards": [
+        {
+          "age": "63 år",
+          "amount": "17 000 kr",
+          "quote": "\"Jag hade aldrig gjort detta själv. Nu slipper jag tänka.\""
+        },
+        {
+          "age": "33 år",
+          "amount": "15 000 kr",
+          "quote": "\"Jag betalar hellre än att behöva bära detta i huvudet.\""
+        }
+      ]
+    },
+    "audience": {
+      "title": "För vem är Valora byggt?",
+      "items": [
+        {
+          "title": "Den upptagna yrkespersonen",
+          "desc": "Du har inte tid att förhandla, jämföra och bevaka. Valora gör det åt dig."
+        },
+        {
+          "title": "Familjen med komplex ekonomi",
+          "desc": "Flera lån och försäkringar. Valora håller allt optimerat i bakgrunden."
+        },
+        {
+          "title": "Den som vill ha kontroll utan stress",
+          "desc": "Du vill göra rätt — men slippa bära ansvaret mentalt."
+        }
+      ]
+    },
+    "waitlist": {
+      "caption": "Begränsad tidig tillgång",
+      "title": "Begär tidig tillgång",
+      "subtitle": "Vi öppnar Valora successivt för ett begränsat antal användare.",
+      "emailLabel": "E-post *",
+      "emailPlaceholder": "din@email.se",
+      "noteLabel": "Vad vill du att Valora ska optimera?",
+      "notePlaceholder": "Bostadslån, privatlån, bilförsäkring, hemförsäkring",
+      "submit": "Gå med i väntelistan",
+      "success": "Tack. Skicka e-postmeddelandet för att bekräfta din plats på väntelistan.",
+      "mailtoSubject": "Valora – tidig tillgång",
+      "mailtoEmailLine": "E-post:",
+      "mailtoNoteLine": "Vad jag vill optimera:",
+      "toastThanksTitle": "Tack",
+      "toastThanksBody": "Skicka e-postmeddelandet som öppnats för att slutföra din anmälan till väntelistan.",
+      "toastInvalidTitle": "Ogiltig inmatning",
+      "toastErrorTitle": "Ett fel uppstod",
+      "toastErrorBody": "Försök igen senare.",
+      "errors": {
+        "invalidEmail": "Ogiltig e-postadress",
+        "noteMax": "Anteckningen får vara max 500 tecken"
+      }
+    },
+    "faq": {
+      "title": "Vanliga frågor",
+      "items": [
+        {
+          "q": "Är Valora en bank?",
+          "a": "Nej. Valora är ett autonomt finansiellt system som optimerar din ekonomi ovanpå banker och försäkringsbolag."
+        },
+        {
+          "q": "Behöver jag byta bank?",
+          "a": "Nej — och ibland, ja. Du behöver aldrig byta bank för att använda Valora. Om Valora identifierar ett förbättringsförslag som kräver ett byte, sker det först efter ditt uttryckliga godkännande."
+        },
+        {
+          "q": "Är det säkert?",
+          "a": "Ja. All åtkomst sker med samtycke och enligt bankstandard."
+        },
+        {
+          "q": "Vad kostar det?",
+          "a": "Prissättning fastställs vid lansering. Tidiga användare prioriteras."
+        }
+      ]
+    },
+    "footer": {
+      "tagline": "Autonomt finansiellt system",
+      "privacy": "Integritetspolicy",
+      "terms": "Användarvillkor",
+      "contact": "Kontakt"
+    },
+    "notFound": {
+      "title": "Hoppsan! Sidan hittades inte",
+      "home": "Tillbaka till startsidan"
+    }
+  }
+}

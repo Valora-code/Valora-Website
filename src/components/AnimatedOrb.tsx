@@ -5,7 +5,7 @@ const AnimatedOrb = () => {
       <div
         className="absolute top-1/3 left-1/2 w-[600px] h-[600px] rounded-full animated-orb"
         style={{
-          background: 'radial-gradient(circle, hsl(335 100% 83% / 0.15) 0%, hsl(335 100% 83% / 0.05) 40%, transparent 70%)',
+          background: 'radial-gradient(circle, hsl(172 50% 45% / 0.18) 0%, hsl(172 50% 45% / 0.06) 40%, transparent 70%)',
           transform: 'translate(-50%, -50%)',
         }}
       />
@@ -34,7 +34,7 @@ const AnimatedOrb = () => {
       <div
         className="absolute bottom-0 left-1/2 w-[800px] h-[400px] rounded-full"
         style={{
-          background: 'radial-gradient(ellipse at center, hsl(335 100% 83% / 0.06) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, hsl(172 50% 45% / 0.08) 0%, transparent 70%)',
           transform: 'translateX(-50%)',
           filter: 'blur(60px)',
         }}

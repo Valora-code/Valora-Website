@@ -16,14 +16,14 @@ const buttonVariants = cva(
         ghost: "text-muted-foreground hover:bg-muted/30 hover:text-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         // Valora premium variants – matches Valora Personal Finance
-        valora: "relative bg-primary text-primary-foreground font-medium px-6 tracking-wide transition-all duration-200 before:absolute before:inset-[-2px] before:rounded-[inherit] before:bg-gradient-to-r before:from-primary/40 before:to-primary/20 before:blur-[12px] before:opacity-0 before:transition-all before:duration-200 before:-z-10 hover:before:opacity-100 hover:before:blur-[20px] hover:-translate-y-0.5 hover:shadow-[0_8px_30px_-8px_hsl(var(--primary)/0.4)] active:translate-y-0",
-        valoraGhost: "border border-border/40 bg-transparent text-foreground transition-all duration-200 hover:bg-muted/20 hover:border-border/60 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/10 active:translate-y-0",
+        valora: "relative rounded-full bg-primary text-primary-foreground font-medium px-6 tracking-wide transition-all duration-200 before:absolute before:inset-[-2px] before:rounded-[inherit] before:bg-gradient-to-r before:from-primary/40 before:to-primary/20 before:blur-[12px] before:opacity-0 before:transition-all before:duration-200 before:-z-10 hover:before:opacity-100 hover:before:blur-[20px] hover:-translate-y-0.5 hover:shadow-[0_8px_30px_-8px_hsl(var(--primary)/0.4)] active:translate-y-0",
+        valoraGhost: "rounded-full border border-border/40 bg-transparent text-foreground transition-all duration-200 hover:bg-muted/20 hover:border-border/60 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/10 active:translate-y-0",
         glass: "liquid-glass text-foreground font-light tracking-wide hover:-translate-y-0.5 active:translate-y-0",
       },
       size: {
         default: "h-10 px-5 py-2",
         sm: "h-9 rounded-lg px-4 text-sm",
-        lg: "h-12 rounded-xl px-8 text-base",
+        lg: "h-12 rounded-full px-8 text-base",
         icon: "h-10 w-10",
       },
     },

@@ -11,7 +11,7 @@ interface CountUpNumberProps {
 export const CountUpNumber = ({ end, duration = 2000, suffix = '', className = '', format }: CountUpNumberProps) => {
   const [count, setCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const elementRef = useRef<HTMLDivElement>(null);
+  const elementRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

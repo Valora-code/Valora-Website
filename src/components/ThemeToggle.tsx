@@ -13,7 +13,7 @@ const themes = [{
 }, {
   id: 'emerald',
   name: 'Klarna Pink',
-  color: 'hsl(335, 100%, 83%)'
+  color: 'hsl(172, 50%, 45%)'
 }, {
   id: 'violet',
   name: 'Violet',

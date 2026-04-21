@@ -1,21 +1,28 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { ValoraLogo } from "@/components/ValoraLogo";
 import { CountUpNumber } from "@/components/CountUpNumber";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { MagneticButton } from "@/components/MagneticButton";
+import { MarketingLanguageSwitcher } from "@/components/MarketingLanguageSwitcher";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
 import { z } from "zod";
+import { useTranslation } from "@/lib/i18n";
+import { getSignupUrl } from "@/config/valoraApp";
 
-const waitlistSchema = z.object({
-  email: z.string().trim().email({ message: "Ogiltig e-postadress" }).max(255),
-  note: z.string().trim().max(500, { message: "Anteckningen får vara max 500 tecken" }).optional()
-});
+/** Hero savings figure: always sv-SE grouping so it matches valora-tech.com (non-breaking space thousands). */
+const HERO_SAVINGS_NUMBER_LOCALE = "sv-SE";
+
+type StatItem = { end: number; text: string };
+type IndustryItem = { label: string; delay: number };
+type HowStep = { step: string; title: string; desc: string };
+type ProofCard = { age: string; amount: string; quote: string };
+type AudienceCard = { title: string; desc: string };
+type FaqItem = { q: string; a: string };
 
 // Cursor-following ambient glow
 const CursorGlow = () => {
@@ -34,7 +41,7 @@ const CursorGlow = () => {
       currentX += (targetX - currentX) * 0.08;
       currentY += (targetY - currentY) * 0.08;
       if (ref.current) {
-        ref.current.style.background = `radial-gradient(600px circle at ${currentX}px ${currentY}px, hsl(335 100% 83% / 0.035), transparent 60%)`;
+        ref.current.style.background = `radial-gradient(600px circle at ${currentX}px ${currentY}px, hsl(172 55% 52% / 0.04), transparent 60%)`;
       }
       rafId = requestAnimationFrame(animate);
     };
@@ -68,23 +75,71 @@ const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { toast } = useToast();
   const navScrolled = useNavScroll();
+  const { t } = useTranslation();
+  const signupUrl = getSignupUrl();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const waitlistSchema = useMemo(
+    () =>
+      z.object({
+        email: z.string().trim().email({ message: t('marketing.waitlist.errors.invalidEmail') }).max(255),
+        note: z.string().trim().max(500, { message: t('marketing.waitlist.errors.noteMax') }).optional(),
+      }),
+    [t],
+  );
+
+  const navLinks = useMemo(
+    () =>
+      [
+        ['why', t('marketing.nav.why')],
+        ['how', t('marketing.nav.how')],
+        ['proof', t('marketing.nav.proof')],
+        ['faq', t('marketing.nav.faq')],
+      ] as const,
+    [t],
+  );
+
+  const problemStats = t('marketing.problem.stats', { returnObjects: true }) as StatItem[];
+  const industryItems = t('marketing.industry.items', { returnObjects: true }) as IndustryItem[];
+  const howSteps = t('marketing.how.steps', { returnObjects: true }) as HowStep[];
+  const proofCards = t('marketing.proof.cards', { returnObjects: true }) as ProofCard[];
+  const audienceItems = t('marketing.audience.items', { returnObjects: true }) as AudienceCard[];
+  const faqItems = t('marketing.faq.items', { returnObjects: true }) as FaqItem[];
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const validatedData = waitlistSchema.parse({ email, note });
-      const { error } = await supabase.from('waitlist').insert([{
-        email: validatedData.email,
-        note: validatedData.note || null
-      }]);
-      if (error && error.code !== '23505') throw error;
+      const subject = encodeURIComponent(t('marketing.waitlist.mailtoSubject'));
+      const noteLine = t('marketing.waitlist.mailtoNoteLine');
+      const emailLine = t('marketing.waitlist.mailtoEmailLine');
+      const body = encodeURIComponent(
+        [
+          `${emailLine} ${validatedData.email}`,
+          "",
+          validatedData.note ? `${noteLine}\n${validatedData.note}` : "",
+        ]
+          .filter(Boolean)
+          .join("\n")
+      );
+      window.location.href = `mailto:info@valora.se?subject=${subject}&body=${body}`;
       setSubmitted(true);
-      toast({ title: "Tack", description: "Du är nu registrerad för tidig access." });
+      toast({
+        title: t('marketing.waitlist.toastThanksTitle'),
+        description: t('marketing.waitlist.toastThanksBody'),
+      });
     } catch (error) {
       if (error instanceof z.ZodError) {
-        toast({ title: "Ogiltig inmatning", description: error.errors[0].message, variant: "destructive" });
+        toast({
+          title: t('marketing.waitlist.toastInvalidTitle'),
+          description: error.errors[0].message,
+          variant: "destructive",
+        });
       } else {
-        toast({ title: "Ett fel uppstod", description: "Försök igen senare.", variant: "destructive" });
+        toast({
+          title: t('marketing.waitlist.toastErrorTitle'),
+          description: t('marketing.waitlist.toastErrorBody'),
+          variant: "destructive",
+        });
       }
     }
   };
@@ -92,8 +147,6 @@ const Index = () => {
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
-
-  const navLinks = [['why', 'Varför Valora'], ['how', 'Hur det fungerar'], ['proof', 'Användare'], ['faq', 'Frågor']];
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
@@ -115,38 +168,49 @@ const Index = () => {
         }}
       >
         <div className="max-w-6xl mx-auto px-6 md:px-12 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-3">
             <ValoraLogo size="small" />
 
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden md:flex flex-1 items-center justify-end gap-8 min-w-0">
               {navLinks.map(([id, label]) => (
-                <button key={id} onClick={() => scrollToSection(id)}
-                  className="text-[13px] text-muted-foreground hover:text-foreground transition-colors duration-200 relative group">
+                <button key={id} type="button" onClick={() => scrollToSection(id)}
+                  className="text-[13px] text-muted-foreground hover:text-foreground transition-colors duration-200 relative group shrink-0">
                   {label}
                   <span className="absolute -bottom-1 left-0 w-0 h-px bg-foreground/40 transition-all duration-300 group-hover:w-full" />
                 </button>
               ))}
-              <MagneticButton strength={0.15}>
-                <Button variant="valora" size="sm" onClick={() => scrollToSection('waitlist')}>
-                  Tidig tillgång
-                </Button>
-              </MagneticButton>
+              <div className="flex items-center gap-2 shrink-0">
+                <MarketingLanguageSwitcher />
+                <MagneticButton strength={0.15}>
+                  <Button variant="valora" size="sm" asChild>
+                    <a href={signupUrl}>{t('marketing.nav.signup')}</a>
+                  </Button>
+                </MagneticButton>
+              </div>
             </div>
 
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors" aria-label="Meny">
-              <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" stroke="currentColor">
-                {mobileMenuOpen ? <path d="M6 18L18 6M6 6l12 12" /> : <path d="M4 6h16M4 12h16M4 18h16" />}
-              </svg>
-            </button>
+            <div className="flex md:hidden items-center gap-0.5 shrink-0">
+              <MarketingLanguageSwitcher />
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+                aria-label={t('marketing.nav.menuAria')}
+              >
+                <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" stroke="currentColor">
+                  {mobileMenuOpen ? <path d="M6 18L18 6M6 6l12 12" /> : <path d="M4 6h16M4 12h16M4 18h16" />}
+                </svg>
+              </button>
+            </div>
           </div>
 
           {/* Mobile menu with animation */}
           <div
             className="md:hidden overflow-hidden transition-all duration-300 ease-out"
             style={{
-              maxHeight: mobileMenuOpen ? '300px' : '0',
+              maxHeight: mobileMenuOpen ? '380px' : '0',
               opacity: mobileMenuOpen ? 1 : 0,
+              pointerEvents: mobileMenuOpen ? 'auto' : 'none',
             }}
           >
             <div className="pt-4 pb-2 space-y-1 border-t border-border/20 mt-4">
@@ -157,8 +221,10 @@ const Index = () => {
                 </button>
               ))}
               <div className="pt-3">
-                <Button variant="valora" size="sm" className="w-full" onClick={() => { scrollToSection('waitlist'); setMobileMenuOpen(false); }}>
-                  Tidig tillgång
+                <Button variant="valora" size="sm" className="w-full" asChild>
+                  <a href={signupUrl} onClick={() => setMobileMenuOpen(false)}>
+                    {t('marketing.nav.signup')}
+                  </a>
                 </Button>
               </div>
             </div>
@@ -172,47 +238,47 @@ const Index = () => {
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           <div className="absolute inset-0" style={{
             background: `
-              radial-gradient(ellipse 80% 60% at 50% 40%, hsl(335 100% 83% / 0.08) 0%, transparent 70%),
-              radial-gradient(ellipse 60% 80% at 50% 0%, hsl(335 100% 85% / 0.06) 0%, transparent 50%),
-              radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, hsl(220 14% 3% / 0.7) 100%)
+              radial-gradient(ellipse 80% 55% at 50% 38%, hsl(172 50% 45% / 0.06) 0%, transparent 72%),
+              radial-gradient(ellipse 55% 70% at 50% 0%, hsl(172 55% 50% / 0.04) 0%, transparent 52%),
+              radial-gradient(ellipse 100% 100% at 50% 50%, transparent 45%, hsl(220 14% 4% / 0.55) 100%)
             `
           }} />
         </div>
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-5xl mx-auto text-center">
 
           <h1 className="headline-hero fade-up mb-8">
-            <span className="text-foreground">Autonom</span>
+            <span className="text-foreground">{t('marketing.hero.title1')}</span>
             <br />
-            <span className="text-foreground/50 transition-colors duration-700 hover:text-foreground/70">personlig ekonomi.</span>
+            <span className="text-foreground/50 transition-colors duration-700 hover:text-foreground/70">{t('marketing.hero.title2')}</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-lg mx-auto fade-up-delay-1 mb-14 leading-relaxed font-light">
-            Valora arbetar i bakgrunden och optimerar din ekonomi — enligt dina villkor.
+          <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto fade-up-delay-1 mb-14 leading-relaxed font-light font-sans">
+            {t('marketing.hero.subtitle')}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 fade-up-delay-2 mb-24">
             <MagneticButton strength={0.3}>
               <Button variant="valora" size="lg" onClick={() => scrollToSection('waitlist')} className="cta-glow min-w-[200px]">
-                Begär tidig tillgång
+                {t('marketing.hero.ctaWaitlist')}
               </Button>
             </MagneticButton>
             <MagneticButton strength={0.15}>
               <Button variant="valoraGhost" size="lg" onClick={() => scrollToSection('how')} className="min-w-[180px]">
-                Så fungerar det
+                {t('marketing.hero.ctaHow')}
               </Button>
             </MagneticButton>
           </div>
 
           {/* Savings counter */}
           <div className="fade-up-delay-3">
-            <div className="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-5 border border-border/30 rounded-2xl px-8 py-5 bg-background-elevated/50 backdrop-blur-sm transition-all duration-500 hover:border-border/50 hover:bg-background-elevated">
+            <div className="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-5 border border-border/25 rounded-full px-10 py-4 sm:py-5 bg-background-elevated/55 backdrop-blur-sm transition-all duration-500 hover:border-border/40 hover:bg-background-elevated/80">
               <CountUpNumber
                 end={190451}
-                suffix=" kr"
-                format={(n) => n.toLocaleString('sv-SE')}
-                className="text-3xl sm:text-4xl font-serif font-normal text-primary tabular-nums"
+                suffix={t('marketing.savings.suffix')}
+                format={(n) => n.toLocaleString(HERO_SAVINGS_NUMBER_LOCALE)}
+                className="text-3xl sm:text-4xl font-serif font-normal text-primary tabular-nums tracking-tight"
               />
-              <span className="text-muted-foreground text-sm">identifierade besparingar</span>
+              <span className="text-muted-foreground text-sm">{t('marketing.savings.caption')}</span>
             </div>
           </div>
         </div>
@@ -225,25 +291,21 @@ const Index = () => {
           <ScrollReveal>
             <div className="max-w-3xl mx-auto text-center mb-20">
               <h2 className="headline-section mb-6">
-                Problemet är inte brist på besparingar.<br />
-                <span className="text-muted-foreground">Det är att ingen orkar agera.</span>
+                {t('marketing.problem.headline1')}<br />
+                <span className="text-muted-foreground">{t('marketing.problem.headline2')}</span>
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground font-light leading-relaxed max-w-xl mx-auto">
-                Människor vet vad de borde göra – men skjuter upp det. Inte av okunskap, utan på grund av friktion.
+                {t('marketing.problem.body')}
               </p>
             </div>
           </ScrollReveal>
 
           {/* Bento grid stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-16">
-            {[
-              { end: 88, text: 'har skjutit upp att byta lån eller försäkring — trots att de vet att de borde.' },
-              { end: 79, text: 'känner dåligt samvete över att inte ta tag i sin ekonomi.' },
-              { end: 56, text: 'upplever hög mental belastning kring lån, försäkringar och ekonomi.' },
-            ].map((item, i) => (
+            {problemStats.map((item, i) => (
               <ScrollReveal key={i} delay={i * 120}>
                 <div className="card-modern rounded-2xl p-8 h-full group hover:scale-[1.01] transition-transform duration-300">
-                  <CountUpNumber end={item.end} suffix="%" className="text-5xl font-serif font-normal text-primary mb-4 block" />
+                  <CountUpNumber end={item.end} suffix="%" className="text-5xl font-sans font-normal text-primary mb-4 block tabular-nums" />
                   <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-muted-foreground/80 transition-colors duration-300">
                     {item.text}
                   </p>
@@ -256,11 +318,11 @@ const Index = () => {
           <ScrollReveal delay={400}>
             <div className="max-w-2xl mx-auto text-center">
               <p className="text-2xl sm:text-3xl font-serif font-normal italic leading-relaxed text-foreground/90 mb-4">
-                "Jag har vetat i två år att jag borde göra detta – men jag orkade inte."
+                {t('marketing.problem.quote')}
               </p>
               <div className="flex items-center justify-center gap-3">
                 <div className="h-px w-8 bg-border/40" />
-                <p className="text-sm text-muted-foreground">Kvinna, 63 år</p>
+                <p className="text-sm text-muted-foreground">{t('marketing.problem.quoteAttribution')}</p>
                 <div className="h-px w-8 bg-border/40" />
               </div>
             </div>
@@ -274,23 +336,19 @@ const Index = () => {
         <div className="max-w-4xl mx-auto">
           <ScrollReveal>
             <div className="text-center mb-16">
-              <span className="caption text-primary mb-4 block">Branschproblem</span>
-              <h2 className="headline-section max-w-2xl mx-auto">
-                Marknaden är manuell.<br />
-                <span className="text-muted-foreground">Belastningen hamnar på individen.</span>
+              <span className="caption text-primary mb-4 block">{t('marketing.industry.caption')}</span>
+              <h2 className="headline-section max-w-3xl mx-auto">
+                {t('marketing.industry.headline1')}<br />
+                <span className="text-muted-foreground">{t('marketing.industry.headline2')}</span>
               </h2>
             </div>
           </ScrollReveal>
 
           <div className="max-w-2xl mx-auto">
-            {[
-              { label: 'Manuell jämförelse mellan aktörer', delay: 100 },
-              { label: 'Prokrastinering vid varje livsbeslut', delay: 200 },
-              { label: 'Kognitiv överbelastning vid komplex ekonomi', delay: 300 },
-            ].map((item, i) => (
+            {industryItems.map((item, i) => (
               <ScrollReveal key={i} delay={item.delay}>
                 <div className="flex items-center gap-5 py-5 border-b border-border/15 last:border-0 group">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary/60 group-hover:bg-primary group-hover:shadow-[0_0_8px_hsl(335_100%_83%/0.4)] transition-all duration-500 flex-shrink-0" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary/60 group-hover:bg-primary group-hover:shadow-[0_0_8px_hsl(172_50%_45%/0.45)] transition-all duration-500 flex-shrink-0" />
                   <span className="text-sm sm:text-base text-foreground/70 group-hover:text-foreground/90 transition-colors duration-300">
                     {item.label}
                   </span>
@@ -306,15 +364,11 @@ const Index = () => {
       <section id="how" className="py-24 sm:py-32 lg:py-40 px-6 relative z-10">
         <div className="max-w-5xl mx-auto">
           <ScrollReveal>
-            <h2 className="headline-section text-center mb-20">Så fungerar Valora</h2>
+            <h2 className="headline-section text-center mb-20">{t('marketing.how.title')}</h2>
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-            {[
-              { step: '01', title: 'Koppla din ekonomi', desc: 'Du ansluter banker, lån och försäkringar — och anger dina villkor.' },
-              { step: '02', title: 'Valora analyserar', desc: 'Systemet bevakar marknaden och identifierar förbättringar kontinuerligt.' },
-              { step: '03', title: 'Du godkänner', desc: 'Ett klick. Resten sker automatiskt i bakgrunden.' },
-            ].map((item, i) => (
+            {howSteps.map((item, i) => (
               <ScrollReveal key={i} delay={i * 120}>
                 <div className="card-modern rounded-2xl p-8 h-full group hover:scale-[1.01] transition-transform duration-300">
                   <div className="flex items-center gap-3 mb-6">
@@ -338,26 +392,25 @@ const Index = () => {
         <div className="max-w-5xl mx-auto">
           <ScrollReveal>
             <h2 className="headline-section text-center mb-20">
-              Verifierad besparing.<br />
-              <span className="text-muted-foreground">Verklig mental lättnad.</span>
+              {t('marketing.proof.headline1')}<br />
+              <span className="text-muted-foreground">{t('marketing.proof.headline2')}</span>
             </h2>
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto mb-6">
-            {[
-              { age: '63 år', amount: '17 000 kr', quote: '"Jag hade aldrig gjort detta själv. Nu slipper jag tänka."' },
-              { age: '33 år', amount: '15 000 kr', quote: '"Jag betalar hellre än att behöva bära detta i huvudet."' },
-            ].map((item, i) => (
+            {proofCards.map((item, i) => (
               <ScrollReveal key={i} delay={i * 120}>
                 <div className="card-accent rounded-2xl p-8 h-full group hover:scale-[1.005] transition-transform duration-300">
                   <div className="flex items-center justify-between mb-6">
-                    <span className="text-sm text-muted-foreground">Privatperson, {item.age}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {t('marketing.proof.privatePerson')}, {item.age}
+                    </span>
                     <span className="text-[11px] text-primary border border-primary/15 rounded-full px-3 py-1 group-hover:border-primary/30 transition-colors duration-300">
-                      Verifierat
+                      {t('marketing.proof.verified')}
                     </span>
                   </div>
-                  <div className="text-4xl sm:text-5xl font-serif font-normal text-primary mb-1">{item.amount}</div>
-                  <div className="text-xs text-muted-foreground mb-8">per år i identifierade besparingar</div>
+                  <div className="text-4xl sm:text-5xl font-sans font-normal tabular-nums text-primary mb-1">{item.amount}</div>
+                  <div className="text-xs text-muted-foreground mb-8">{t('marketing.proof.perYear')}</div>
                   <p className="text-sm text-muted-foreground font-light italic leading-relaxed">{item.quote}</p>
                 </div>
               </ScrollReveal>
@@ -367,7 +420,7 @@ const Index = () => {
           <ScrollReveal delay={300}>
             <div className="card-modern rounded-2xl p-10 max-w-4xl mx-auto text-center">
               <p className="text-xl sm:text-2xl font-serif font-normal italic text-foreground/80 leading-relaxed">
-                "Tidigare gav ekonomi mig konstant ångest. Nu känns det mycket enklare."
+                {t('marketing.proof.quoteBottom')}
               </p>
             </div>
           </ScrollReveal>
@@ -379,15 +432,11 @@ const Index = () => {
       <section className="py-24 sm:py-32 lg:py-40 px-6 relative z-10">
         <div className="max-w-5xl mx-auto">
           <ScrollReveal>
-            <h2 className="headline-section text-center mb-20">För vem är Valora byggt?</h2>
+            <h2 className="headline-section text-center mb-20">{t('marketing.audience.title')}</h2>
           </ScrollReveal>
 
           <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-            {[
-              { title: 'Den upptagna yrkespersonen', desc: 'Du har inte tid att förhandla, jämföra och bevaka. Valora gör det åt dig.' },
-              { title: 'Familjen med komplex ekonomi', desc: 'Flera lån och försäkringar. Valora håller allt optimerat i bakgrunden.' },
-              { title: 'Den som vill ha kontroll utan stress', desc: 'Du vill göra rätt — men slippa bära ansvaret mentalt.' },
-            ].map((item, i) => (
+            {audienceItems.map((item, i) => (
               <ScrollReveal key={i} delay={i * 120}>
                 <div className="card-modern rounded-2xl p-8 h-full group hover:scale-[1.01] transition-transform duration-300">
                   <h3 className="headline-card mb-3 group-hover:text-foreground transition-colors duration-300">{item.title}</h3>
@@ -405,10 +454,10 @@ const Index = () => {
         <div className="max-w-xl mx-auto">
           <ScrollReveal>
             <div className="text-center mb-12">
-              <span className="caption text-primary mb-4 block">Begränsad tidig tillgång</span>
-              <h2 className="headline-section mb-4">Begär tidig tillgång</h2>
+              <span className="caption text-primary mb-4 block">{t('marketing.waitlist.caption')}</span>
+              <h2 className="headline-section mb-4">{t('marketing.waitlist.title')}</h2>
               <p className="text-base text-muted-foreground font-light">
-                Vi öppnar Valora successivt för ett begränsat antal användare.
+                {t('marketing.waitlist.subtitle')}
               </p>
             </div>
           </ScrollReveal>
@@ -417,19 +466,19 @@ const Index = () => {
             {!submitted ? (
               <form onSubmit={handleSubmit} className="card-accent rounded-2xl p-8 sm:p-10 space-y-5">
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-light text-foreground/80">E-post *</label>
+                  <label htmlFor="email" className="text-sm font-light text-foreground/80">{t('marketing.waitlist.emailLabel')}</label>
                   <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} required
-                    className="bg-background border-border/50 focus:border-primary/40 transition-colors duration-300" placeholder="din@email.se" />
+                    className="bg-background border-border/50 focus:border-primary/40 transition-colors duration-300" placeholder={t('marketing.waitlist.emailPlaceholder')} />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="note" className="text-sm font-light text-foreground/80">Vad vill du att Valora ska optimera?</label>
+                  <label htmlFor="note" className="text-sm font-light text-foreground/80">{t('marketing.waitlist.noteLabel')}</label>
                   <Textarea id="note" value={note} onChange={e => setNote(e.target.value)}
                     className="bg-background border-border/50 focus:border-primary/40 transition-colors duration-300 min-h-24"
-                    placeholder="Bostadslån, privatlån, bilförsäkring, hemförsäkring" />
+                    placeholder={t('marketing.waitlist.notePlaceholder')} />
                 </div>
                 <MagneticButton strength={0.1} className="w-full">
                   <Button type="submit" variant="valora" className="w-full cta-glow" size="lg">
-                    Gå med i väntelistan
+                    {t('marketing.waitlist.submit')}
                   </Button>
                 </MagneticButton>
               </form>
@@ -440,7 +489,7 @@ const Index = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <p className="text-lg font-light">Tack. Du är nu registrerad för tidig access.</p>
+                <p className="text-lg font-light">{t('marketing.waitlist.success')}</p>
               </div>
             )}
           </ScrollReveal>
@@ -452,17 +501,12 @@ const Index = () => {
       <section id="faq" className="py-24 sm:py-32 lg:py-40 px-6 relative z-10">
         <div className="max-w-2xl mx-auto">
           <ScrollReveal>
-            <h2 className="headline-section text-center mb-16">Vanliga frågor</h2>
+            <h2 className="headline-section text-center mb-16">{t('marketing.faq.title')}</h2>
           </ScrollReveal>
 
           <ScrollReveal delay={150}>
             <Accordion type="single" collapsible className="space-y-3">
-              {[
-                { q: 'Är Valora en bank?', a: 'Nej. Valora är ett autonomt finansiellt system som optimerar din ekonomi ovanpå banker och försäkringsbolag.' },
-                { q: 'Behöver jag byta bank?', a: 'Nej — och ibland, ja. Du behöver aldrig byta bank för att använda Valora. Om Valora identifierar ett förbättringsförslag som kräver ett byte, sker det först efter ditt uttryckliga godkännande.' },
-                { q: 'Är det säkert?', a: 'Ja. All åtkomst sker med samtycke och enligt bankstandard.' },
-                { q: 'Vad kostar det?', a: 'Prissättning fastställs vid lansering. Tidiga användare prioriteras.' },
-              ].map((item, i) => (
+              {faqItems.map((item, i) => (
                 <AccordionItem key={i} value={`item-${i}`} className="card-modern px-6 sm:px-8 rounded-xl border-none data-[state=open]:bg-background-surface transition-colors duration-300">
                   <AccordionTrigger className="text-left font-light text-base sm:text-lg hover:no-underline py-5">
                     {item.q}
@@ -484,14 +528,14 @@ const Index = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex flex-col items-center md:items-start gap-1">
               <span className="text-foreground/80 font-medium tracking-[0.2em] text-xs">VALORA</span>
-              <span className="text-muted-foreground text-sm font-light">Autonomt finansiellt system</span>
+              <span className="text-muted-foreground text-sm font-light">{t('marketing.footer.tagline')}</span>
             </div>
             <nav className="flex items-center gap-6">
               {[
-                { label: 'Integritetspolicy', to: '/integritetspolicy' },
-                { label: 'Användarvillkor', to: '/anvandarvillkor' },
+                { label: t('marketing.footer.privacy'), to: '/integritetspolicy' },
+                { label: t('marketing.footer.terms'), to: '/anvandarvillkor' },
               ].map(({ label, to }) => (
-                <Link key={label} to={to}
+                <Link key={to} to={to}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light relative group">
                   {label}
                   <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-foreground/30 transition-all duration-300 group-hover:w-full" />
@@ -499,7 +543,7 @@ const Index = () => {
               ))}
               <a href="mailto:info@valora.se"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light relative group">
-                Kontakt
+                {t('marketing.footer.contact')}
                 <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-foreground/30 transition-all duration-300 group-hover:w-full" />
               </a>
             </nav>

@@ -7,7 +7,7 @@ const TermsOfService = () => {
     <div className="min-h-screen bg-background text-foreground">
       {/* Nav */}
       <nav className="sticky top-0 z-50 nav-sticky">
-        <div className="max-w-6xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between gap-4">
           <Link to="/"><ValoraLogo size="small" /></Link>
           <Link to="/">
             <Button variant="ghost" size="sm">← Tillbaka</Button>

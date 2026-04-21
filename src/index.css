@@ -2,16 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Valora Design System – 2025 Minimal Fintech */
-
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap');
+/* Valora marketing site — Space Grotesk (UI/numbers) + Instrument Serif (display) */
 
 @layer base {
   :root {
+    /* Aligned with app shell / computed reference */
     --background: 220 14% 5%;
     --background-elevated: 220 12% 8%;
     --background-surface: 220 12% 11%;
-    --foreground: 0 0% 95%;
+    --foreground: 0 0% 94.9%;
 
     --card: 220 12% 8%;
     --card-foreground: 0 0% 95%;
@@ -19,16 +18,16 @@
     --popover: 220 12% 8%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 335 100% 83%;
+    --primary: 172 50% 45%;
     --primary-foreground: 220 14% 5%;
 
     --secondary: 220 12% 12%;
     --secondary-foreground: 0 0% 85%;
 
     --muted: 220 12% 14%;
-    --muted-foreground: 0 0% 55%;
+    --muted-foreground: 0 0% 62%;
 
-    --accent: 335 80% 70%;
+    --accent: 172 40% 38%;
     --accent-foreground: 0 0% 95%;
 
     --destructive: 0 62% 50%;
@@ -36,54 +35,53 @@
 
     --border: 220 12% 16%;
     --input: 220 12% 10%;
-    --ring: 335 100% 83%;
+    --ring: 172 50% 45%;
 
     --radius: 0.75rem;
 
-    --stat-accent: 335 100% 85%;
+    --stat-accent: 172 55% 60%;
 
-    /* Sidebar */
     --sidebar-background: 220 14% 5%;
-    --sidebar-foreground: 0 0% 85%;
-    --sidebar-primary: 335 100% 83%;
+    --sidebar-foreground: 0 0% 88%;
+    --sidebar-primary: 172 50% 45%;
     --sidebar-primary-foreground: 220 14% 5%;
     --sidebar-accent: 220 12% 12%;
     --sidebar-accent-foreground: 0 0% 85%;
     --sidebar-border: 220 12% 16%;
-    --sidebar-ring: 335 100% 83%;
+    --sidebar-ring: 172 50% 45%;
   }
 
   .dark {
     --background: 220 14% 5%;
     --background-elevated: 220 12% 8%;
     --background-surface: 220 12% 11%;
-    --foreground: 0 0% 95%;
+    --foreground: 0 0% 94.9%;
     --card: 220 12% 8%;
     --card-foreground: 0 0% 95%;
     --popover: 220 12% 8%;
     --popover-foreground: 0 0% 95%;
-    --primary: 335 100% 83%;
+    --primary: 172 50% 45%;
     --primary-foreground: 220 14% 5%;
     --secondary: 220 12% 12%;
     --secondary-foreground: 0 0% 85%;
     --muted: 220 12% 14%;
-    --muted-foreground: 0 0% 55%;
-    --accent: 335 80% 70%;
+    --muted-foreground: 0 0% 62%;
+    --accent: 172 40% 38%;
     --accent-foreground: 0 0% 95%;
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 95%;
     --border: 220 12% 16%;
     --input: 220 12% 10%;
-    --ring: 335 100% 83%;
-    --stat-accent: 335 100% 85%;
+    --ring: 172 50% 45%;
+    --stat-accent: 172 55% 60%;
     --sidebar-background: 220 14% 5%;
-    --sidebar-foreground: 0 0% 85%;
-    --sidebar-primary: 335 100% 83%;
+    --sidebar-foreground: 0 0% 88%;
+    --sidebar-primary: 172 50% 45%;
     --sidebar-primary-foreground: 220 14% 5%;
     --sidebar-accent: 220 12% 12%;
     --sidebar-accent-foreground: 0 0% 85%;
     --sidebar-border: 220 12% 16%;
-    --sidebar-ring: 335 100% 83%;
+    --sidebar-ring: 172 50% 45%;
   }
 }
 
@@ -95,18 +93,27 @@
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    tab-size: 4;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-    font-feature-settings: 'tnum' on, 'lnum' on, 'cv01' on, 'cv03' on;
-    letter-spacing: -0.01em;
+    font-family: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-feature-settings: normal;
+    letter-spacing: -0.015em;
     overflow-x: hidden;
   }
 
+  /* Editorial / quotes — Instrument “style”; numbers use default sans (Grotesk) instead */
   .font-serif {
-    font-family: 'Instrument Serif', Georgia, serif;
+    font-family: "Instrument Serif", Georgia, serif;
+    font-feature-settings: normal;
+    letter-spacing: 0;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
   }
 
   /* Minimal scrollbar */
@@ -130,23 +137,56 @@
 }
 
 @layer components {
-  /* 2025 Typography – clean, editorial */
+  /* Hero — Instrument style at the same display scale as before (Grotesk elsewhere sets “structure”) */
   .headline-hero {
-    @apply text-5xl md:text-7xl lg:text-8xl font-normal tracking-tight leading-[0.95];
-    font-family: 'Instrument Serif', Georgia, serif;
+    @apply font-normal text-center;
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: 3rem;
+    line-height: 0.95;
     letter-spacing: -0.03em;
+    font-stretch: normal;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    transform: none;
+  }
+
+  @media (min-width: 768px) {
+    .headline-hero {
+      font-size: 4.5rem;
+      line-height: 1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .headline-hero {
+      font-size: 6rem;
+      line-height: 1;
+    }
+  }
+
+  .headline-hero * {
+    letter-spacing: inherit;
+    font-weight: inherit;
+    font-feature-settings: inherit;
+    font-variation-settings: inherit;
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
   }
 
   .headline-section {
-    @apply text-3xl md:text-4xl lg:text-5xl font-normal tracking-tight leading-[1.1];
-    font-family: 'Instrument Serif', Georgia, serif;
+    @apply text-3xl md:text-4xl lg:text-5xl font-normal leading-[1.12];
+    font-family: "Instrument Serif", Georgia, serif;
+    font-feature-settings: normal;
     letter-spacing: -0.02em;
+    font-synthesis: none;
   }
 
   .headline-card {
-    @apply text-xl md:text-2xl font-normal tracking-tight;
-    font-family: 'Instrument Serif', Georgia, serif;
-    letter-spacing: -0.01em;
+    @apply text-xl md:text-2xl font-normal leading-snug;
+    font-family: "Instrument Serif", Georgia, serif;
+    font-feature-settings: normal;
+    letter-spacing: -0.015em;
+    font-synthesis: none;
   }
 
   .body-large {
@@ -242,7 +282,7 @@
 
   /* Gradient text – restrained */
   .text-gradient-primary {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(335 100% 85%) 100%);
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(172 55% 58%) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -303,8 +343,12 @@
 
   /* Keyframes */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes fadeIn {

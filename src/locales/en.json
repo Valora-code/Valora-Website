@@ -1,0 +1,170 @@
+{
+  "shell": {
+    "language": {
+      "label": "Language"
+    }
+  },
+  "marketing": {
+    "nav": {
+      "why": "Why Valora",
+      "how": "How it works",
+      "proof": "Users",
+      "faq": "FAQ",
+      "signup": "Sign up",
+      "menuAria": "Menu"
+    },
+    "hero": {
+      "title1": "Autonomous",
+      "title2": "personal finance.",
+      "subtitle": "Valora works in the background and optimizes your finances — on your terms.",
+      "ctaWaitlist": "Request early access",
+      "ctaHow": "How it works"
+    },
+    "savings": {
+      "suffix": " kr",
+      "caption": "identified savings"
+    },
+    "problem": {
+      "headline1": "The problem isn't a lack of savings.",
+      "headline2": "It's that nobody has the energy to act.",
+      "body": "People know what they should do — but they postpone it. Not out of ignorance, but because of friction.",
+      "stats": [
+        {
+          "end": 88,
+          "text": "have postponed switching loans or insurance — even though they know they should."
+        },
+        {
+          "end": 79,
+          "text": "feel guilty about not getting their finances in order."
+        },
+        {
+          "end": 56,
+          "text": "experience high mental load around loans, insurance, and money."
+        }
+      ],
+      "quote": "\"I've known for two years that I should do this — but I couldn't bring myself to.\"",
+      "quoteAttribution": "Woman, 63"
+    },
+    "industry": {
+      "caption": "Industry problem",
+      "headline1": "The market is manual.",
+      "headline2": "The burden lands on the individual.",
+      "items": [
+        { "label": "Manual comparison between providers", "delay": 100 },
+        { "label": "Procrastination at every life decision", "delay": 200 },
+        { "label": "Cognitive overload with complex finances", "delay": 300 }
+      ]
+    },
+    "how": {
+      "title": "How Valora works",
+      "steps": [
+        {
+          "step": "01",
+          "title": "Connect your finances",
+          "desc": "You connect banks, loans, and insurance — and set your preferences."
+        },
+        {
+          "step": "02",
+          "title": "Valora analyzes",
+          "desc": "The system monitors the market and continuously identifies improvements."
+        },
+        {
+          "step": "03",
+          "title": "You approve",
+          "desc": "One click. The rest happens automatically in the background."
+        }
+      ]
+    },
+    "proof": {
+      "headline1": "Verified savings.",
+      "headline2": "Real mental relief.",
+      "privatePerson": "Private individual",
+      "verified": "Verified",
+      "perYear": "per year in identified savings",
+      "quoteBottom": "\"Money used to give me constant anxiety. Now it feels much simpler.\"",
+      "cards": [
+        {
+          "age": "63 years",
+          "amount": "17,000 kr",
+          "quote": "\"I would never have done this myself. Now I don't have to think about it.\""
+        },
+        {
+          "age": "33 years",
+          "amount": "15,000 kr",
+          "quote": "\"I'd rather pay than carry this in my head.\""
+        }
+      ]
+    },
+    "audience": {
+      "title": "Who is Valora built for?",
+      "items": [
+        {
+          "title": "The busy professional",
+          "desc": "You don't have time to negotiate, compare, and monitor. Valora does it for you."
+        },
+        {
+          "title": "Families with complex finances",
+          "desc": "Multiple loans and insurance policies. Valora keeps everything optimized in the background."
+        },
+        {
+          "title": "Those who want control without stress",
+          "desc": "You want to do the right thing — without carrying the mental responsibility."
+        }
+      ]
+    },
+    "waitlist": {
+      "caption": "Limited early access",
+      "title": "Request early access",
+      "subtitle": "We're opening Valora gradually to a limited number of users.",
+      "emailLabel": "Email *",
+      "emailPlaceholder": "you@example.com",
+      "noteLabel": "What should Valora optimize for you?",
+      "notePlaceholder": "Mortgage, personal loan, car insurance, home insurance",
+      "submit": "Join the waitlist",
+      "success": "Thank you. Send the email that opened to confirm your place on the waitlist.",
+      "mailtoSubject": "Valora – early access",
+      "mailtoEmailLine": "Email:",
+      "mailtoNoteLine": "What I want to optimize:",
+      "toastThanksTitle": "Thanks",
+      "toastThanksBody": "Send the email that opened to complete your waitlist signup.",
+      "toastInvalidTitle": "Invalid input",
+      "toastErrorTitle": "Something went wrong",
+      "toastErrorBody": "Please try again later.",
+      "errors": {
+        "invalidEmail": "Invalid email address",
+        "noteMax": "Note must be at most 500 characters"
+      }
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "items": [
+        {
+          "q": "Is Valora a bank?",
+          "a": "No. Valora is an autonomous financial system that optimizes your finances on top of banks and insurers."
+        },
+        {
+          "q": "Do I need to switch banks?",
+          "a": "No — and sometimes, yes. You never need to switch banks to use Valora. If Valora identifies an improvement that requires a switch, it only happens after your explicit approval."
+        },
+        {
+          "q": "Is it safe?",
+          "a": "Yes. All access happens with consent and to banking-industry standards."
+        },
+        {
+          "q": "What does it cost?",
+          "a": "Pricing will be set at launch. Early users are prioritized."
+        }
+      ]
+    },
+    "footer": {
+      "tagline": "Autonomous financial system",
+      "privacy": "Privacy policy",
+      "terms": "Terms of use",
+      "contact": "Contact"
+    },
+    "notFound": {
+      "title": "Oops! Page not found",
+      "home": "Return to home"
+    }
+  }
+}
