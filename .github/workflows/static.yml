@@ -1,5 +1,6 @@
-# Build with Vite and deploy the production bundle to GitHub Pages.
-# Do not upload the repo root: dev index.html loads /src/main.tsx, which Pages serves as application/octet-stream.
+# GitHub Pages deployment for a Vite + React app.
+# Follows https://vite.dev/guide/static-deploy (build dist, upload artifact, deploy-pages).
+# Never publish the repo root: dev index.html loads /src/main.tsx (wrong MIME on Pages).
 name: Deploy static content to Pages
 
 on:
@@ -13,8 +14,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -24,13 +25,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Set up Node
+        uses: actions/setup-node@v6
         with:
-          node-version: "20"
-          cache: "npm"
+          node-version: lts/*
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
@@ -50,12 +51,12 @@ jobs:
           fi
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
-          path: dist
+          path: ./dist
 
       - name: Deploy to GitHub Pages
         id: deployment
