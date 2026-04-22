@@ -2,23 +2,41 @@
   "shell": {
     "language": {
       "label": "Language"
+    },
+    "appearance": {
+      "toggle": "Switch color mode",
+      "light": "Light",
+      "dark": "Dark"
     }
   },
   "marketing": {
     "nav": {
       "why": "Why Valora",
       "how": "How it works",
-      "proof": "Users",
+      "proof": "Results",
       "faq": "FAQ",
       "signup": "Sign up",
-      "menuAria": "Menu"
+      "menuAria": "Menu",
+      "menuCloseAria": "Close menu"
+    },
+    "chrome": {
+      "signal": "Illustrative total",
+      "pipeline": "Pipeline",
+      "faqEyebrow": "FAQ",
+      "chapterWhy": "Context",
+      "chapterHow": "Process",
+      "chapterProof": "Outcomes",
+      "chapterWaitlist": "Early access"
     },
     "hero": {
+      "eyebrow": "Autonomous finance · Sweden",
       "title1": "Autonomous",
       "title2": "personal finance.",
       "subtitle": "Valora works in the background and optimizes your finances — on your terms.",
       "ctaWaitlist": "Request early access",
-      "ctaHow": "How it works"
+      "ctaHow": "How it works",
+      "trustWaitlist": "Early access opens your email client to join the waitlist.",
+      "trustSignupSuffix": " Use Sign up if you already have access."
     },
     "savings": {
       "suffix": " kr",
@@ -43,7 +61,8 @@
         }
       ],
       "quote": "\"I've known for two years that I should do this — but I couldn't bring myself to.\"",
-      "quoteAttribution": "Woman, 63"
+      "quoteAttribution": "Woman, 63",
+      "statsFootnote": "Figures are illustrative summaries from qualitative research, not nationally representative statistics."
     },
     "industry": {
       "caption": "Industry problem",
@@ -148,7 +167,7 @@
         },
         {
           "q": "Is it safe?",
-          "a": "Yes. All access happens with consent and to banking-industry standards."
+          "a": "You choose what to connect and what to approve. We use strong security for data in transit and at rest, and Valora does not move money or change contracts without your confirmation. Read the privacy policy for details."
         },
         {
           "q": "What does it cost?",

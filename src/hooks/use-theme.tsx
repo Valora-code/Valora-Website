@@ -1,29 +1,48 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from "react";
 
-type Theme = 'obsidian' | 'arctic' | 'emerald' | 'violet';
+export type Appearance = "light" | "dark";
+
+const STORAGE_KEY = "valora-appearance";
 
 interface ThemeContextType {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
+  appearance: Appearance;
+  setAppearance: (a: Appearance) => void;
+  toggleAppearance: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+function readStoredAppearance(): Appearance {
+  if (typeof window === "undefined") return "dark";
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored === "light" || stored === "dark") return stored;
+  return "dark";
+}
+
+function applyAppearanceClass(appearance: Appearance) {
+  const root = document.documentElement;
+  root.classList.toggle("dark", appearance === "dark");
+}
+
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>(() => {
-    const stored = localStorage.getItem('valora-theme') as Theme;
-    return stored || 'obsidian';
-  });
+  const [appearance, setAppearanceState] = useState<Appearance>(() => readStoredAppearance());
+
+  const setAppearance = useCallback((a: Appearance) => {
+    setAppearanceState(a);
+    localStorage.setItem(STORAGE_KEY, a);
+    applyAppearanceClass(a);
+  }, []);
+
+  const toggleAppearance = useCallback(() => {
+    setAppearance(appearance === "dark" ? "light" : "dark");
+  }, [appearance, setAppearance]);
 
   useEffect(() => {
-    const root = document.documentElement;
-    root.classList.remove('obsidian', 'arctic', 'emerald', 'violet');
-    root.classList.add(theme);
-    localStorage.setItem('valora-theme', theme);
-  }, [theme]);
+    applyAppearanceClass(appearance);
+  }, [appearance]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ appearance, setAppearance, toggleAppearance }}>
       {children}
     </ThemeContext.Provider>
   );
@@ -32,7 +51,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error('useTheme must be used within ThemeProvider');
+    throw new Error("useTheme must be used within ThemeProvider");
   }
   return context;
 };

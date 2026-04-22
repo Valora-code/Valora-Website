@@ -68,29 +68,11 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        serif: ['"Instrument Serif"', 'Georgia', 'Times New Roman', 'serif'],
-        sans: [
-          '"Space Grotesk"',
-          'ui-sans-serif',
-          'system-ui',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          'sans-serif',
-        ],
-        mono: [
-          'SF Mono',
-          'Monaco',
-          'Cascadia Code',
-          'Consolas',
-          'monospace',
-        ],
+        sans: ['"Plus Jakarta Sans"', "ui-sans-serif", "system-ui", "sans-serif"],
       },
-      /* Do not override `normal` — Tailwind default is 0em. A negative `normal` made
-         `tracking-normal` squeeze copy and was easy to misuse on serif display type. */
       letterSpacing: {
-        tight: '-0.03em',
-        snug: '-0.01em',
-        wide: '0.02em',
+        tight: "-0.02em",
+        snug: "-0.01em",
       },
       keyframes: {
         "accordion-down": {

@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { ValoraLogo } from "@/components/ValoraLogo";
 import { CountUpNumber } from "@/components/CountUpNumber";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { MagneticButton } from "@/components/MagneticButton";
 import { MarketingLanguageSwitcher } from "@/components/MarketingLanguageSwitcher";
+import { MarketingAppearanceToggle } from "@/components/MarketingAppearanceToggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,8 +13,9 @@ import { Link } from "react-router-dom";
 import { z } from "zod";
 import { useTranslation } from "@/lib/i18n";
 import { getSignupUrl } from "@/config/valoraApp";
+import { useMarketingScroll } from "@/hooks/use-marketing-scroll";
+import { cn } from "@/lib/utils";
 
-/** Hero savings figure: always sv-SE grouping so it matches valora-tech.com (non-breaking space thousands). */
 const HERO_SAVINGS_NUMBER_LOCALE = "sv-SE";
 
 type StatItem = { end: number; text: string };
@@ -24,49 +25,20 @@ type ProofCard = { age: string; amount: string; quote: string };
 type AudienceCard = { title: string; desc: string };
 type FaqItem = { q: string; a: string };
 
-// Cursor-following ambient glow
-const CursorGlow = () => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    let rafId: number;
-    let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
-
-    const handleMove = (e: MouseEvent) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
-    };
-
-    const animate = () => {
-      currentX += (targetX - currentX) * 0.08;
-      currentY += (targetY - currentY) * 0.08;
-      if (ref.current) {
-        ref.current.style.background = `radial-gradient(600px circle at ${currentX}px ${currentY}px, hsl(172 55% 52% / 0.04), transparent 60%)`;
-      }
-      rafId = requestAnimationFrame(animate);
-    };
-
-    window.addEventListener('mousemove', handleMove);
-    rafId = requestAnimationFrame(animate);
-    return () => {
-      window.removeEventListener('mousemove', handleMove);
-      cancelAnimationFrame(rafId);
-    };
-  }, []);
-
-  return <div ref={ref} className="fixed inset-0 pointer-events-none z-0 hidden md:block" />;
-};
-
-// Nav with scroll-based opacity
 const useNavScroll = () => {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
   return scrolled;
 };
+
+const sectionClass = "scroll-mt-24 border-t border-border bg-background";
+const sectionInner = "mx-auto max-w-6xl px-6 py-16 sm:px-8 sm:py-20 md:py-24";
+const altSectionClass = "scroll-mt-24 border-t border-border bg-muted/40 dark:bg-muted/20";
 
 const Index = () => {
   const [email, setEmail] = useState("");
@@ -75,14 +47,16 @@ const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { toast } = useToast();
   const navScrolled = useNavScroll();
+  const { scrollY, readProgress, reducedMotion } = useMarketingScroll();
   const { t } = useTranslation();
   const signupUrl = getSignupUrl();
+  const heroParallaxY = reducedMotion ? 0 : Math.min(scrollY, 520) * 0.055;
 
   const waitlistSchema = useMemo(
     () =>
       z.object({
-        email: z.string().trim().email({ message: t('marketing.waitlist.errors.invalidEmail') }).max(255),
-        note: z.string().trim().max(500, { message: t('marketing.waitlist.errors.noteMax') }).optional(),
+        email: z.string().trim().email({ message: t("marketing.waitlist.errors.invalidEmail") }).max(255),
+        note: z.string().trim().max(500, { message: t("marketing.waitlist.errors.noteMax") }).optional(),
       }),
     [t],
   );
@@ -90,54 +64,50 @@ const Index = () => {
   const navLinks = useMemo(
     () =>
       [
-        ['why', t('marketing.nav.why')],
-        ['how', t('marketing.nav.how')],
-        ['proof', t('marketing.nav.proof')],
-        ['faq', t('marketing.nav.faq')],
+        ["why", t("marketing.nav.why")],
+        ["how", t("marketing.nav.how")],
+        ["proof", t("marketing.nav.proof")],
+        ["faq", t("marketing.nav.faq")],
       ] as const,
     [t],
   );
 
-  const problemStats = t('marketing.problem.stats', { returnObjects: true }) as StatItem[];
-  const industryItems = t('marketing.industry.items', { returnObjects: true }) as IndustryItem[];
-  const howSteps = t('marketing.how.steps', { returnObjects: true }) as HowStep[];
-  const proofCards = t('marketing.proof.cards', { returnObjects: true }) as ProofCard[];
-  const audienceItems = t('marketing.audience.items', { returnObjects: true }) as AudienceCard[];
-  const faqItems = t('marketing.faq.items', { returnObjects: true }) as FaqItem[];
+  const problemStats = t("marketing.problem.stats", { returnObjects: true }) as StatItem[];
+  const industryItems = t("marketing.industry.items", { returnObjects: true }) as IndustryItem[];
+  const howSteps = t("marketing.how.steps", { returnObjects: true }) as HowStep[];
+  const proofCards = t("marketing.proof.cards", { returnObjects: true }) as ProofCard[];
+  const audienceItems = t("marketing.audience.items", { returnObjects: true }) as AudienceCard[];
+  const faqItems = t("marketing.faq.items", { returnObjects: true }) as FaqItem[];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const validatedData = waitlistSchema.parse({ email, note });
-      const subject = encodeURIComponent(t('marketing.waitlist.mailtoSubject'));
-      const noteLine = t('marketing.waitlist.mailtoNoteLine');
-      const emailLine = t('marketing.waitlist.mailtoEmailLine');
+      const subject = encodeURIComponent(t("marketing.waitlist.mailtoSubject"));
+      const noteLine = t("marketing.waitlist.mailtoNoteLine");
+      const emailLine = t("marketing.waitlist.mailtoEmailLine");
       const body = encodeURIComponent(
-        [
-          `${emailLine} ${validatedData.email}`,
-          "",
-          validatedData.note ? `${noteLine}\n${validatedData.note}` : "",
-        ]
+        [`${emailLine} ${validatedData.email}`, "", validatedData.note ? `${noteLine}\n${validatedData.note}` : ""]
           .filter(Boolean)
-          .join("\n")
+          .join("\n"),
       );
       window.location.href = `mailto:info@valora.se?subject=${subject}&body=${body}`;
       setSubmitted(true);
       toast({
-        title: t('marketing.waitlist.toastThanksTitle'),
-        description: t('marketing.waitlist.toastThanksBody'),
+        title: t("marketing.waitlist.toastThanksTitle"),
+        description: t("marketing.waitlist.toastThanksBody"),
       });
     } catch (error) {
       if (error instanceof z.ZodError) {
         toast({
-          title: t('marketing.waitlist.toastInvalidTitle'),
+          title: t("marketing.waitlist.toastInvalidTitle"),
           description: error.errors[0].message,
           variant: "destructive",
         });
       } else {
         toast({
-          title: t('marketing.waitlist.toastErrorTitle'),
-          description: t('marketing.waitlist.toastErrorBody'),
+          title: t("marketing.waitlist.toastErrorTitle"),
+          description: t("marketing.waitlist.toastErrorBody"),
           variant: "destructive",
         });
       }
@@ -145,411 +115,440 @@ const Index = () => {
   };
 
   const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const el = document.getElementById(id);
+    if (!el) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
   };
 
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [mobileMenuOpen]);
+
   return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
-      <CursorGlow />
-
-      {/* Subtle top ambient */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[50vh]"
-          style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 0%, hsl(220 14% 10%) 0%, transparent 100%)' }} />
-      </div>
-
-      {/* ─── NAV ─── */}
-      <nav
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
-        style={{
-          background: navScrolled ? 'hsl(220 14% 5% / 0.92)' : 'transparent',
-          backdropFilter: navScrolled ? 'blur(20px)' : 'none',
-          borderBottom: navScrolled ? '1px solid hsl(220 12% 16% / 0.3)' : '1px solid transparent',
-        }}
+    <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
+      <header
+        className={cn(
+          "relative sticky top-0 z-50 w-full border-b border-border/70 bg-background/80 shadow-[inset_0_-1px_0_0_hsl(var(--border)/0.5)] backdrop-blur-xl supports-[backdrop-filter]:bg-background/65 dark:border-border/80 dark:bg-background/75 dark:supports-[backdrop-filter]:bg-background/55",
+          navScrolled && "border-border/90 shadow-sm dark:shadow-black/20",
+        )}
       >
-        <div className="max-w-6xl mx-auto px-6 md:px-12 py-4">
-          <div className="flex items-center justify-between gap-3">
-            <ValoraLogo size="small" />
-
-            <div className="hidden md:flex flex-1 items-center justify-end gap-8 min-w-0">
-              {navLinks.map(([id, label]) => (
-                <button key={id} type="button" onClick={() => scrollToSection(id)}
-                  className="text-[13px] text-muted-foreground hover:text-foreground transition-colors duration-200 relative group shrink-0">
-                  {label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-foreground/40 transition-all duration-300 group-hover:w-full" />
-                </button>
-              ))}
-              <div className="flex items-center gap-2 shrink-0">
-                <MarketingLanguageSwitcher />
-                <MagneticButton strength={0.15}>
-                  <Button variant="valora" size="sm" asChild>
-                    <a href={signupUrl}>{t('marketing.nav.signup')}</a>
-                  </Button>
-                </MagneticButton>
-              </div>
-            </div>
-
-            <div className="flex md:hidden items-center gap-0.5 shrink-0">
-              <MarketingLanguageSwitcher />
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-muted-foreground hover:text-foreground transition-colors"
-                aria-label={t('marketing.nav.menuAria')}
-              >
-                <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" stroke="currentColor">
-                  {mobileMenuOpen ? <path d="M6 18L18 6M6 6l12 12" /> : <path d="M4 6h16M4 12h16M4 18h16" />}
-                </svg>
-              </button>
-            </div>
+        {!reducedMotion ? (
+          <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-[2px] overflow-hidden bg-primary/[0.08] dark:bg-primary/[0.12]" aria-hidden>
+            <div
+              className="h-full w-full origin-left bg-primary/45 dark:bg-primary/40"
+              style={{ transform: `scaleX(${readProgress})` }}
+            />
           </div>
-
-          {/* Mobile menu with animation */}
-          <div
-            className="md:hidden overflow-hidden transition-all duration-300 ease-out"
-            style={{
-              maxHeight: mobileMenuOpen ? '380px' : '0',
-              opacity: mobileMenuOpen ? 1 : 0,
-              pointerEvents: mobileMenuOpen ? 'auto' : 'none',
-            }}
+        ) : null}
+        <div className="mx-auto flex w-full max-w-6xl items-center gap-6 px-4 py-2.5 sm:gap-8 sm:px-6 md:py-3 lg:max-w-7xl lg:gap-10 lg:px-8">
+          <button
+            type="button"
+            onClick={() => scrollToSection("top")}
+            className="shrink-0 rounded-md text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            aria-label="Valora"
           >
-            <div className="pt-4 pb-2 space-y-1 border-t border-border/20 mt-4">
-              {navLinks.map(([id, label]) => (
-                <button key={id} onClick={() => { scrollToSection(id); setMobileMenuOpen(false); }}
-                  className="block w-full text-left py-2.5 px-1 text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  {label}
-                </button>
-              ))}
-              <div className="pt-3">
-                <Button variant="valora" size="sm" className="w-full" asChild>
-                  <a href={signupUrl} onClick={() => setMobileMenuOpen(false)}>
-                    {t('marketing.nav.signup')}
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+            <ValoraLogo size="small" />
+          </button>
 
-      {/* ─── HERO ─── */}
-      <section className="min-h-[100vh] flex flex-col items-center justify-center px-6 md:px-12 pt-24 pb-20 relative z-10">
-        {/* Vignette gradient overlay */}
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute inset-0" style={{
-            background: `
-              radial-gradient(ellipse 80% 55% at 50% 38%, hsl(172 50% 45% / 0.06) 0%, transparent 72%),
-              radial-gradient(ellipse 55% 70% at 50% 0%, hsl(172 55% 50% / 0.04) 0%, transparent 52%),
-              radial-gradient(ellipse 100% 100% at 50% 50%, transparent 45%, hsl(220 14% 4% / 0.55) 100%)
-            `
-          }} />
-        </div>
-        <div className="max-w-5xl mx-auto text-center">
-
-          <h1 className="headline-hero fade-up mb-8">
-            <span className="text-foreground">{t('marketing.hero.title1')}</span>
-            <br />
-            <span className="text-foreground/50 transition-colors duration-700 hover:text-foreground/70">{t('marketing.hero.title2')}</span>
-          </h1>
-
-          <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto fade-up-delay-1 mb-14 leading-relaxed font-light font-sans">
-            {t('marketing.hero.subtitle')}
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 fade-up-delay-2 mb-24">
-            <MagneticButton strength={0.3}>
-              <Button variant="valora" size="lg" onClick={() => scrollToSection('waitlist')} className="cta-glow min-w-[200px]">
-                {t('marketing.hero.ctaWaitlist')}
-              </Button>
-            </MagneticButton>
-            <MagneticButton strength={0.15}>
-              <Button variant="valoraGhost" size="lg" onClick={() => scrollToSection('how')} className="min-w-[180px]">
-                {t('marketing.hero.ctaHow')}
-              </Button>
-            </MagneticButton>
-          </div>
-
-          {/* Savings counter */}
-          <div className="fade-up-delay-3">
-            <div className="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-5 border border-border/25 rounded-full px-10 py-4 sm:py-5 bg-background-elevated/55 backdrop-blur-sm transition-all duration-500 hover:border-border/40 hover:bg-background-elevated/80">
-              <CountUpNumber
-                end={190451}
-                suffix={t('marketing.savings.suffix')}
-                format={(n) => n.toLocaleString(HERO_SAVINGS_NUMBER_LOCALE)}
-                className="text-3xl sm:text-4xl font-serif font-normal text-primary tabular-nums tracking-tight"
-              />
-              <span className="text-muted-foreground text-sm">{t('marketing.savings.caption')}</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── PROBLEM ─── */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-border/40 to-transparent" />
-      <section id="why" className="py-24 sm:py-32 lg:py-40 px-6 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          <ScrollReveal>
-            <div className="max-w-3xl mx-auto text-center mb-20">
-              <h2 className="headline-section mb-6">
-                {t('marketing.problem.headline1')}<br />
-                <span className="text-muted-foreground">{t('marketing.problem.headline2')}</span>
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground font-light leading-relaxed max-w-xl mx-auto">
-                {t('marketing.problem.body')}
-              </p>
-            </div>
-          </ScrollReveal>
-
-          {/* Bento grid stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-16">
-            {problemStats.map((item, i) => (
-              <ScrollReveal key={i} delay={i * 120}>
-                <div className="card-modern rounded-2xl p-8 h-full group hover:scale-[1.01] transition-transform duration-300">
-                  <CountUpNumber end={item.end} suffix="%" className="text-5xl font-sans font-normal text-primary mb-4 block tabular-nums" />
-                  <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-muted-foreground/80 transition-colors duration-300">
-                    {item.text}
-                  </p>
-                </div>
-              </ScrollReveal>
+          <nav className="hidden min-w-0 items-center gap-7 md:flex lg:gap-9" aria-label="Primary">
+            {navLinks.map(([id, label]) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => scrollToSection(id)}
+                className="shrink-0 rounded-md text-sm font-medium text-foreground/90 transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:text-foreground/85"
+              >
+                {label}
+              </button>
             ))}
+          </nav>
+
+          <div className="hidden min-w-0 flex-1 md:block" aria-hidden />
+
+          <div className="hidden shrink-0 items-center gap-1 sm:gap-2 md:flex">
+            <MarketingLanguageSwitcher />
+            <MarketingAppearanceToggle />
+            <Button variant="valora" size="sm" className="ml-2 h-9 shrink-0 rounded-full px-5 text-sm" asChild>
+              <a href={signupUrl}>{t("marketing.nav.signup")}</a>
+            </Button>
           </div>
 
-          {/* Quote */}
-          <ScrollReveal delay={400}>
-            <div className="max-w-2xl mx-auto text-center">
-              <p className="text-2xl sm:text-3xl font-serif font-normal italic leading-relaxed text-foreground/90 mb-4">
-                {t('marketing.problem.quote')}
-              </p>
-              <div className="flex items-center justify-center gap-3">
-                <div className="h-px w-8 bg-border/40" />
-                <p className="text-sm text-muted-foreground">{t('marketing.problem.quoteAttribution')}</p>
-                <div className="h-px w-8 bg-border/40" />
-              </div>
-            </div>
-          </ScrollReveal>
+          <div className="ml-auto flex shrink-0 items-center gap-0.5 md:hidden">
+            <MarketingLanguageSwitcher />
+            <MarketingAppearanceToggle />
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="flex min-h-10 min-w-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              aria-label={mobileMenuOpen ? t("marketing.nav.menuCloseAria") : t("marketing.nav.menuAria")}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="primary-mobile-nav"
+            >
+              <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" stroke="currentColor">
+                {mobileMenuOpen ? <path d="M6 18L18 6M6 6l12 12" /> : <path d="M4 6h16M4 12h16M4 18h16" />}
+              </svg>
+            </button>
+          </div>
         </div>
-      </section>
 
-      {/* ─── INDUSTRY PROBLEMS ─── */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-border/40 to-transparent" />
-      <section className="py-24 sm:py-32 px-6 bg-background-elevated relative z-10">
-        <div className="max-w-4xl mx-auto">
-          <ScrollReveal>
-            <div className="text-center mb-16">
-              <span className="caption text-primary mb-4 block">{t('marketing.industry.caption')}</span>
-              <h2 className="headline-section max-w-3xl mx-auto">
-                {t('marketing.industry.headline1')}<br />
-                <span className="text-muted-foreground">{t('marketing.industry.headline2')}</span>
-              </h2>
-            </div>
-          </ScrollReveal>
-
-          <div className="max-w-2xl mx-auto">
-            {industryItems.map((item, i) => (
-              <ScrollReveal key={i} delay={item.delay}>
-                <div className="flex items-center gap-5 py-5 border-b border-border/15 last:border-0 group">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary/60 group-hover:bg-primary group-hover:shadow-[0_0_8px_hsl(172_50%_45%/0.45)] transition-all duration-500 flex-shrink-0" />
-                  <span className="text-sm sm:text-base text-foreground/70 group-hover:text-foreground/90 transition-colors duration-300">
-                    {item.label}
-                  </span>
-                </div>
-              </ScrollReveal>
+        <div
+          id="primary-mobile-nav"
+          className={cn(
+            "border-t border-border/70 bg-background/95 backdrop-blur-xl supports-[backdrop-filter]:bg-background/88 dark:bg-background/92 md:hidden",
+            !mobileMenuOpen && "hidden",
+          )}
+          aria-hidden={!mobileMenuOpen}
+        >
+          <div className="mx-auto w-full max-w-6xl space-y-0.5 px-4 py-3 sm:px-6 lg:max-w-7xl lg:px-8">
+            {navLinks.map(([id, label]) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => {
+                  scrollToSection(id);
+                  setMobileMenuOpen(false);
+                }}
+                className="block w-full rounded-md py-2.5 text-left text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                {label}
+              </button>
             ))}
+            <div className="pt-3">
+              <Button variant="valora" size="sm" className="w-full" asChild>
+                <a href={signupUrl} onClick={() => setMobileMenuOpen(false)}>
+                  {t("marketing.nav.signup")}
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
-      </section>
+      </header>
 
-      {/* ─── HOW IT WORKS ─── */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-border/40 to-transparent" />
-      <section id="how" className="py-24 sm:py-32 lg:py-40 px-6 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          <ScrollReveal>
-            <h2 className="headline-section text-center mb-20">{t('marketing.how.title')}</h2>
+      <main>
+        <section id="top" className="scroll-mt-24 relative overflow-hidden border-b border-border bg-background">
+          <div
+            className="pointer-events-none absolute inset-x-0 top-0 h-[min(26rem,50vh)] bg-[radial-gradient(ellipse_72%_52%_at_50%_-5%,hsl(var(--primary)/0.08),transparent_58%)] will-change-transform dark:bg-[radial-gradient(ellipse_72%_52%_at_50%_-5%,hsl(var(--primary)/0.14),transparent_58%)]"
+            style={
+              reducedMotion
+                ? undefined
+                : { transform: `translate3d(0, ${heroParallaxY}px, 0)` }
+            }
+            aria-hidden
+          />
+          <ScrollReveal subtle className={`${sectionInner} relative max-w-3xl`}>
+            <div className="mb-5 flex flex-col gap-2">
+              <p className="section-eyebrow">{t("marketing.hero.eyebrow")}</p>
+              <div className="marketing-accent-bar" aria-hidden />
+            </div>
+            <h1 className="headline-hero mb-6">
+              <span className="text-foreground">{t("marketing.hero.title1")}</span>{" "}
+              <span className="text-muted-foreground">{t("marketing.hero.title2")}</span>
+            </h1>
+            <p className="body-large mb-10">{t("marketing.hero.subtitle")}</p>
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Button variant="valora" size="lg" className="h-11 px-7" onClick={() => scrollToSection("waitlist")}>
+                {t("marketing.hero.ctaWaitlist")}
+              </Button>
+              <Button variant="outline" size="lg" className="h-11 border-border px-7" onClick={() => scrollToSection("how")}>
+                {t("marketing.hero.ctaHow")}
+              </Button>
+            </div>
+
+            <p className="mt-6 max-w-xl text-xs leading-relaxed text-muted-foreground">
+              {t("marketing.hero.trustWaitlist")}{" "}
+              <a href={signupUrl} className="font-medium text-primary underline-offset-2 hover:underline">
+                {t("marketing.nav.signup")}
+              </a>
+              {t("marketing.hero.trustSignupSuffix")}
+              {" · "}
+              <Link to="/integritetspolicy" className="font-medium text-primary underline-offset-2 hover:underline">
+                {t("marketing.footer.privacy")}
+              </Link>
+              {" · "}
+              <Link to="/anvandarvillkor" className="font-medium text-primary underline-offset-2 hover:underline">
+                {t("marketing.footer.terms")}
+              </Link>
+            </p>
+
+            <div className="card-modern marketing-card-lift mt-14 p-6 shadow-sm shadow-primary/5 sm:p-8">
+              <p className="caption mb-1 text-xs font-semibold uppercase tracking-wide text-primary">{t("marketing.chrome.signal")}</p>
+              <div className="flex flex-wrap items-baseline gap-2">
+                <CountUpNumber
+                  end={190451}
+                  suffix={t("marketing.savings.suffix")}
+                  format={(n) => n.toLocaleString(HERO_SAVINGS_NUMBER_LOCALE)}
+                  className="text-3xl font-semibold tabular-nums tracking-tight text-primary sm:text-4xl"
+                />
+              </div>
+              <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">{t("marketing.savings.caption")}</p>
+            </div>
           </ScrollReveal>
+        </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-            {howSteps.map((item, i) => (
-              <ScrollReveal key={i} delay={i * 120}>
-                <div className="card-modern rounded-2xl p-8 h-full group hover:scale-[1.01] transition-transform duration-300">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 rounded-lg bg-primary/8 border border-primary/15 flex items-center justify-center group-hover:bg-primary/12 group-hover:border-primary/25 transition-all duration-300">
-                      <span className="text-[11px] font-medium text-primary/70">{item.step}</span>
+        <section id="why" className={`${sectionClass} relative overflow-hidden`}>
+          <ScrollReveal subtle className="relative">
+            <div
+              className="marketing-scroll-line pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
+              aria-hidden
+            />
+            <div className={sectionInner}>
+              <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+                <div>
+                  <div className="mb-3 flex flex-col gap-2">
+                    <p className="section-eyebrow">{t("marketing.chrome.chapterWhy")}</p>
+                    <div className="marketing-accent-bar" aria-hidden />
+                  </div>
+                  <h2 className="headline-section mb-5">
+                    {t("marketing.problem.headline1")}{" "}
+                    <span className="text-muted-foreground">{t("marketing.problem.headline2")}</span>
+                  </h2>
+                  <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">{t("marketing.problem.body")}</p>
+                </div>
+                <div className="card-modern marketing-card-lift p-6 sm:p-8">
+                  <div className="mb-3 flex flex-col gap-2">
+                    <p className="caption text-xs font-semibold uppercase tracking-wide text-primary">{t("marketing.industry.caption")}</p>
+                    <div className="marketing-accent-bar" aria-hidden />
+                  </div>
+                  <h3 className="mb-6 text-xl font-semibold leading-snug sm:text-2xl">
+                    {t("marketing.industry.headline1")}{" "}
+                    <span className="text-muted-foreground">{t("marketing.industry.headline2")}</span>
+                  </h3>
+                  <ul className="space-y-3">
+                    {industryItems.map((item) => (
+                      <li key={item.label} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
+                        <span>{item.label}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-14 grid gap-4 sm:grid-cols-3">
+                {problemStats.map((item, i) => (
+                  <div key={i} className="card-modern marketing-card-lift p-6">
+                    <CountUpNumber end={item.end} suffix="%" className="mb-2 block text-3xl font-semibold tabular-nums text-primary" />
+                    <p className="text-sm leading-relaxed text-muted-foreground">{item.text}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-4 text-center text-xs text-muted-foreground/90 sm:text-left">{t("marketing.problem.statsFootnote")}</p>
+
+              <blockquote className="mx-auto mt-14 max-w-2xl rounded-lg border border-border bg-muted/30 px-6 py-8 text-center dark:bg-muted/10 sm:px-10 sm:py-10">
+                <p className="text-lg font-medium leading-snug text-foreground sm:text-xl">{t("marketing.problem.quote")}</p>
+                <footer className="mt-4 text-xs text-muted-foreground">{t("marketing.problem.quoteAttribution")}</footer>
+              </blockquote>
+            </div>
+          </ScrollReveal>
+        </section>
+
+        <section id="how" className={`${altSectionClass} relative overflow-hidden`}>
+          <ScrollReveal subtle className="relative">
+            <div
+              className="marketing-scroll-line pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
+              aria-hidden
+            />
+            <div className={sectionInner}>
+              <div className="mb-3 flex flex-col gap-2">
+                <p className="section-eyebrow">{t("marketing.chrome.chapterHow")}</p>
+                <div className="marketing-accent-bar" aria-hidden />
+              </div>
+              <h2 className="headline-section mb-10 max-w-2xl">{t("marketing.how.title")}</h2>
+
+              <ol className="mx-auto max-w-2xl list-none space-y-10 p-0">
+                {howSteps.map((item) => (
+                  <li key={item.step}>
+                    <div className="flex gap-4 sm:gap-5">
+                      <span
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-primary/35 bg-primary/10 text-xs font-semibold text-primary shadow-sm shadow-primary/10"
+                        aria-hidden
+                      >
+                        {item.step}
+                      </span>
+                      <div className="min-w-0 border-l-2 border-primary/15 pl-4 pt-0.5 sm:pl-5">
+                        <h3 className="headline-card text-base sm:text-lg">{item.title}</h3>
+                        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+                      </div>
                     </div>
-                    <div className="h-px flex-1 bg-border/20 group-hover:bg-border/40 transition-colors duration-500" />
-                  </div>
-                  <h3 className="headline-card mb-3">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── PROOF ─── */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-border/40 to-transparent" />
-      <section id="proof" className="py-24 sm:py-32 lg:py-40 px-6 bg-background-elevated relative z-10">
-        <div className="max-w-5xl mx-auto">
-          <ScrollReveal>
-            <h2 className="headline-section text-center mb-20">
-              {t('marketing.proof.headline1')}<br />
-              <span className="text-muted-foreground">{t('marketing.proof.headline2')}</span>
-            </h2>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto mb-6">
-            {proofCards.map((item, i) => (
-              <ScrollReveal key={i} delay={i * 120}>
-                <div className="card-accent rounded-2xl p-8 h-full group hover:scale-[1.005] transition-transform duration-300">
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="text-sm text-muted-foreground">
-                      {t('marketing.proof.privatePerson')}, {item.age}
-                    </span>
-                    <span className="text-[11px] text-primary border border-primary/15 rounded-full px-3 py-1 group-hover:border-primary/30 transition-colors duration-300">
-                      {t('marketing.proof.verified')}
-                    </span>
-                  </div>
-                  <div className="text-4xl sm:text-5xl font-sans font-normal tabular-nums text-primary mb-1">{item.amount}</div>
-                  <div className="text-xs text-muted-foreground mb-8">{t('marketing.proof.perYear')}</div>
-                  <p className="text-sm text-muted-foreground font-light italic leading-relaxed">{item.quote}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-
-          <ScrollReveal delay={300}>
-            <div className="card-modern rounded-2xl p-10 max-w-4xl mx-auto text-center">
-              <p className="text-xl sm:text-2xl font-serif font-normal italic text-foreground/80 leading-relaxed">
-                {t('marketing.proof.quoteBottom')}
-              </p>
+                  </li>
+                ))}
+              </ol>
             </div>
           </ScrollReveal>
-        </div>
-      </section>
+        </section>
 
-      {/* ─── AUDIENCE ─── */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-border/40 to-transparent" />
-      <section className="py-24 sm:py-32 lg:py-40 px-6 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          <ScrollReveal>
-            <h2 className="headline-section text-center mb-20">{t('marketing.audience.title')}</h2>
-          </ScrollReveal>
-
-          <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-            {audienceItems.map((item, i) => (
-              <ScrollReveal key={i} delay={i * 120}>
-                <div className="card-modern rounded-2xl p-8 h-full group hover:scale-[1.01] transition-transform duration-300">
-                  <h3 className="headline-card mb-3 group-hover:text-foreground transition-colors duration-300">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── WAITLIST ─── */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-border/40 to-transparent" />
-      <section id="waitlist" className="py-24 sm:py-32 lg:py-40 px-6 bg-background-elevated relative z-10">
-        <div className="max-w-xl mx-auto">
-          <ScrollReveal>
-            <div className="text-center mb-12">
-              <span className="caption text-primary mb-4 block">{t('marketing.waitlist.caption')}</span>
-              <h2 className="headline-section mb-4">{t('marketing.waitlist.title')}</h2>
-              <p className="text-base text-muted-foreground font-light">
-                {t('marketing.waitlist.subtitle')}
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={150}>
-            {!submitted ? (
-              <form onSubmit={handleSubmit} className="card-accent rounded-2xl p-8 sm:p-10 space-y-5">
-                <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-light text-foreground/80">{t('marketing.waitlist.emailLabel')}</label>
-                  <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} required
-                    className="bg-background border-border/50 focus:border-primary/40 transition-colors duration-300" placeholder={t('marketing.waitlist.emailPlaceholder')} />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="note" className="text-sm font-light text-foreground/80">{t('marketing.waitlist.noteLabel')}</label>
-                  <Textarea id="note" value={note} onChange={e => setNote(e.target.value)}
-                    className="bg-background border-border/50 focus:border-primary/40 transition-colors duration-300 min-h-24"
-                    placeholder={t('marketing.waitlist.notePlaceholder')} />
-                </div>
-                <MagneticButton strength={0.1} className="w-full">
-                  <Button type="submit" variant="valora" className="w-full cta-glow" size="lg">
-                    {t('marketing.waitlist.submit')}
-                  </Button>
-                </MagneticButton>
-              </form>
-            ) : (
-              <div className="card-modern rounded-2xl p-10 text-center">
-                <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-5">
-                  <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <p className="text-lg font-light">{t('marketing.waitlist.success')}</p>
+        <section id="proof" className={`${sectionClass} relative overflow-hidden`}>
+          <ScrollReveal subtle className="relative">
+            <div
+              className="marketing-scroll-line pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
+              aria-hidden
+            />
+            <div className={sectionInner}>
+              <div className="mb-3 flex flex-col gap-2">
+                <p className="section-eyebrow">{t("marketing.chrome.chapterProof")}</p>
+                <div className="marketing-accent-bar" aria-hidden />
               </div>
-            )}
-          </ScrollReveal>
-        </div>
-      </section>
+              <h2 className="headline-section mb-12 max-w-2xl">
+                {t("marketing.proof.headline1")}{" "}
+                <span className="text-muted-foreground">{t("marketing.proof.headline2")}</span>
+              </h2>
 
-      {/* ─── FAQ ─── */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-border/40 to-transparent" />
-      <section id="faq" className="py-24 sm:py-32 lg:py-40 px-6 relative z-10">
-        <div className="max-w-2xl mx-auto">
-          <ScrollReveal>
-            <h2 className="headline-section text-center mb-16">{t('marketing.faq.title')}</h2>
-          </ScrollReveal>
+              <div className="mb-10 grid gap-4 md:grid-cols-2">
+                {proofCards.map((item, i) => (
+                  <div key={i} className="card-accent marketing-card-lift flex flex-col p-6 sm:p-7">
+                    <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-xs text-muted-foreground">
+                        {t("marketing.proof.privatePerson")} · {item.age}
+                      </span>
+                      <span className="rounded border border-primary/30 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
+                        {t("marketing.proof.verified")}
+                      </span>
+                    </div>
+                    <div className="text-3xl font-semibold tabular-nums text-primary sm:text-4xl">{item.amount}</div>
+                    <p className="mb-4 text-xs text-muted-foreground">{t("marketing.proof.perYear")}</p>
+                    <p className="mt-auto text-sm italic leading-relaxed text-muted-foreground">{item.quote}</p>
+                  </div>
+                ))}
+              </div>
 
-          <ScrollReveal delay={150}>
-            <Accordion type="single" collapsible className="space-y-3">
-              {faqItems.map((item, i) => (
-                <AccordionItem key={i} value={`item-${i}`} className="card-modern px-6 sm:px-8 rounded-xl border-none data-[state=open]:bg-background-surface transition-colors duration-300">
-                  <AccordionTrigger className="text-left font-light text-base sm:text-lg hover:no-underline py-5">
-                    {item.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-sm sm:text-base text-foreground/70 font-light leading-relaxed pb-5">
-                    {item.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </ScrollReveal>
-        </div>
-      </section>
+              <div className="mx-auto max-w-2xl rounded-lg border border-border bg-muted/25 px-6 py-8 text-center dark:bg-muted/10 sm:px-8">
+                <p className="text-base font-medium leading-relaxed text-foreground sm:text-lg">{t("marketing.proof.quoteBottom")}</p>
+              </div>
 
-      {/* ─── FOOTER ─── */}
-      <footer className="relative z-10 w-full">
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-border/40 to-transparent" />
-        <div className="max-w-6xl mx-auto px-6 md:px-12 py-12">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex flex-col items-center md:items-start gap-1">
-              <span className="text-foreground/80 font-medium tracking-[0.2em] text-xs">VALORA</span>
-              <span className="text-muted-foreground text-sm font-light">{t('marketing.footer.tagline')}</span>
+              <div className="mt-20">
+                <h2 className="headline-section mb-8 text-center">{t("marketing.audience.title")}</h2>
+                <div className="grid gap-4 md:grid-cols-3">
+                  {audienceItems.map((item, i) => (
+                    <div key={i} className="card-modern marketing-card-lift p-6">
+                      <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
+                      <p className="text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-            <nav className="flex items-center gap-6">
+          </ScrollReveal>
+        </section>
+
+        <section id="waitlist" className={`${altSectionClass} relative overflow-hidden`}>
+          <ScrollReveal subtle className="relative">
+            <div
+              className="marketing-scroll-line pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
+              aria-hidden
+            />
+            <div className={`${sectionInner} max-w-lg`}>
+              <div className="mb-3 flex flex-col gap-2">
+                <p className="section-eyebrow">{t("marketing.chrome.chapterWaitlist")}</p>
+                <div className="marketing-accent-bar" aria-hidden />
+              </div>
+              <h2 className="headline-section mb-2">{t("marketing.waitlist.title")}</h2>
+              <p className="caption mb-1 text-xs font-semibold uppercase tracking-wide text-primary">{t("marketing.waitlist.caption")}</p>
+              <p className="mb-8 text-sm text-muted-foreground">{t("marketing.waitlist.subtitle")}</p>
+
+              {!submitted ? (
+                <form onSubmit={handleSubmit} className="card-accent marketing-card-lift space-y-5 rounded-lg p-6 sm:p-8">
+                  <div className="space-y-2">
+                    <label htmlFor="email" className="text-sm font-medium text-foreground">
+                      {t("marketing.waitlist.emailLabel")}
+                    </label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="bg-background"
+                      placeholder={t("marketing.waitlist.emailPlaceholder")}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label htmlFor="note" className="text-sm font-medium text-foreground">
+                      {t("marketing.waitlist.noteLabel")}
+                    </label>
+                    <Textarea
+                      id="note"
+                      value={note}
+                      onChange={(e) => setNote(e.target.value)}
+                      className="min-h-24 bg-background"
+                      placeholder={t("marketing.waitlist.notePlaceholder")}
+                    />
+                  </div>
+                  <Button type="submit" variant="valora" className="h-11 w-full" size="lg">
+                    {t("marketing.waitlist.submit")}
+                  </Button>
+                </form>
+              ) : (
+                <div className="card-modern marketing-card-lift p-10 text-center">
+                  <div className="mx-auto mb-4 flex h-11 w-11 items-center justify-center rounded-full border border-primary/30 bg-primary/10">
+                    <svg className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <p className="text-base leading-relaxed text-foreground">{t("marketing.waitlist.success")}</p>
+                </div>
+              )}
+            </div>
+          </ScrollReveal>
+        </section>
+
+        <section id="faq" className={`${sectionClass} relative overflow-hidden`}>
+          <ScrollReveal subtle className="relative">
+            <div
+              className="marketing-scroll-line pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
+              aria-hidden
+            />
+            <div className={`${sectionInner} max-w-2xl`}>
+              <div className="mb-3 flex flex-col items-center gap-2">
+                <p className="section-eyebrow text-center">{t("marketing.chrome.faqEyebrow")}</p>
+                <div className="marketing-accent-bar" aria-hidden />
+              </div>
+              <h2 className="headline-section mb-10 text-center">{t("marketing.faq.title")}</h2>
+              <Accordion type="single" collapsible className="space-y-2">
+                {faqItems.map((item, i) => (
+                  <AccordionItem
+                    key={i}
+                    value={`item-${i}`}
+                    className="card-modern marketing-card-lift rounded-lg border-0 px-4 data-[state=open]:bg-muted/30 sm:px-5 dark:data-[state=open]:bg-muted/10"
+                  >
+                    <AccordionTrigger className="py-4 text-left text-sm font-medium hover:no-underline sm:text-base">{item.q}</AccordionTrigger>
+                    <AccordionContent className="pb-4 text-sm leading-relaxed text-muted-foreground">{item.a}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </ScrollReveal>
+        </section>
+      </main>
+
+      <footer className="border-t border-border bg-background">
+        <ScrollReveal subtle>
+          <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 py-10 sm:flex-row sm:px-8">
+            <div className="flex flex-col items-center gap-1 sm:items-start">
+              <span className="text-sm font-semibold text-foreground">Valora</span>
+              <span className="text-center text-xs text-muted-foreground sm:text-left">{t("marketing.footer.tagline")}</span>
+            </div>
+            <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
               {[
-                { label: t('marketing.footer.privacy'), to: '/integritetspolicy' },
-                { label: t('marketing.footer.terms'), to: '/anvandarvillkor' },
+                { label: t("marketing.footer.privacy"), to: "/integritetspolicy" },
+                { label: t("marketing.footer.terms"), to: "/anvandarvillkor" },
               ].map(({ label, to }) => (
-                <Link key={to} to={to}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light relative group">
+                <Link key={to} to={to} className="text-muted-foreground transition-colors hover:text-foreground">
                   {label}
-                  <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-foreground/30 transition-all duration-300 group-hover:w-full" />
                 </Link>
               ))}
-              <a href="mailto:info@valora.se"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light relative group">
-                {t('marketing.footer.contact')}
-                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-foreground/30 transition-all duration-300 group-hover:w-full" />
+              <a href="mailto:info@valora.se" className="text-muted-foreground transition-colors hover:text-foreground">
+                {t("marketing.footer.contact")}
               </a>
             </nav>
-            <span className="text-xs text-muted-foreground/40">© {new Date().getFullYear()} Valora</span>
+            <span className="text-xs text-muted-foreground">© {new Date().getFullYear()}</span>
           </div>
-        </div>
+        </ScrollReveal>
       </footer>
     </div>
   );

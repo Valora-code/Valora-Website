@@ -14,7 +14,7 @@ export function MarketingLanguageSwitcher() {
       <PopoverTrigger asChild>
         <button
           type="button"
-          className="shrink-0 flex items-center justify-center p-2 rounded-md hover:bg-muted/60 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/30 focus:ring-offset-2 text-muted-foreground hover:text-foreground"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label={t('shell.language.label')}
           title={t('shell.language.label')}
         >
@@ -29,8 +29,9 @@ export function MarketingLanguageSwitcher() {
               key={opt.value}
               type="button"
               onClick={() => setLanguage(opt.value)}
+              aria-current={language === opt.value ? 'true' : undefined}
               className={cn(
-                'flex items-center justify-between gap-2 rounded-md px-2 py-2 text-sm text-left hover:bg-muted/60 transition-colors',
+                'flex items-center justify-between gap-2 rounded-md px-2 py-2 text-sm text-left hover:bg-muted/60 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
                 language === opt.value && 'bg-muted/50 text-foreground',
               )}
             >

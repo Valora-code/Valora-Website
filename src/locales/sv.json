@@ -2,23 +2,41 @@
   "shell": {
     "language": {
       "label": "Språk"
+    },
+    "appearance": {
+      "toggle": "Byt ljus/mörkt läge",
+      "light": "Ljust",
+      "dark": "Mörkt"
     }
   },
   "marketing": {
     "nav": {
       "why": "Varför Valora",
       "how": "Hur det fungerar",
-      "proof": "Användare",
+      "proof": "Resultat",
       "faq": "Frågor",
       "signup": "Skapa konto",
-      "menuAria": "Meny"
+      "menuAria": "Meny",
+      "menuCloseAria": "Stäng menyn"
+    },
+    "chrome": {
+      "signal": "Illustrativ totalsumma",
+      "pipeline": "Flöde",
+      "faqEyebrow": "Frågor",
+      "chapterWhy": "Bakgrund",
+      "chapterHow": "Arbetssätt",
+      "chapterProof": "Resultat",
+      "chapterWaitlist": "Tidig tillgång"
     },
     "hero": {
+      "eyebrow": "Autonom ekonomi · Sverige",
       "title1": "Autonom",
       "title2": "personlig ekonomi.",
       "subtitle": "Valora arbetar i bakgrunden och optimerar din ekonomi — enligt dina villkor.",
       "ctaWaitlist": "Begär tidig tillgång",
-      "ctaHow": "Så fungerar det"
+      "ctaHow": "Så fungerar det",
+      "trustWaitlist": "Tidig tillgång öppnar din e-postklient för att gå med i väntelistan.",
+      "trustSignupSuffix": " Använd Skapa konto om du redan har tillgång."
     },
     "savings": {
       "suffix": " kr",
@@ -43,7 +61,8 @@
         }
       ],
       "quote": "\"Jag har vetat i två år att jag borde göra detta – men jag orkade inte.\"",
-      "quoteAttribution": "Kvinna, 63 år"
+      "quoteAttribution": "Kvinna, 63 år",
+      "statsFootnote": "Siffrorna är illustrativa sammanfattningar från kvalitativ research, inte nationellt representativ statistik."
     },
     "industry": {
       "caption": "Branschproblem",
@@ -148,7 +167,7 @@
         },
         {
           "q": "Är det säkert?",
-          "a": "Ja. All åtkomst sker med samtycke och enligt bankstandard."
+          "a": "Du väljer vad som kopplas och vad som godkänns. Vi använder stark säkerhet för data i transit och i vila, och Valora flyttar inte pengar eller ändrar avtal utan ditt godkännande. Läs integritetspolicyn för mer."
         },
         {
           "q": "Vad kostar det?",
