@@ -38,6 +38,17 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Verify dist is a production bundle (not dev index.html)
+        run: |
+          if grep -q 'src/main.tsx' dist/index.html; then
+            echo "ERROR: dist/index.html still references /src/main.tsx — build misconfigured."
+            exit 1
+          fi
+          if ! grep -qE '/assets/[^"]+\.js' dist/index.html; then
+            echo "ERROR: dist/index.html has no /assets/*.js script tag."
+            exit 1
+          fi
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
