@@ -37,6 +37,11 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          # Repository secret: Clerk Dashboard → API Keys → Publishable key (same instance as Waitlist).
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.VITE_CLERK_PUBLISHABLE_KEY }}
+          # Optional: override app origin for “Already have an account?” sign-in link (default in code: https://app.valora-tech.com).
+          VITE_VALORA_APP_ORIGIN: ${{ secrets.VITE_VALORA_APP_ORIGIN }}
         run: npm run build
 
       - name: Verify dist is a production bundle (not dev index.html)

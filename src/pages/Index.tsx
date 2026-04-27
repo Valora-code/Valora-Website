@@ -5,12 +5,8 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { MarketingLanguageSwitcher } from "@/components/MarketingLanguageSwitcher";
 import { MarketingAppearanceToggle } from "@/components/MarketingAppearanceToggle";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
-import { z } from "zod";
 import { useTranslation } from "@/lib/i18n";
 import { getSignupUrl } from "@/config/valoraApp";
 import { useMarketingScroll } from "@/hooks/use-marketing-scroll";
@@ -41,25 +37,12 @@ const sectionInner = "mx-auto max-w-6xl px-6 py-16 sm:px-8 sm:py-20 md:py-24";
 const altSectionClass = "scroll-mt-24 border-t border-border bg-muted/40 dark:bg-muted/20";
 
 const Index = () => {
-  const [email, setEmail] = useState("");
-  const [note, setNote] = useState("");
-  const [submitted, setSubmitted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { toast } = useToast();
   const navScrolled = useNavScroll();
   const { scrollY, readProgress, reducedMotion } = useMarketingScroll();
   const { t } = useTranslation();
   const signupUrl = getSignupUrl();
   const heroParallaxY = reducedMotion ? 0 : Math.min(scrollY, 520) * 0.055;
-
-  const waitlistSchema = useMemo(
-    () =>
-      z.object({
-        email: z.string().trim().email({ message: t("marketing.waitlist.errors.invalidEmail") }).max(255),
-        note: z.string().trim().max(500, { message: t("marketing.waitlist.errors.noteMax") }).optional(),
-      }),
-    [t],
-  );
 
   const navLinks = useMemo(
     () =>
@@ -78,41 +61,6 @@ const Index = () => {
   const proofCards = t("marketing.proof.cards", { returnObjects: true }) as ProofCard[];
   const audienceItems = t("marketing.audience.items", { returnObjects: true }) as AudienceCard[];
   const faqItems = t("marketing.faq.items", { returnObjects: true }) as FaqItem[];
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const validatedData = waitlistSchema.parse({ email, note });
-      const subject = encodeURIComponent(t("marketing.waitlist.mailtoSubject"));
-      const noteLine = t("marketing.waitlist.mailtoNoteLine");
-      const emailLine = t("marketing.waitlist.mailtoEmailLine");
-      const body = encodeURIComponent(
-        [`${emailLine} ${validatedData.email}`, "", validatedData.note ? `${noteLine}\n${validatedData.note}` : ""]
-          .filter(Boolean)
-          .join("\n"),
-      );
-      window.location.href = `mailto:info@valora.se?subject=${subject}&body=${body}`;
-      setSubmitted(true);
-      toast({
-        title: t("marketing.waitlist.toastThanksTitle"),
-        description: t("marketing.waitlist.toastThanksBody"),
-      });
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        toast({
-          title: t("marketing.waitlist.toastInvalidTitle"),
-          description: error.errors[0].message,
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: t("marketing.waitlist.toastErrorTitle"),
-          description: t("marketing.waitlist.toastErrorBody"),
-          variant: "destructive",
-        });
-      }
-    }
-  };
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -451,48 +399,12 @@ const Index = () => {
               <p className="caption mb-1 text-xs font-semibold uppercase tracking-wide text-primary">{t("marketing.waitlist.caption")}</p>
               <p className="mb-8 text-sm text-muted-foreground">{t("marketing.waitlist.subtitle")}</p>
 
-              {!submitted ? (
-                <form onSubmit={handleSubmit} className="card-accent marketing-card-lift space-y-5 rounded-lg p-6 sm:p-8">
-                  <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium text-foreground">
-                      {t("marketing.waitlist.emailLabel")}
-                    </label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="bg-background"
-                      placeholder={t("marketing.waitlist.emailPlaceholder")}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="note" className="text-sm font-medium text-foreground">
-                      {t("marketing.waitlist.noteLabel")}
-                    </label>
-                    <Textarea
-                      id="note"
-                      value={note}
-                      onChange={(e) => setNote(e.target.value)}
-                      className="min-h-24 bg-background"
-                      placeholder={t("marketing.waitlist.notePlaceholder")}
-                    />
-                  </div>
-                  <Button type="submit" variant="valora" className="h-11 w-full" size="lg">
-                    {t("marketing.waitlist.submit")}
-                  </Button>
-                </form>
-              ) : (
-                <div className="card-modern marketing-card-lift p-10 text-center">
-                  <div className="mx-auto mb-4 flex h-11 w-11 items-center justify-center rounded-full border border-primary/30 bg-primary/10">
-                    <svg className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <p className="text-base leading-relaxed text-foreground">{t("marketing.waitlist.success")}</p>
-                </div>
-              )}
+              <div className="card-accent marketing-card-lift space-y-6 rounded-lg p-6 sm:p-8">
+                <p className="text-sm leading-relaxed text-muted-foreground">{t("marketing.waitlist.homeTeaser")}</p>
+                <Button variant="valora" className="h-11 w-full sm:w-auto" size="lg" asChild>
+                  <Link to="/waitlist">{t("marketing.waitlist.openForm")}</Link>
+                </Button>
+              </div>
             </div>
           </ScrollReveal>
         </section>

@@ -35,7 +35,7 @@
       "subtitle": "Valora works in the background and optimizes your finances — on your terms.",
       "ctaWaitlist": "Request early access",
       "ctaHow": "How it works",
-      "trustWaitlist": "Early access opens your email client to join the waitlist.",
+      "trustWaitlist": "Early access uses a short form on the next page. If you already have access, use Sign up below.",
       "trustSignupSuffix": " Use Sign up if you already have access."
     },
     "savings": {
@@ -132,6 +132,10 @@
       ]
     },
     "waitlist": {
+      "openForm": "Continue to early access",
+      "backHome": "Home",
+      "homeTeaser": "Tell us you’re interested on the next screen. We’ll add you to our waitlist and email you when it’s your turn.",
+      "fallbackHint": "Clerk isn’t configured in this environment (missing publishable key). Use your email app to send the request below, or set VITE_CLERK_PUBLISHABLE_KEY for the hosted waitlist.",
       "caption": "Limited early access",
       "title": "Request early access",
       "subtitle": "We're opening Valora gradually to a limited number of users.",

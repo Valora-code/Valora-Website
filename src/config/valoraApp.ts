@@ -13,3 +13,8 @@ export function getValoraAppOrigin(): string {
 export function getSignupUrl(): string {
   return `${getValoraAppOrigin()}/register`;
 }
+
+/** Full URL to the Valora app sign-in page (used by Clerk `<Waitlist />` “Already have an account?”). */
+export function getSignInUrl(): string {
+  return `${getValoraAppOrigin()}/sign-in`;
+}

@@ -35,7 +35,7 @@
       "subtitle": "Valora arbetar i bakgrunden och optimerar din ekonomi — enligt dina villkor.",
       "ctaWaitlist": "Begär tidig tillgång",
       "ctaHow": "Så fungerar det",
-      "trustWaitlist": "Tidig tillgång öppnar din e-postklient för att gå med i väntelistan.",
+      "trustWaitlist": "Tidig tillgång använder ett kort formulär på nästa sida. Har du redan tillgång, använd Skapa konto nedan.",
       "trustSignupSuffix": " Använd Skapa konto om du redan har tillgång."
     },
     "savings": {
@@ -132,6 +132,10 @@
       ]
     },
     "waitlist": {
+      "openForm": "Fortsätt till tidig tillgång",
+      "backHome": "Hem",
+      "homeTeaser": "På nästa sida visar du att du är intresserad. Vi lägger dig på väntelistan och mejlar när det är din tur.",
+      "fallbackHint": "Clerk är inte konfigurerat här (saknar publicerbar nyckel). Skicka anmälan via e-post nedan, eller sätt VITE_CLERK_PUBLISHABLE_KEY för den värdväntelistan.",
       "caption": "Begränsad tidig tillgång",
       "title": "Begär tidig tillgång",
       "subtitle": "Vi öppnar Valora successivt för ett begränsat antal användare.",
