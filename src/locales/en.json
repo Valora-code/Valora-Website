@@ -30,34 +30,31 @@
     },
     "hero": {
       "eyebrow": "Autonomous finance · Sweden",
-      "title1": "Autonomous",
-      "title2": "personal finance.",
-      "subtitle": "Valora works in the background and optimizes your finances — on your terms.",
-      "ctaWaitlist": "Request early access",
-      "ctaHow": "How it works",
+      "title1": "Autopilot",
+      "title2": "for your loans.",
+      "subtitle": "Valora is your financial assistant that finds improvements for you. On your own terms.",
+      "ctaWaitlist": "Get early access",
+      "ctaHow": "See how",
       "trustWaitlist": "Early access uses a short form on the next page. If you already have access, use Sign up below.",
       "trustSignupSuffix": " Use Sign up if you already have access."
     },
-    "savings": {
-      "suffix": " kr",
-      "caption": "identified savings"
-    },
     "problem": {
-      "headline1": "The problem isn't a lack of savings.",
-      "headline2": "It's that nobody has the energy to act.",
-      "body": "People know what they should do — but they postpone it. Not out of ignorance, but because of friction.",
+      "eyebrow": "Reality",
+      "headline1": "You already know what you should do.",
+      "headline2": "Starting is the work.",
+      "body": "It's not laziness. It's friction — and friction costs.",
       "stats": [
         {
           "end": 88,
-          "text": "have postponed switching loans or insurance — even though they know they should."
+          "text": "postpone switching — even though they know better."
         },
         {
           "end": 79,
-          "text": "feel guilty about not getting their finances in order."
+          "text": "carry guilt."
         },
         {
           "end": 56,
-          "text": "experience high mental load around loans, insurance, and money."
+          "text": "carry it in their head."
         }
       ],
       "quote": "\"I've known for two years that I should do this — but I couldn't bring myself to.\"",
@@ -66,35 +63,20 @@
     },
     "industry": {
       "caption": "Industry problem",
+      "eyebrow": "Insight",
       "headline1": "The market is manual.",
-      "headline2": "The burden lands on the individual.",
+      "headline2": "The cost is yours.",
+      "body": "Swedish households on average pay thousands of kronor too much. Not because they're careless, but because no one keeps track for them.",
+      "cta": "See the fix",
+      "imageAlt": "Stockholm City Hall at dusk",
       "items": [
         { "label": "Manual comparison between providers", "delay": 100 },
         { "label": "Procrastination at every life decision", "delay": 200 },
         { "label": "Cognitive overload with complex finances", "delay": 300 }
       ]
     },
-    "how": {
-      "title": "How Valora works",
-      "steps": [
-        {
-          "step": "01",
-          "title": "Connect your finances",
-          "desc": "You connect banks, loans, and insurance — and set your preferences."
-        },
-        {
-          "step": "02",
-          "title": "Valora analyzes",
-          "desc": "The system monitors the market and continuously identifies improvements."
-        },
-        {
-          "step": "03",
-          "title": "You approve",
-          "desc": "One click. The rest happens automatically in the background."
-        }
-      ]
-    },
     "proof": {
+      "eyebrow": "Results",
       "headline1": "Verified savings.",
       "headline2": "Real mental relief.",
       "privatePerson": "Private individual",
@@ -114,23 +96,6 @@
         }
       ]
     },
-    "audience": {
-      "title": "Who is Valora built for?",
-      "items": [
-        {
-          "title": "The busy professional",
-          "desc": "You don't have time to negotiate, compare, and monitor. Valora does it for you."
-        },
-        {
-          "title": "Families with complex finances",
-          "desc": "Multiple loans and insurance policies. Valora keeps everything optimized in the background."
-        },
-        {
-          "title": "Those who want control without stress",
-          "desc": "You want to do the right thing — without carrying the mental responsibility."
-        }
-      ]
-    },
     "waitlist": {
       "openForm": "Continue to early access",
       "backHome": "Home",
@@ -140,9 +105,9 @@
       "title": "Request early access",
       "subtitle": "We're opening Valora gradually to a limited number of users.",
       "emailLabel": "Email *",
-      "emailPlaceholder": "you@example.com",
       "noteLabel": "What should Valora optimize for you?",
       "notePlaceholder": "Mortgage, personal loan, car insurance, home insurance",
+      "emailPlaceholder": "you@example.com",
       "submit": "Join the waitlist",
       "success": "Thank you. Send the email that opened to confirm your place on the waitlist.",
       "mailtoSubject": "Valora – early access",
@@ -158,7 +123,36 @@
         "noteMax": "Note must be at most 500 characters"
       }
     },
+    "brand": {
+      "statement": "Valora — your money on autopilot.",
+      "statementSupport": "You set the rules. We handle the rest.",
+      "stepLabel": "Step",
+      "pinned": {
+        "eyebrow": "How it works",
+        "headline": "Your money, on autopilot.",
+        "items": [
+          {
+            "title": "Tell us your situation",
+            "desc": "And what you want to achieve."
+          },
+          {
+            "title": "Valora looks for improvements automatically",
+            "desc": "And notifies you when proposals are found."
+          },
+          {
+            "title": "You approve — or you don't",
+            "desc": "Nothing switches without your sign-off. You always see why, how much, and when."
+          }
+        ]
+      },
+      "footer": {
+        "orgLine": "Guvani Labs AB · Reg. 559573-0341",
+        "foundedLine": "Founded 2025 · Stockholm",
+        "addressLine": "Stockholm, Sweden"
+      }
+    },
     "faq": {
+      "eyebrow": "Questions",
       "title": "Frequently asked questions",
       "items": [
         {
@@ -171,11 +165,11 @@
         },
         {
           "q": "Is it safe?",
-          "a": "You choose what to connect and what to approve. We use strong security for data in transit and at rest, and Valora does not move money or change contracts without your confirmation. Read the privacy policy for details."
+          "a": "You choose what gets connected. We don't move money without your yes. Strong encryption — both in transit and at rest."
         },
         {
           "q": "What does it cost?",
-          "a": "Pricing will be set at launch. Early users are prioritized."
+          "a": "Pricing is set at launch. Early users always pay less."
         }
       ]
     },

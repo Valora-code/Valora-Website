@@ -30,34 +30,31 @@
     },
     "hero": {
       "eyebrow": "Autonom ekonomi · Sverige",
-      "title1": "Autonom",
-      "title2": "personlig ekonomi.",
-      "subtitle": "Valora arbetar i bakgrunden och optimerar din ekonomi — enligt dina villkor.",
-      "ctaWaitlist": "Begär tidig tillgång",
-      "ctaHow": "Så fungerar det",
+      "title1": "Autopiloten",
+      "title2": "för dina lån.",
+      "subtitle": "Valora är din finansiella assistent som hittar förbättringar åt dig. Enligt dina egna villkor.",
+      "ctaWaitlist": "Få tidig tillgång",
+      "ctaHow": "Se hur",
       "trustWaitlist": "Tidig tillgång använder ett kort formulär på nästa sida. Har du redan tillgång, använd Skapa konto nedan.",
       "trustSignupSuffix": " Använd Skapa konto om du redan har tillgång."
     },
-    "savings": {
-      "suffix": " kr",
-      "caption": "identifierade besparingar"
-    },
     "problem": {
-      "headline1": "Problemet är inte brist på besparingar.",
-      "headline2": "Det är att ingen orkar agera.",
-      "body": "Människor vet vad de borde göra – men skjuter upp det. Inte av okunskap, utan på grund av friktion.",
+      "eyebrow": "Verkligheten",
+      "headline1": "Du vet redan vad du borde göra.",
+      "headline2": "Det är att börja som är jobbet.",
+      "body": "Det är inte lathet. Det är friktion — och friktion kostar.",
       "stats": [
         {
           "end": 88,
-          "text": "har skjutit upp att byta lån eller försäkring — trots att de vet att de borde."
+          "text": "skjuter upp att byta — trots att de vet bättre."
         },
         {
           "end": 79,
-          "text": "känner dåligt samvete över att inte ta tag i sin ekonomi."
+          "text": "bär dåligt samvete."
         },
         {
           "end": 56,
-          "text": "upplever hög mental belastning kring lån, försäkringar och ekonomi."
+          "text": "bär det i huvudet."
         }
       ],
       "quote": "\"Jag har vetat i två år att jag borde göra detta – men jag orkade inte.\"",
@@ -66,35 +63,20 @@
     },
     "industry": {
       "caption": "Branschproblem",
+      "eyebrow": "Insikt",
       "headline1": "Marknaden är manuell.",
-      "headline2": "Belastningen hamnar på individen.",
+      "headline2": "Kostnaden är din.",
+      "body": "Svenska hushåll betalar i snitt tusentals kronor för mycket. Inte för att de är slarviga, utan för att ingen håller koll åt dem.",
+      "cta": "Se lösningen",
+      "imageAlt": "Stockholms stadshus i skymning",
       "items": [
         { "label": "Manuell jämförelse mellan aktörer", "delay": 100 },
         { "label": "Prokrastinering vid varje livsbeslut", "delay": 200 },
         { "label": "Kognitiv överbelastning vid komplex ekonomi", "delay": 300 }
       ]
     },
-    "how": {
-      "title": "Så fungerar Valora",
-      "steps": [
-        {
-          "step": "01",
-          "title": "Koppla din ekonomi",
-          "desc": "Du ansluter banker, lån och försäkringar — och anger dina villkor."
-        },
-        {
-          "step": "02",
-          "title": "Valora analyserar",
-          "desc": "Systemet bevakar marknaden och identifierar förbättringar kontinuerligt."
-        },
-        {
-          "step": "03",
-          "title": "Du godkänner",
-          "desc": "Ett klick. Resten sker automatiskt i bakgrunden."
-        }
-      ]
-    },
     "proof": {
+      "eyebrow": "Resultat",
       "headline1": "Verifierad besparing.",
       "headline2": "Verklig mental lättnad.",
       "privatePerson": "Privatperson",
@@ -114,23 +96,6 @@
         }
       ]
     },
-    "audience": {
-      "title": "För vem är Valora byggt?",
-      "items": [
-        {
-          "title": "Den upptagna yrkespersonen",
-          "desc": "Du har inte tid att förhandla, jämföra och bevaka. Valora gör det åt dig."
-        },
-        {
-          "title": "Familjen med komplex ekonomi",
-          "desc": "Flera lån och försäkringar. Valora håller allt optimerat i bakgrunden."
-        },
-        {
-          "title": "Den som vill ha kontroll utan stress",
-          "desc": "Du vill göra rätt — men slippa bära ansvaret mentalt."
-        }
-      ]
-    },
     "waitlist": {
       "openForm": "Fortsätt till tidig tillgång",
       "backHome": "Hem",
@@ -140,9 +105,9 @@
       "title": "Begär tidig tillgång",
       "subtitle": "Vi öppnar Valora successivt för ett begränsat antal användare.",
       "emailLabel": "E-post *",
-      "emailPlaceholder": "din@email.se",
       "noteLabel": "Vad vill du att Valora ska optimera?",
       "notePlaceholder": "Bostadslån, privatlån, bilförsäkring, hemförsäkring",
+      "emailPlaceholder": "din@email.se",
       "submit": "Gå med i väntelistan",
       "success": "Tack. Skicka e-postmeddelandet för att bekräfta din plats på väntelistan.",
       "mailtoSubject": "Valora – tidig tillgång",
@@ -158,7 +123,36 @@
         "noteMax": "Anteckningen får vara max 500 tecken"
       }
     },
+    "brand": {
+      "statement": "Valora — din ekonomi på autopilot.",
+      "statementSupport": "Du sätter reglerna. Vi sköter resten.",
+      "stepLabel": "Steg",
+      "pinned": {
+        "eyebrow": "Så fungerar det",
+        "headline": "Din ekonomi, på autopilot.",
+        "items": [
+          {
+            "title": "Berätta om din situation",
+            "desc": "Och vad du vill uppnå."
+          },
+          {
+            "title": "Valora letar automatiskt efter förbättringar",
+            "desc": "Och meddelar dig när förslag har hittats."
+          },
+          {
+            "title": "Du godkänner — eller inte",
+            "desc": "Inget byts utan ditt godkännande. Du ser alltid varför, hur mycket och när."
+          }
+        ]
+      },
+      "footer": {
+        "orgLine": "Guvani Labs AB · Org.nr 559573-0341",
+        "foundedLine": "Grundat 2025 · Stockholm",
+        "addressLine": "Stockholm, Sverige"
+      }
+    },
     "faq": {
+      "eyebrow": "Frågor",
       "title": "Vanliga frågor",
       "items": [
         {
@@ -171,11 +165,11 @@
         },
         {
           "q": "Är det säkert?",
-          "a": "Du väljer vad som kopplas och vad som godkänns. Vi använder stark säkerhet för data i transit och i vila, och Valora flyttar inte pengar eller ändrar avtal utan ditt godkännande. Läs integritetspolicyn för mer."
+          "a": "Du väljer vad som kopplas. Vi rör inga pengar utan ditt ja. Stark kryptering — både i transit och i vila."
         },
         {
           "q": "Vad kostar det?",
-          "a": "Prissättning fastställs vid lansering. Tidiga användare prioriteras."
+          "a": "Pris sätts vid lansering. Tidiga användare betalar mindre — alltid."
         }
       ]
     },
