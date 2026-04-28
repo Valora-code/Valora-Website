@@ -24,9 +24,11 @@ Open **http://localhost:8080** (port is set in `vite.config.ts`).
 5. **Fields:** Use the Dashboard waitlist settings to require **email only** (or email + name, etc.); the React app does not hard-code which fields appear.
 6. Open **http://localhost:8080** and scroll to **Early access** (or **http://localhost:8080/#waitlist**). `/waitlist` redirects there. Without the env var, that section uses the mailto fallback instead.
 
-**GitHub Pages:** Vite bakes env vars in at **build** time. Add a [repository secret](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) named `VITE_CLERK_PUBLISHABLE_KEY` with your **publishable** key (not the secret key). The workflow `.github/workflows/static.yml` passes it into `npm run build`. Optionally add `VITE_VALORA_APP_ORIGIN` if the app’s sign-in URL should not use the default `https://app.valora-tech.com`.
+**GitHub Pages:** Vite bakes env vars in at **build** time. Add a [repository secret](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) named `VITE_CLERK_PUBLISHABLE_KEY` with your **publishable** key (not the secret key). The workflow `.github/workflows/static.yml` passes it into `npm run build`. After changing your Clerk Frontend API / custom domain, copy a fresh key from the Dashboard so the embedded host matches DNS. Optionally add `VITE_VALORA_APP_ORIGIN` if the app’s sign-in URL should not use the default `https://app.valora-tech.com`.
 
 If the repo uses a GitHub **environment** named `github-pages` with protection rules, add the same variable names there under **Environment secrets** (they override repository secrets when the job targets that environment).
+
+**Production: `failed_to_load_clerk_js` / `ERR_NAME_NOT_RESOLVED` for `clerk.*.yourdomain.com`:** The bundle loads Clerk’s script from the **Frontend API** host encoded in your publishable key. That hostname must resolve in public DNS. In [Clerk Dashboard → Domains](https://dashboard.clerk.com/~/domains), add the **exact DNS records** Clerk shows (usually a **CNAME** for `clerk…` → Clerk’s target). Until DNS propagates, the script URL fails and Clerk never loads. Browser errors from **extensions** (`chrome-extension://…`, `querySelector` on null) are unrelated and can be ignored.
 
 ## Scripts
 

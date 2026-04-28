@@ -1,9 +1,11 @@
-import type { Appearance } from "@clerk/types";
+import type { ClerkProviderProps } from "@clerk/react";
+
+type MarketingClerkAppearance = NonNullable<ClerkProviderProps["appearance"]>;
 
 /**
  * Clerk embedded UI aligned with marketing tokens (`src/index.css` — teal primary).
  */
-export const marketingClerkAppearance: Appearance = {
+export const marketingClerkAppearance: MarketingClerkAppearance = {
   layout: {
     socialButtonsVariant: "blockButton",
     socialButtonsPlacement: "bottom",
