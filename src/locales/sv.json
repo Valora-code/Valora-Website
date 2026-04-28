@@ -99,6 +99,11 @@
     "waitlist": {
       "backHome": "Hem",
       "formLoading": "Laddar formulär…",
+      "submitting": "Går med…",
+      "clerkSuccess": "Du står på väntelistan. Vi mejlar dig när din plats är redo.",
+      "clerkSuccessToast": "Vi har skickat en bekräftelse till din e-post.",
+      "clerkSignInPrompt": "Har du redan tillgång?",
+      "clerkSignIn": "Logga in",
       "howWaitlistTeaser": "När du är redo, hoppa ner till formuläret för tidig tillgång.",
       "fallbackHint": "Clerk är inte konfigurerat här (saknar publicerbar nyckel). Skicka anmälan via e-post nedan, eller sätt VITE_CLERK_PUBLISHABLE_KEY för den värdväntelistan.",
       "caption": "Begränsad tidig tillgång",

@@ -99,6 +99,11 @@
     "waitlist": {
       "backHome": "Home",
       "formLoading": "Loading form…",
+      "submitting": "Joining…",
+      "clerkSuccess": "You're on the waitlist. We'll email you when your spot is ready.",
+      "clerkSuccessToast": "We sent a confirmation email.",
+      "clerkSignInPrompt": "Already have access?",
+      "clerkSignIn": "Sign in",
       "howWaitlistTeaser": "When you’re ready, jump to the early access form below.",
       "fallbackHint": "Clerk isn’t configured in this environment (missing publishable key). Use your email app to send the request below, or set VITE_CLERK_PUBLISHABLE_KEY for the hosted waitlist.",
       "caption": "Limited early access",
