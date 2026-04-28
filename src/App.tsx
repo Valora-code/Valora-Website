@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ClerkProviderApp } from "@/components/ClerkProviderApp";
 import { DocumentThemeRouteSync } from "@/components/DocumentThemeRouteSync";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import Index from "./pages/Index";
 import WaitlistPage from "./pages/WaitlistPage";
 import NotFound from "./pages/NotFound";
@@ -19,6 +20,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <ClerkProviderApp>
           <DocumentThemeRouteSync />
           <Routes>

@@ -15,7 +15,6 @@
       "how": "Hur det fungerar",
       "proof": "Resultat",
       "faq": "Frågor",
-      "signup": "Skapa konto",
       "menuAria": "Meny",
       "menuCloseAria": "Stäng menyn"
     },
@@ -35,8 +34,7 @@
       "subtitle": "Valora är din finansiella assistent som hittar förbättringar åt dig. Enligt dina egna villkor.",
       "ctaWaitlist": "Få tidig tillgång",
       "ctaHow": "Se hur",
-      "trustWaitlist": "Tidig tillgång är formuläret längre ner på sidan. Har du redan tillgång, använd Skapa konto nedan.",
-      "trustSignupSuffix": " Använd Skapa konto om du redan har tillgång."
+      "trustWaitlist": "Tidig tillgång är formuläret längre ner på sidan."
     },
     "problem": {
       "eyebrow": "Verkligheten",
@@ -102,14 +100,11 @@
       "submitting": "Går med…",
       "clerkSuccess": "Du står på väntelistan. Vi mejlar dig när din plats är redo.",
       "clerkSuccessToast": "Vi har skickat en bekräftelse till din e-post.",
-      "clerkSignInPrompt": "Har du redan tillgång?",
-      "clerkSignIn": "Logga in",
-      "howWaitlistTeaser": "När du är redo, hoppa ner till formuläret för tidig tillgång.",
       "fallbackHint": "Clerk är inte konfigurerat här (saknar publicerbar nyckel). Skicka anmälan via e-post nedan, eller sätt VITE_CLERK_PUBLISHABLE_KEY för den värdväntelistan.",
       "caption": "Begränsad tidig tillgång",
       "title": "Begär tidig tillgång",
       "subtitle": "Vi öppnar Valora successivt för ett begränsat antal användare.",
-      "emailLabel": "E-post *",
+      "emailLabel": "E-post",
       "noteLabel": "Vad vill du att Valora ska optimera?",
       "notePlaceholder": "Bostadslån, privatlån, bilförsäkring, hemförsäkring",
       "emailPlaceholder": "din@email.se",
@@ -129,7 +124,7 @@
       }
     },
     "brand": {
-      "statement": "Valora — din ekonomi på autopilot.",
+      "statement": "Valora — dina lån på autopilot.",
       "statementSupport": "Du sätter reglerna. Vi sköter resten.",
       "stepLabel": "Steg",
       "pinned": {

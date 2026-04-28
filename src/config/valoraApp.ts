@@ -5,16 +5,7 @@
 export function getValoraAppOrigin(): string {
   const raw = import.meta.env.VITE_VALORA_APP_ORIGIN as string | undefined;
   if (raw && raw.trim().length > 0) {
-    return raw.replace(/\/$/, '');
+    return raw.replace(/\/$/, "");
   }
-  return 'https://app.valora-tech.com';
-}
-
-export function getSignupUrl(): string {
-  return `${getValoraAppOrigin()}/register`;
-}
-
-/** Full URL to the Valora app sign-in page (used by Clerk `<Waitlist />` “Already have an account?”). */
-export function getSignInUrl(): string {
-  return `${getValoraAppOrigin()}/sign-in`;
+  return "https://app.valora-tech.com";
 }

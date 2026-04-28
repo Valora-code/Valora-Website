@@ -1,14 +1,11 @@
 import { useWaitlist } from "@clerk/react";
+import { ArrowRight } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/lib/i18n";
 import { z } from "zod";
-
-type MarketingClerkWaitlistFormProps = {
-  signInUrl: string;
-};
 
 function firstGlobalMessage(
   global: { message?: string; longMessage?: string }[] | null | undefined,
@@ -22,7 +19,7 @@ function firstGlobalMessage(
  * Clerk-backed waitlist using `useWaitlist` + themed Valora UI (no `<Waitlist />` chrome).
  * Must render under `ClerkProvider`.
  */
-export function MarketingClerkWaitlistForm({ signInUrl }: MarketingClerkWaitlistFormProps) {
+export function MarketingClerkWaitlistForm() {
   const { waitlist, errors, fetchStatus } = useWaitlist();
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -103,48 +100,41 @@ export function MarketingClerkWaitlistForm({ signInUrl }: MarketingClerkWaitlist
   }
 
   return (
-    <div className="space-y-6">
-      <form onSubmit={(e) => void handleSubmit(e)} className="card-accent marketing-card-lift space-y-5 rounded-lg p-6 sm:p-8">
-        <div className="space-y-2">
-          <label htmlFor="waitlist-clerk-email" className="text-sm font-medium text-foreground">
-            {t("marketing.waitlist.emailLabel")}
-          </label>
-          <Input
-            id="waitlist-clerk-email"
-            type="email"
-            name="email"
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            disabled={submitting}
-            className="bg-background"
-            placeholder={t("marketing.waitlist.emailPlaceholder")}
-            aria-invalid={Boolean(fieldError || globalError)}
-            aria-describedby={
-              fieldError || globalError ? "waitlist-clerk-email-error" : undefined
-            }
-          />
-          {(fieldError || globalError) && (
-            <p id="waitlist-clerk-email-error" className="text-sm text-destructive" role="alert">
-              {fieldError ?? globalError}
-            </p>
-          )}
-        </div>
-        <Button type="submit" variant="valora" className="h-11 w-full" size="lg" disabled={submitting}>
-          {submitting ? t("marketing.waitlist.submitting") : t("marketing.waitlist.submit")}
-        </Button>
-      </form>
-
-      <div className="border-t border-border pt-4 text-center text-sm text-muted-foreground">
-        <span>{t("marketing.waitlist.clerkSignInPrompt")} </span>
-        <a
-          href={signInUrl}
-          className="font-medium text-primary underline-offset-4 hover:text-primary/90 hover:underline"
-        >
-          {t("marketing.waitlist.clerkSignIn")}
-        </a>
+    <form onSubmit={(e) => void handleSubmit(e)} className="card-accent marketing-card-lift space-y-5 rounded-lg p-6 sm:p-8">
+      <div className="space-y-2">
+        <label htmlFor="waitlist-clerk-email" className="text-sm font-medium text-foreground">
+          {t("marketing.waitlist.emailLabel")}
+        </label>
+        <Input
+          id="waitlist-clerk-email"
+          type="email"
+          name="email"
+          autoComplete="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          disabled={submitting}
+          className="bg-background"
+          placeholder={t("marketing.waitlist.emailPlaceholder")}
+          aria-invalid={Boolean(fieldError || globalError)}
+          aria-describedby={fieldError || globalError ? "waitlist-clerk-email-error" : undefined}
+        />
+        {(fieldError || globalError) && (
+          <p id="waitlist-clerk-email-error" className="text-sm text-destructive" role="alert">
+            {fieldError ?? globalError}
+          </p>
+        )}
       </div>
-    </div>
+      <Button type="submit" variant="valora" className="h-11 w-full" size="lg" disabled={submitting}>
+        {submitting ? (
+          t("marketing.waitlist.submitting")
+        ) : (
+          <>
+            {t("marketing.waitlist.submit")}
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </>
+        )}
+      </Button>
+    </form>
   );
 }

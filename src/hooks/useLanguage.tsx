@@ -8,8 +8,8 @@ import type { Language } from '@/types/language';
 export type { Language } from '@/types/language';
 
 const LANGUAGE_OPTIONS: { value: Language; label: string }[] = [
-  { value: 'en', label: 'English' },
-  { value: 'sv', label: 'Svenska' },
+  { value: "sv", label: "Svenska" },
+  { value: "en", label: "English" },
 ];
 
 type LanguageContextValue = {

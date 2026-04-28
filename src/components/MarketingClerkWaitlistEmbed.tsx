@@ -1,6 +1,5 @@
 import { MarketingClerkWaitlistForm } from "@/components/MarketingClerkWaitlistForm";
 import { MarketingWaitlistMailtoForm } from "@/components/MarketingWaitlistMailtoForm";
-import { getSignInUrl } from "@/config/valoraApp";
 import { getClerkPublishableKey } from "@/lib/clerkPublishableKey";
 
 /**
@@ -8,7 +7,6 @@ import { getClerkPublishableKey } from "@/lib/clerkPublishableKey";
  * Email-only join matches a typical Clerk Waitlist dashboard configuration.
  */
 export function MarketingClerkWaitlistEmbed() {
-  const signInUrl = getSignInUrl();
   const clerkPublishableKey = getClerkPublishableKey();
 
   if (!clerkPublishableKey) {
@@ -17,7 +15,7 @@ export function MarketingClerkWaitlistEmbed() {
 
   return (
     <div className="min-h-[12rem] w-full">
-      <MarketingClerkWaitlistForm signInUrl={signInUrl} />
+      <MarketingClerkWaitlistForm />
     </div>
   );
 }

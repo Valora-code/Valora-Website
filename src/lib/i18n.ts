@@ -15,7 +15,7 @@ const resources = {
 void i18n.use(initReactI18next).init({
   resources,
   lng: readStoredLanguage(),
-  fallbackLng: 'en',
+  fallbackLng: "sv",
   supportedLngs: ['en', 'sv'],
   interpolation: {
     escapeValue: true,

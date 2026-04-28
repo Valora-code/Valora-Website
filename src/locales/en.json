@@ -15,7 +15,6 @@
       "how": "How it works",
       "proof": "Results",
       "faq": "FAQ",
-      "signup": "Sign up",
       "menuAria": "Menu",
       "menuCloseAria": "Close menu"
     },
@@ -35,8 +34,7 @@
       "subtitle": "Valora is your financial assistant that finds improvements for you. On your own terms.",
       "ctaWaitlist": "Get early access",
       "ctaHow": "See how",
-      "trustWaitlist": "Early access is the form further down this page. If you already have access, use Sign up below.",
-      "trustSignupSuffix": " Use Sign up if you already have access."
+      "trustWaitlist": "Early access is the form further down this page."
     },
     "problem": {
       "eyebrow": "Reality",
@@ -102,14 +100,11 @@
       "submitting": "Joining…",
       "clerkSuccess": "You're on the waitlist. We'll email you when your spot is ready.",
       "clerkSuccessToast": "We sent a confirmation email.",
-      "clerkSignInPrompt": "Already have access?",
-      "clerkSignIn": "Sign in",
-      "howWaitlistTeaser": "When you’re ready, jump to the early access form below.",
       "fallbackHint": "Clerk isn’t configured in this environment (missing publishable key). Use your email app to send the request below, or set VITE_CLERK_PUBLISHABLE_KEY for the hosted waitlist.",
       "caption": "Limited early access",
       "title": "Request early access",
       "subtitle": "We're opening Valora gradually to a limited number of users.",
-      "emailLabel": "Email *",
+      "emailLabel": "Email",
       "noteLabel": "What should Valora optimize for you?",
       "notePlaceholder": "Mortgage, personal loan, car insurance, home insurance",
       "emailPlaceholder": "you@example.com",
@@ -129,7 +124,7 @@
       }
     },
     "brand": {
-      "statement": "Valora — your money on autopilot.",
+      "statement": "Valora — your loans on autopilot.",
       "statementSupport": "You set the rules. We handle the rest.",
       "stepLabel": "Step",
       "pinned": {

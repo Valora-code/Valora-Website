@@ -12,7 +12,6 @@ import { useScrollParallax } from "@/hooks/use-scroll-parallax";
 import { Link } from "react-router-dom";
 import { MarketingClerkWaitlistEmbed } from "@/components/MarketingClerkWaitlistEmbed";
 import { useTranslation } from "@/lib/i18n";
-import { getSignupUrl } from "@/config/valoraApp";
 import { cn } from "@/lib/utils";
 
 type StatItem = { end: number; text: string };
@@ -40,7 +39,6 @@ const Index = () => {
   const navScrolled = useNavScroll();
   const heroParallaxY = useScrollParallax(0.1);
   const { t } = useTranslation();
-  const signupUrl = getSignupUrl();
 
   const pinnedItems = t("marketing.brand.pinned.items", { returnObjects: true }) as PinnedItem[];
 
@@ -153,15 +151,8 @@ const Index = () => {
                 </button>
               ))}
             </nav>
-            <div className="mt-6 flex items-center justify-between border-t border-border pt-6">
+            <div className="mt-6 flex items-center justify-end border-t border-border pt-6">
               <MarketingLanguageSwitcher />
-              <a
-                href={signupUrl}
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {t("marketing.nav.signup")}
-              </a>
             </div>
           </div>
         </div>
@@ -203,11 +194,7 @@ const Index = () => {
             </div>
 
             <p className="mx-auto mt-8 max-w-xl text-center text-xs leading-relaxed text-muted-foreground">
-              {t("marketing.hero.trustWaitlist")}{" "}
-              <a href={signupUrl} className="font-medium text-foreground underline underline-offset-4 decoration-accent-strong/60 hover:decoration-accent-strong">
-                {t("marketing.nav.signup")}
-              </a>
-              {t("marketing.hero.trustSignupSuffix")}
+              {t("marketing.hero.trustWaitlist")}
               {" · "}
               <Link to="/integritetspolicy" className="font-medium text-foreground underline underline-offset-4 decoration-foreground/30 hover:decoration-foreground">
                 {t("marketing.footer.privacy")}
@@ -527,17 +514,6 @@ const Index = () => {
                   />
                 </div>
               </ScrollReveal>
-
-              <ScrollReveal direction="right" delay={80} scale={0.92}>
-                <div className="mx-auto max-w-3xl">
-                  <div className="space-y-6 rounded-[1.75rem] border border-border/60 bg-muted/20 p-8 sm:rounded-[2.25rem] sm:p-10">
-                    <p className="text-sm leading-relaxed text-muted-foreground">{t("marketing.waitlist.howWaitlistTeaser")}</p>
-                    <Button variant="valora" className="h-11 w-full sm:w-auto" size="lg" onClick={() => scrollToSection("waitlist")}>
-                      {t("marketing.hero.ctaWaitlist")}
-                    </Button>
-                  </div>
-                </div>
-              </ScrollReveal>
             </div>
           </div>
         </section>
@@ -709,7 +685,7 @@ const Index = () => {
           </div>
         </section>
 
-        {/* WAITLIST — slide 5: signup form on a painterly starry-night canvas. */}
+        {/* WAITLIST — early access form on a painterly starry-night canvas. */}
         <section
           id="waitlist"
           className="relative overflow-hidden bg-[#3D5C5A] scroll-mt-24"
