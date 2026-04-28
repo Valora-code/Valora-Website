@@ -1,6 +1,7 @@
 import { ValoraLogo } from "@/components/ValoraLogo";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { MARKETING_PRIVACY_EMAIL } from "@/config/marketing";
 
 const PrivacyPolicy = () => {
   return (
@@ -25,7 +26,10 @@ const PrivacyPolicy = () => {
             <p>
               Guvani Labs AB (org.nr 559573-0341) ("Valora", "vi", "oss") är personuppgiftsansvarig
               för behandlingen av dina personuppgifter. Du kan kontakta oss via e-post på{" "}
-              <a href="mailto:privacy@valora.se" className="text-primary hover:underline">privacy@valora.se</a>.
+              <a href={`mailto:${MARKETING_PRIVACY_EMAIL}`} className="text-primary hover:underline">
+                {MARKETING_PRIVACY_EMAIL}
+              </a>
+              .
             </p>
           </section>
 
@@ -105,7 +109,9 @@ const PrivacyPolicy = () => {
             </ul>
             <p className="mt-3">
               Kontakta oss på{" "}
-              <a href="mailto:privacy@valora.se" className="text-primary hover:underline">privacy@valora.se</a>{" "}
+              <a href={`mailto:${MARKETING_PRIVACY_EMAIL}`} className="text-primary hover:underline">
+                {MARKETING_PRIVACY_EMAIL}
+              </a>{" "}
               för att utöva dina rättigheter. Du har också rätt att lämna klagomål till
               Integritetsskyddsmyndigheten (IMY).
             </p>

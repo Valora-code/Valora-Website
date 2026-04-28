@@ -124,7 +124,6 @@
       }
     },
     "brand": {
-      "statement": "Valora — dina lån på autopilot.",
       "statementSupport": "Du sätter reglerna. Vi sköter resten.",
       "stepLabel": "Steg",
       "pinned": {
@@ -146,9 +145,10 @@
         ]
       },
       "footer": {
-        "orgLine": "Guvani Labs AB · Org.nr 559573-0341",
+        "orgLine": "Valora — dina lån på autopilot.",
         "foundedLine": "Grundat 2025 · Stockholm",
-        "addressLine": "Stockholm, Sverige"
+        "addressLine": "Stockholm, Sverige",
+        "locationBar": "Slotsbacken 8, Stockholm"
       }
     },
     "faq": {
@@ -177,7 +177,8 @@
       "tagline": "Autonomt finansiellt system",
       "privacy": "Integritetspolicy",
       "terms": "Användarvillkor",
-      "contact": "Kontakt"
+      "contact": "Kontakt",
+      "linkedin": "LinkedIn"
     },
     "notFound": {
       "title": "Hoppsan! Sidan hittades inte",

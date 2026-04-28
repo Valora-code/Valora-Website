@@ -124,7 +124,6 @@
       }
     },
     "brand": {
-      "statement": "Valora — your loans on autopilot.",
       "statementSupport": "You set the rules. We handle the rest.",
       "stepLabel": "Step",
       "pinned": {
@@ -146,9 +145,10 @@
         ]
       },
       "footer": {
-        "orgLine": "Guvani Labs AB · Reg. 559573-0341",
+        "orgLine": "Valora — your loans on autopilot.",
         "foundedLine": "Founded 2025 · Stockholm",
-        "addressLine": "Stockholm, Sweden"
+        "addressLine": "Stockholm, Sweden",
+        "locationBar": "Slotsbacken 8, Stockholm"
       }
     },
     "faq": {
@@ -177,7 +177,8 @@
       "tagline": "Autonomous financial system",
       "privacy": "Privacy policy",
       "terms": "Terms of use",
-      "contact": "Contact"
+      "contact": "Contact",
+      "linkedin": "LinkedIn"
     },
     "notFound": {
       "title": "Oops! Page not found",

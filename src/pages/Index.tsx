@@ -10,7 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useScrollParallax } from "@/hooks/use-scroll-parallax";
 import { Link } from "react-router-dom";
+import { LinkedInBrandButton } from "@/components/LinkedInBrandButton";
 import { MarketingClerkWaitlistEmbed } from "@/components/MarketingClerkWaitlistEmbed";
+import { VALORA_LINKEDIN_URL, MARKETING_INFO_EMAIL } from "@/config/marketing";
 import { useTranslation } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
@@ -845,8 +847,14 @@ const Index = () => {
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t("marketing.footer.tagline")}</p>
               </div>
               <div className="grid gap-x-12 gap-y-8 sm:grid-cols-3">
-                <div className="space-y-1.5 text-sm">
-                  <p className="font-medium text-foreground">{t("marketing.brand.footer.orgLine")}</p>
+                <div className="flex h-full min-h-0 flex-col text-sm">
+                  <p className="shrink-0 font-medium text-foreground">{t("marketing.brand.footer.orgLine")}</p>
+                  <div className="flex min-h-0 flex-1 flex-col items-start justify-end">
+                    <LinkedInBrandButton
+                      href={VALORA_LINKEDIN_URL}
+                      aria-label={t("marketing.footer.linkedin")}
+                    />
+                  </div>
                 </div>
                 <div className="space-y-1.5 text-sm">
                   <p className="font-medium text-foreground">{t("marketing.brand.footer.foundedLine")}</p>
@@ -859,7 +867,10 @@ const Index = () => {
                   <Link to="/anvandarvillkor" className="block text-muted-foreground transition-colors hover:text-foreground">
                     {t("marketing.footer.terms")}
                   </Link>
-                  <a href="mailto:info@valora.se" className="block text-muted-foreground transition-colors hover:text-foreground">
+                  <a
+                    href={`mailto:${MARKETING_INFO_EMAIL}`}
+                    className="block text-muted-foreground transition-colors hover:text-foreground"
+                  >
                     {t("marketing.footer.contact")}
                   </a>
                 </div>
@@ -868,7 +879,7 @@ const Index = () => {
             <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-border pt-8 text-xs text-muted-foreground sm:flex-row sm:items-center">
               <span>© {new Date().getFullYear()} Guvani Labs AB</span>
               <span className="font-display text-sm italic font-light text-foreground/70">
-                {t("marketing.brand.statement")}
+                {t("marketing.brand.footer.locationBar")}
               </span>
             </div>
           </div>

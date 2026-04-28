@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
+import { MARKETING_INFO_EMAIL } from "@/config/marketing";
 import { useTranslation } from "@/lib/i18n";
 
 /**
@@ -38,7 +39,7 @@ export function MarketingWaitlistMailtoForm() {
           .filter(Boolean)
           .join("\n"),
       );
-      window.location.href = `mailto:info@valora.se?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:${MARKETING_INFO_EMAIL}?subject=${subject}&body=${body}`;
       setSubmitted(true);
       toast({
         title: t("marketing.waitlist.toastThanksTitle"),

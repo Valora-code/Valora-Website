@@ -1,6 +1,7 @@
 import { ValoraLogo } from "@/components/ValoraLogo";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { MARKETING_INFO_EMAIL } from "@/config/marketing";
 
 const TermsOfService = () => {
   return (
@@ -138,7 +139,10 @@ const TermsOfService = () => {
             <h2 className="display-card mb-3">12. Kontakt</h2>
             <p>
               För frågor om dessa villkor, kontakta oss på{" "}
-              <a href="mailto:info@valora.se" className="text-primary hover:underline">info@valora.se</a>.
+              <a href={`mailto:${MARKETING_INFO_EMAIL}`} className="text-primary hover:underline">
+                {MARKETING_INFO_EMAIL}
+              </a>
+              .
             </p>
           </section>
         </div>
