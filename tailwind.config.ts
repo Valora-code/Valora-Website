@@ -43,6 +43,25 @@ export default {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        "accent-strong": {
+          DEFAULT: "hsl(var(--accent-strong))",
+          foreground: "hsl(var(--accent-strong-foreground))",
+        },
+        ink: {
+          DEFAULT: "hsl(var(--ink))",
+          foreground: "hsl(var(--ink-foreground))",
+        },
+        "brand-teal": {
+          DEFAULT: "var(--brand-teal)",
+          light: "var(--brand-teal-light)",
+          dark: "var(--brand-teal-dark)",
+        },
+        "cream-deep": "var(--cream-deep)",
+        "ink-warm": "var(--ink-warm)",
+        "signal-yellow": {
+          DEFAULT: "var(--signal-yellow)",
+          soft: "var(--signal-yellow-soft)",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -68,7 +87,8 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ['"Plus Jakarta Sans"', "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        display: ['"Editorial New"', "Georgia", "ui-serif", "serif"],
       },
       letterSpacing: {
         tight: "-0.02em",

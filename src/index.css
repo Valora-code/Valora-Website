@@ -2,95 +2,137 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Valora marketing — Plus Jakarta Sans only */
+/* Valora marketing — Klarna-faithful system, Valora green accent. */
 
 @layer base {
   :root {
-    --background: 210 25% 98%;
-    --background-elevated: 210 20% 96%;
-    --background-surface: 210 18% 94%;
-    --foreground: 220 18% 12%;
+    /* Brand teal — single source of truth for accent color */
+    --brand-teal: #1a7a6e;
+    --brand-teal-light: #E8F2F0;
+    --brand-teal-dark: #0D5048;
+
+    /* Extended palette — used sparingly */
+    --cream-deep: #F5F0E8;
+    --ink-warm: #1F1B16;
+    --signal-yellow: #FFD66B;
+    --signal-yellow-soft: #FFF4D1;
+
+    /* Surfaces — warm cream, à la Klarna Off White (#F9F8F5) */
+    --background: 40 30% 97%;
+    --background-elevated: 0 0% 100%;
+    --background-surface: 38 22% 95%;
+
+    /* Ink — cool slate near-black (#111827) — primary text + dark surfaces */
+    --foreground: 221 39% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 18% 12%;
+    --card-foreground: 221 39% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 18% 12%;
+    --popover-foreground: 221 39% 11%;
 
-    --primary: 172 52% 32%;
+    /* PRIMARY = the dark CTA. Klarna's default is dark fill, white text. */
+    --primary: 221 39% 11%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 16% 92%;
-    --secondary-foreground: 220 18% 18%;
+    /* INK = same as primary, named explicitly for surfaces/heroes */
+    --ink: 221 39% 11%;
+    --ink-foreground: 40 30% 97%;
 
-    --muted: 210 14% 90%;
-    --muted-foreground: 220 10% 38%;
+    --secondary: 34 15% 93%;
+    --secondary-foreground: 221 39% 11%;
 
-    --accent: 172 40% 94%;
-    --accent-foreground: 172 52% 22%;
+    /* Secondary/muted text — cool slate gray (#6B7280) */
+    --muted: 34 14% 91%;
+    --muted-foreground: 220 9% 46%;
+
+    /* Accent (soft) = brand-teal-light wash, mirrored as HSL for opacity utilities */
+    --accent: 168 28% 93%;
+    --accent-foreground: 173 65% 22%;
+
+    /* Accent-strong = HSL mirror of --brand-teal (#1a7a6e). Reserved for highlights. */
+    --accent-strong: 173 65% 29%;
+    --accent-strong-foreground: 0 0% 100%;
 
     --destructive: 0 72% 48%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 210 14% 86%;
-    --input: 210 14% 88%;
-    --ring: 172 52% 32%;
+    --border: 34 12% 86%;
+    --input: 34 12% 88%;
+    --ring: 173 65% 29%;
 
-    --radius: 0.5rem;
+    --radius: 0.875rem;
 
-    --stat-accent: 172 55% 36%;
+    --stat-accent: 173 65% 29%;
 
-    --sidebar-background: 210 25% 98%;
-    --sidebar-foreground: 220 18% 18%;
-    --sidebar-primary: 172 52% 32%;
+    --sidebar-background: 40 30% 97%;
+    --sidebar-foreground: 221 39% 11%;
+    --sidebar-primary: 221 39% 11%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 16% 92%;
-    --sidebar-accent-foreground: 220 18% 18%;
-    --sidebar-border: 210 14% 86%;
-    --sidebar-ring: 172 52% 32%;
+    --sidebar-accent: 34 15% 93%;
+    --sidebar-accent-foreground: 221 39% 11%;
+    --sidebar-border: 34 12% 86%;
+    --sidebar-ring: 173 65% 29%;
   }
 
   .dark {
-    --background: 222 18% 6%;
-    --background-elevated: 222 16% 9%;
-    --background-surface: 222 14% 12%;
-    --foreground: 210 25% 96%;
+    /* Brand teal — lifted lightness for visibility on the dark canvas */
+    --brand-teal: #5DB8A9;
+    --brand-teal-light: hsl(173 30% 16%);
+    --brand-teal-dark: #2A9C8C;
 
-    --card: 222 16% 10%;
-    --card-foreground: 210 25% 96%;
+    --cream-deep: hsl(30 10% 12%);
+    --ink-warm: #F5F0E8;
+    --signal-yellow: #FFD66B;
+    --signal-yellow-soft: hsl(45 70% 22%);
 
-    --popover: 222 16% 10%;
-    --popover-foreground: 210 25% 96%;
+    /* Inverted: violet-black canvas, cream ink, teal stays the highlight */
+    --background: 260 30% 7%;
+    --background-elevated: 260 22% 10%;
+    --background-surface: 260 18% 13%;
+    --foreground: 40 30% 96%;
 
-    --primary: 172 50% 46%;
-    --primary-foreground: 222 18% 6%;
+    --card: 260 22% 10%;
+    --card-foreground: 40 30% 96%;
 
-    --secondary: 222 12% 14%;
-    --secondary-foreground: 210 20% 88%;
+    --popover: 260 22% 10%;
+    --popover-foreground: 40 30% 96%;
 
-    --muted: 222 10% 18%;
-    --muted-foreground: 215 12% 62%;
+    --primary: 40 30% 96%;
+    --primary-foreground: 221 39% 11%;
 
-    --accent: 172 35% 16%;
-    --accent-foreground: 172 55% 78%;
+    --ink: 40 30% 96%;
+    --ink-foreground: 221 39% 11%;
+
+    --secondary: 260 14% 16%;
+    --secondary-foreground: 40 22% 90%;
+
+    --muted: 260 12% 20%;
+    --muted-foreground: 35 8% 64%;
+
+    --accent: 173 30% 16%;
+    --accent-foreground: 173 50% 78%;
+
+    --accent-strong: 173 45% 56%;
+    --accent-strong-foreground: 221 39% 11%;
 
     --destructive: 0 62% 48%;
     --destructive-foreground: 0 0% 96%;
 
-    --border: 222 10% 20%;
-    --input: 222 12% 12%;
-    --ring: 172 50% 46%;
+    --border: 260 10% 22%;
+    --input: 260 14% 14%;
+    --ring: 173 45% 56%;
 
-    --stat-accent: 172 58% 58%;
+    --stat-accent: 173 50% 60%;
 
-    --sidebar-background: 222 18% 6%;
-    --sidebar-foreground: 210 22% 90%;
-    --sidebar-primary: 172 50% 46%;
-    --sidebar-primary-foreground: 222 18% 6%;
-    --sidebar-accent: 222 12% 14%;
-    --sidebar-accent-foreground: 210 20% 88%;
-    --sidebar-border: 222 10% 20%;
-    --sidebar-ring: 172 50% 46%;
+    --sidebar-background: 260 30% 7%;
+    --sidebar-foreground: 40 22% 90%;
+    --sidebar-primary: 40 30% 96%;
+    --sidebar-primary-foreground: 221 39% 11%;
+    --sidebar-accent: 260 14% 16%;
+    --sidebar-accent-foreground: 40 22% 90%;
+    --sidebar-border: 260 10% 22%;
+    --sidebar-ring: 173 45% 56%;
   }
 }
 
@@ -109,16 +151,29 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased font-sans;
-    font-feature-settings: "ss01" on, "cv01" on;
-    letter-spacing: -0.01em;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-weight: 400;
+    line-height: 1.6;
+    font-feature-settings: "ss01" on, "cv11" on;
   }
 
-  /* Kept for legal pages — same family as UI for consistency */
-  .font-serif {
-    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-    font-feature-settings: "ss01" on, "cv01" on;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 700;
+    line-height: 1.1;
     letter-spacing: -0.02em;
+  }
+
+  .font-display {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-feature-settings: "ss01" on;
+  }
+
+  /* Legal pages keep an editorial read but stay in Inter */
+  .font-serif {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    letter-spacing: -0.011em;
     text-rendering: optimizeLegibility;
   }
 }
@@ -147,150 +202,129 @@
 }
 
 @layer components {
-  .headline-hero {
-    @apply font-sans font-semibold tracking-tight text-foreground;
-    font-size: clamp(2.25rem, 4.5vw, 3.25rem);
-    line-height: 1.12;
+  /* Display ladder — Editorial New Light for editorial weight; Inter for sub-display. */
+  .display-hero {
+    font-family: "Editorial New", Georgia, ui-serif, serif;
+    @apply text-foreground;
+    font-weight: 300;
+    font-size: clamp(3.25rem, 9.5vw, 7.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
     text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01" on;
   }
 
-  .headline-section {
-    @apply font-sans font-semibold tracking-tight text-foreground;
-    font-size: clamp(1.5rem, 3vw, 2.25rem);
+  .display-section {
+    font-family: "Editorial New", Georgia, ui-serif, serif;
+    @apply text-foreground;
+    font-weight: 300;
+    font-size: clamp(2.25rem, 5.5vw, 4.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+
+  .display-statement {
+    font-family: "Editorial New", Georgia, ui-serif, serif;
+    @apply text-foreground;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .display-card {
+    @apply font-sans font-bold text-xl md:text-2xl text-foreground;
     line-height: 1.2;
+    letter-spacing: -0.015em;
   }
 
-  .headline-card {
-    @apply font-sans font-semibold text-lg md:text-xl tracking-tight leading-snug text-foreground;
+  .body-lead {
+    @apply text-lg md:text-xl font-normal leading-[1.55] text-muted-foreground max-w-[42ch];
   }
 
-  .section-eyebrow {
-    @apply text-xs font-semibold uppercase tracking-wide text-primary;
-  }
-
-  .body-large {
-    @apply text-lg md:text-xl font-normal leading-relaxed text-muted-foreground max-w-2xl;
+  .body-base {
+    @apply text-base leading-[1.55] text-muted-foreground;
   }
 
   .caption {
     @apply text-sm font-medium text-muted-foreground;
   }
 
-  .card-modern {
-    @apply rounded-lg border border-border bg-card text-card-foreground;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .card-modern:hover {
-    border-color: hsl(var(--primary) / 0.22);
-    box-shadow: 0 12px 40px -24px hsl(222 40% 4% / 0.12);
-  }
-
-  .dark .card-modern:hover {
-    box-shadow: 0 12px 40px -20px hsl(0 0% 0% / 0.35);
-  }
-
-  .card-accent {
-    @apply rounded-lg border border-primary/20 bg-card text-card-foreground;
+  /* Klarna-style flat surface: rounded, bordered, no shadow, no glow. */
+  .surface-card {
+    @apply rounded-[1.25rem] border border-border bg-card text-card-foreground;
     transition: border-color 0.2s ease;
   }
 
-  .card-accent:hover {
-    border-color: hsl(var(--primary) / 0.35);
-  }
-
-  .surface-clean {
-    @apply rounded-lg border border-border bg-background-elevated;
-    transition: border-color 0.2s ease;
-  }
-
-  .surface-clean:hover {
-    border-color: hsl(var(--border));
-  }
-
-  .nav-shell {
-    @apply border-b border-border bg-background;
-  }
-
-  .nav-shell--scrolled {
-    box-shadow: 0 1px 0 hsl(var(--border));
-  }
-
-  .liquid-glass {
-    background: hsl(var(--background-elevated));
-    border: 1px solid hsl(var(--border) / 0.65);
+  .surface-card:hover {
+    border-color: hsl(var(--foreground) / 0.18);
   }
 
   .surface-elevated {
-    background: hsl(var(--background-elevated));
-    border: 1px solid hsl(var(--border) / 0.65);
+    @apply rounded-[1.25rem] border border-border bg-background-elevated;
   }
 
-  .surface-glass {
-    background: hsl(var(--background-elevated));
-    border: 1px solid hsl(var(--border) / 0.65);
+  /* Dark hero block — Klarna does this with their black canvas; we use violet-ink. */
+  .surface-ink {
+    @apply rounded-[1.5rem] bg-ink text-ink-foreground;
   }
 
-  /** Short gradient bar under section labels */
-  .marketing-accent-bar {
-    height: 3px;
-    width: 2.5rem;
-    border-radius: 9999px;
-    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary) / 0.15));
+  /* Pill tag — used for "verified", category labels. Flat, no shadow. */
+  .pill-tag {
+    @apply inline-flex items-center rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground;
   }
 
-  /** Slight lift on hover — keep subtle for trust aesthetic */
-  .marketing-card-lift {
-    transition:
-      border-color 0.22s ease,
-      box-shadow 0.32s ease,
-      transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  .pill-tag-accent {
+    @apply inline-flex items-center rounded-full bg-brand-teal-light px-2.5 py-1 text-xs font-semibold text-brand-teal;
   }
 
-  .marketing-card-lift:hover {
-    transform: translateY(-3px);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .marketing-card-lift {
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .marketing-card-lift:hover {
-      transform: none;
-    }
-  }
-
-  /**
-   * Scroll-linked (view timeline): section top rules strengthen as the block enters.
-   * Browsers without support keep a static line.
-   */
-  @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      .marketing-scroll-line {
-        opacity: 0.35;
-        transform: scaleX(0.88);
-        transform-origin: center;
-        animation: marketingScrollLineReveal linear both;
-        animation-timeline: view(block);
-        animation-range: entry -5% entry 40%;
-      }
-
-      @keyframes marketingScrollLineReveal {
-        to {
-          opacity: 1;
-          transform: scaleX(1);
-        }
-      }
-    }
+  /* Nav shell stays minimal; no read-progress. */
+  .nav-shell {
+    @apply border-b border-border bg-background;
   }
 }
 
 @layer utilities {
-  .text-gradient-primary {
-    background: linear-gradient(120deg, hsl(var(--primary)) 0%, hsl(172 60% 52%) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+  .text-accent-strong {
+    color: hsl(var(--accent-strong));
+  }
+
+  .bg-accent-strong {
+    background-color: hsl(var(--accent-strong));
+  }
+
+  /* For numerals in display contexts: proportional, not tabular. */
+  .nums-prop {
+    font-variant-numeric: proportional-nums;
+  }
+
+  /*
+   * Scroll-driven parallax on painterly card images.
+   * The photo translates from -5% → +5% of its height as the card moves
+   * through the viewport — creating "look-through-a-window" depth against
+   * the static card frame and gradient overlay.
+   *
+   * Uses CSS `animation-timeline: view()`. Falls back to no animation on
+   * browsers without support (Safari < 18.4, Firefox stable).
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      @keyframes painterly-image-parallax {
+        from {
+          transform: translate3d(0, -5%, 0) scale(1.14);
+        }
+        to {
+          transform: translate3d(0, 5%, 0) scale(1.14);
+        }
+      }
+
+      .painterly-parallax {
+        animation: painterly-image-parallax linear both;
+        animation-timeline: view();
+        animation-range: entry 0% exit 100%;
+        will-change: transform;
+      }
+    }
   }
 }
