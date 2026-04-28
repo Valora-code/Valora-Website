@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
 
 export type Appearance = "light" | "dark";
 
@@ -16,12 +16,7 @@ function readStoredAppearance(): Appearance {
   if (typeof window === "undefined") return "light";
   const stored = localStorage.getItem(STORAGE_KEY);
   if (stored === "light" || stored === "dark") return stored;
-  return "light";
-}
-
-function applyAppearanceClass(appearance: Appearance) {
-  const root = document.documentElement;
-  root.classList.toggle("dark", appearance === "dark");
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
@@ -30,16 +25,11 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const setAppearance = useCallback((a: Appearance) => {
     setAppearanceState(a);
     localStorage.setItem(STORAGE_KEY, a);
-    applyAppearanceClass(a);
   }, []);
 
   const toggleAppearance = useCallback(() => {
     setAppearance(appearance === "dark" ? "light" : "dark");
   }, [appearance, setAppearance]);
-
-  useEffect(() => {
-    applyAppearanceClass(appearance);
-  }, [appearance]);
 
   return (
     <ThemeContext.Provider value={{ appearance, setAppearance, toggleAppearance }}>

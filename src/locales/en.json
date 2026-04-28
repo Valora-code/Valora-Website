@@ -35,7 +35,7 @@
       "subtitle": "Valora is your financial assistant that finds improvements for you. On your own terms.",
       "ctaWaitlist": "Get early access",
       "ctaHow": "See how",
-      "trustWaitlist": "Early access uses a short form on the next page. If you already have access, use Sign up below.",
+      "trustWaitlist": "Early access is the form further down this page. If you already have access, use Sign up below.",
       "trustSignupSuffix": " Use Sign up if you already have access."
     },
     "problem": {
@@ -97,9 +97,9 @@
       ]
     },
     "waitlist": {
-      "openForm": "Continue to early access",
       "backHome": "Home",
-      "homeTeaser": "Tell us you’re interested on the next screen. We’ll add you to our waitlist and email you when it’s your turn.",
+      "formLoading": "Loading form…",
+      "howWaitlistTeaser": "When you’re ready, jump to the early access form below.",
       "fallbackHint": "Clerk isn’t configured in this environment (missing publishable key). Use your email app to send the request below, or set VITE_CLERK_PUBLISHABLE_KEY for the hosted waitlist.",
       "caption": "Limited early access",
       "title": "Request early access",

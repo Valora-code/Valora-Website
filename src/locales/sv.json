@@ -35,7 +35,7 @@
       "subtitle": "Valora är din finansiella assistent som hittar förbättringar åt dig. Enligt dina egna villkor.",
       "ctaWaitlist": "Få tidig tillgång",
       "ctaHow": "Se hur",
-      "trustWaitlist": "Tidig tillgång använder ett kort formulär på nästa sida. Har du redan tillgång, använd Skapa konto nedan.",
+      "trustWaitlist": "Tidig tillgång är formuläret längre ner på sidan. Har du redan tillgång, använd Skapa konto nedan.",
       "trustSignupSuffix": " Använd Skapa konto om du redan har tillgång."
     },
     "problem": {
@@ -97,9 +97,9 @@
       ]
     },
     "waitlist": {
-      "openForm": "Fortsätt till tidig tillgång",
       "backHome": "Hem",
-      "homeTeaser": "På nästa sida visar du att du är intresserad. Vi lägger dig på väntelistan och mejlar när det är din tur.",
+      "formLoading": "Laddar formulär…",
+      "howWaitlistTeaser": "När du är redo, hoppa ner till formuläret för tidig tillgång.",
       "fallbackHint": "Clerk är inte konfigurerat här (saknar publicerbar nyckel). Skicka anmälan via e-post nedan, eller sätt VITE_CLERK_PUBLISHABLE_KEY för den värdväntelistan.",
       "caption": "Begränsad tidig tillgång",
       "title": "Begär tidig tillgång",

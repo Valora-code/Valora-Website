@@ -6,7 +6,7 @@ export function normalizeClerkPublishableKey(raw: string): string {
   return s;
 }
 
-/** Publishable key for Clerk (waitlist). Undefined when unset — use mailto fallback on `/waitlist`. */
+/** Publishable key for Clerk (waitlist). Undefined when unset — use mailto fallback in the homepage waitlist section. */
 export function getClerkPublishableKey(): string | undefined {
   const raw = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
   if (typeof raw !== "string") return undefined;

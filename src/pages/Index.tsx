@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useScrollParallax } from "@/hooks/use-scroll-parallax";
 import { Link } from "react-router-dom";
+import { MarketingClerkWaitlistEmbed } from "@/components/MarketingClerkWaitlistEmbed";
 import { useTranslation } from "@/lib/i18n";
 import { getSignupUrl } from "@/config/valoraApp";
 import { cn } from "@/lib/utils";
@@ -74,6 +75,14 @@ const Index = () => {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    if (window.location.hash !== "#waitlist") return;
+    const tid = window.setTimeout(() => {
+      document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+    return () => window.clearTimeout(tid);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-accent-strong/25">
@@ -522,9 +531,9 @@ const Index = () => {
               <ScrollReveal direction="right" delay={80} scale={0.92}>
                 <div className="mx-auto max-w-3xl">
                   <div className="space-y-6 rounded-[1.75rem] border border-border/60 bg-muted/20 p-8 sm:rounded-[2.25rem] sm:p-10">
-                    <p className="text-sm leading-relaxed text-muted-foreground">{t("marketing.waitlist.homeTeaser")}</p>
-                    <Button variant="valora" className="h-11 w-full sm:w-auto" size="lg" asChild>
-                      <Link to="/waitlist">{t("marketing.waitlist.openForm")}</Link>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{t("marketing.waitlist.howWaitlistTeaser")}</p>
+                    <Button variant="valora" className="h-11 w-full sm:w-auto" size="lg" onClick={() => scrollToSection("waitlist")}>
+                      {t("marketing.hero.ctaWaitlist")}
                     </Button>
                   </div>
                 </div>
@@ -817,10 +826,7 @@ const Index = () => {
             </p>
 
             <div className="overflow-hidden rounded-2xl border border-white/30 bg-white/85 p-7 shadow-[0_30px_80px_-30px_rgba(8,18,26,0.45)] backdrop-blur-2xl sm:p-9">
-              <p className="text-sm leading-relaxed text-muted-foreground">{t("marketing.waitlist.homeTeaser")}</p>
-              <Button variant="valora" className="mt-6 h-11 w-full sm:w-auto" size="lg" asChild>
-                <Link to="/waitlist">{t("marketing.waitlist.openForm")}</Link>
-              </Button>
+              <MarketingClerkWaitlistEmbed />
             </div>
           </ScrollReveal>
         </section>
