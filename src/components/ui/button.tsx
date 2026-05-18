@@ -15,14 +15,14 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "text-muted-foreground hover:bg-muted/30 hover:text-foreground",
         link: "text-foreground underline underline-offset-4 decoration-accent-strong/60 hover:decoration-accent-strong",
-        // Valora primary CTA — Klarna pattern: dark fill, white text, flat pill, no glow.
-        valora: "rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/92",
-        // Secondary: outlined pill on cream — for "How it works" style links.
+        // Valora primary CTA — violet pill, navy text. The one earned moment per screen.
+        valora: "rounded-full bg-[var(--brand-violet)] text-foreground font-bold hover:bg-[var(--brand-violet-dark)] disabled:bg-[var(--brand-violet)]/30 disabled:text-foreground/55",
+        // Secondary: outlined navy pill on cream — for "How it works" style links.
         valoraGhost: "rounded-full border border-foreground/25 bg-transparent text-foreground font-semibold hover:border-foreground/60 hover:bg-foreground/[0.03]",
-        // Accent: green pill — reserved for use on dark surfaces where the green needs to sing.
-        accent: "rounded-full bg-accent-strong text-accent-strong-foreground font-semibold hover:bg-accent-strong/92",
-        // OnDark: white pill with dark text — for use over painterly/dark gradient cards.
-        valoraOnDark: "rounded-full bg-white text-foreground font-semibold hover:bg-white/95",
+        // Accent alias (kept for compatibility) — also violet now.
+        accent: "rounded-full bg-[var(--brand-violet)] text-foreground font-bold hover:bg-[var(--brand-violet-dark)]",
+        // OnDark: cream pill with navy text — for use over dark surfaces.
+        valoraOnDark: "rounded-full bg-[#FAF6F0] text-foreground font-semibold hover:bg-white",
       },
       size: {
         default: "h-10 px-5 py-2",

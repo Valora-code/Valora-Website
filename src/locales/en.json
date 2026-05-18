@@ -170,7 +170,15 @@
       "tagline": "Autonomous financial system",
       "privacy": "Privacy policy",
       "terms": "Terms of use",
-      "contact": "Contact"
+      "contact": "Contact",
+      "colKontakt": "Contact",
+      "colStudio": "Studio",
+      "colSociala": "Social",
+      "colIndex": "Index",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn",
+      "home": "Home",
+      "faqShort": "FAQ"
     },
     "notFound": {
       "title": "Oops! Page not found",

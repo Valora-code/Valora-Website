@@ -2,28 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Valora marketing — Klarna-faithful system, Valora green accent. */
+/* Valora landing — brand brief 2026-05.
+ * Cream first. Navy text. Violet only for the one moment per screen
+ * that earns it. Anton for display + money. Inter for body.
+ */
 
 @layer base {
   :root {
-    /* Brand teal — single source of truth for accent color */
-    --brand-teal: #1a7a6e;
-    --brand-teal-light: #E8F2F0;
-    --brand-teal-dark: #0D5048;
-
-    /* Extended palette — used sparingly */
+    /* Foundation palette */
+    --cream: #FAF6F0;
     --cream-deep: #F5F0E8;
+    --navy: #11151F;
     --ink-warm: #1F1B16;
-    --signal-yellow: #FFD66B;
+
+    /* Signature accent */
+    --brand-violet: #8C52FF;
+    --brand-violet-soft: #F1EAFF;
+    --brand-violet-dark: #6A36D9;
+
+    /* Ambient atmosphere only — never foreground blocks */
+    --mint: #E5F0EB;
+    --honey: #FFD66B;
     --signal-yellow-soft: #FFF4D1;
 
-    /* Surfaces — warm cream, à la Klarna Off White (#F9F8F5) */
-    --background: 40 30% 97%;
+    /* Tokens — surfaces */
+    --background: 40 30% 97%;          /* cream */
     --background-elevated: 0 0% 100%;
-    --background-surface: 38 22% 95%;
+    --background-surface: 38 22% 95%;  /* cream-deep */
 
-    /* Ink — cool slate near-black (#111827) — primary text + dark surfaces */
-    --foreground: 221 39% 11%;
+    /* Tokens — ink */
+    --foreground: 221 39% 11%;         /* navy */
 
     --card: 0 0% 100%;
     --card-foreground: 221 39% 11%;
@@ -31,62 +39,58 @@
     --popover: 0 0% 100%;
     --popover-foreground: 221 39% 11%;
 
-    /* PRIMARY = the dark CTA. Klarna's default is dark fill, white text. */
-    --primary: 221 39% 11%;
-    --primary-foreground: 0 0% 100%;
+    /* PRIMARY = violet pill, navy text (per brief) */
+    --primary: 259 100% 66%;
+    --primary-foreground: 221 39% 11%;
 
-    /* INK = same as primary, named explicitly for surfaces/heroes */
+    /* INK token = navy, for moments where we need dark surfaces */
     --ink: 221 39% 11%;
     --ink-foreground: 40 30% 97%;
 
     --secondary: 34 15% 93%;
     --secondary-foreground: 221 39% 11%;
 
-    /* Secondary/muted text — cool slate gray (#6B7280) */
     --muted: 34 14% 91%;
     --muted-foreground: 220 9% 46%;
 
-    /* Accent (soft) = brand-teal-light wash, mirrored as HSL for opacity utilities */
-    --accent: 168 28% 93%;
-    --accent-foreground: 173 65% 22%;
+    /* Accent (soft violet wash) */
+    --accent: 264 100% 95%;
+    --accent-foreground: 259 65% 38%;
 
-    /* Accent-strong = HSL mirror of --brand-teal (#1a7a6e). Reserved for highlights. */
-    --accent-strong: 173 65% 29%;
-    --accent-strong-foreground: 0 0% 100%;
+    /* Accent-strong = violet, HSL mirror of #8C52FF */
+    --accent-strong: 259 100% 66%;
+    --accent-strong-foreground: 221 39% 11%;
 
     --destructive: 0 72% 48%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 34 12% 86%;
     --input: 34 12% 88%;
-    --ring: 173 65% 29%;
+    --ring: 259 100% 66%;
 
-    --radius: 0.875rem;
+    --radius: 1.25rem; /* 20px — brief default */
 
-    --stat-accent: 173 65% 29%;
+    --stat-accent: 259 100% 66%;
 
     --sidebar-background: 40 30% 97%;
     --sidebar-foreground: 221 39% 11%;
-    --sidebar-primary: 221 39% 11%;
-    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-primary: 259 100% 66%;
+    --sidebar-primary-foreground: 221 39% 11%;
     --sidebar-accent: 34 15% 93%;
     --sidebar-accent-foreground: 221 39% 11%;
     --sidebar-border: 34 12% 86%;
-    --sidebar-ring: 173 65% 29%;
+    --sidebar-ring: 259 100% 66%;
   }
 
   .dark {
-    /* Brand teal — lifted lightness for visibility on the dark canvas */
-    --brand-teal: #5DB8A9;
-    --brand-teal-light: hsl(173 30% 16%);
-    --brand-teal-dark: #2A9C8C;
+    --brand-violet: #B58BFF;
+    --brand-violet-soft: hsl(259 60% 18%);
+    --brand-violet-dark: #8C52FF;
 
     --cream-deep: hsl(30 10% 12%);
     --ink-warm: #F5F0E8;
-    --signal-yellow: #FFD66B;
     --signal-yellow-soft: hsl(45 70% 22%);
 
-    /* Inverted: violet-black canvas, cream ink, teal stays the highlight */
     --background: 260 30% 7%;
     --background-elevated: 260 22% 10%;
     --background-surface: 260 18% 13%;
@@ -98,7 +102,7 @@
     --popover: 260 22% 10%;
     --popover-foreground: 40 30% 96%;
 
-    --primary: 40 30% 96%;
+    --primary: 259 100% 72%;
     --primary-foreground: 221 39% 11%;
 
     --ink: 40 30% 96%;
@@ -110,10 +114,10 @@
     --muted: 260 12% 20%;
     --muted-foreground: 35 8% 64%;
 
-    --accent: 173 30% 16%;
-    --accent-foreground: 173 50% 78%;
+    --accent: 259 50% 18%;
+    --accent-foreground: 259 80% 86%;
 
-    --accent-strong: 173 45% 56%;
+    --accent-strong: 259 100% 72%;
     --accent-strong-foreground: 221 39% 11%;
 
     --destructive: 0 62% 48%;
@@ -121,18 +125,18 @@
 
     --border: 260 10% 22%;
     --input: 260 14% 14%;
-    --ring: 173 45% 56%;
+    --ring: 259 100% 72%;
 
-    --stat-accent: 173 50% 60%;
+    --stat-accent: 259 100% 72%;
 
     --sidebar-background: 260 30% 7%;
     --sidebar-foreground: 40 22% 90%;
-    --sidebar-primary: 40 30% 96%;
+    --sidebar-primary: 259 100% 72%;
     --sidebar-primary-foreground: 221 39% 11%;
     --sidebar-accent: 260 14% 16%;
     --sidebar-accent-foreground: 40 22% 90%;
     --sidebar-border: 260 10% 22%;
-    --sidebar-ring: 173 45% 56%;
+    --sidebar-ring: 259 100% 72%;
   }
 }
 
@@ -165,9 +169,11 @@
     letter-spacing: -0.02em;
   }
 
-  .font-display {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-    font-feature-settings: "ss01" on;
+  /* Anton — the display voice. Used for hero, money, eyebrows, section heads. */
+  .font-display,
+  .font-anton {
+    font-family: "Anton", Impact, Haettenschweiler, sans-serif;
+    font-weight: 400;
   }
 
   /* Legal pages keep an editorial read but stay in Inter */
@@ -202,86 +208,335 @@
 }
 
 @layer components {
-  /* Display ladder — Editorial New Light for editorial weight; Inter for sub-display. */
+  /* Display ladder — Anton everywhere.
+   * Letter-spacing kept tight; line-height 0.95 for hero presence.
+   */
+  /* Cinematic hero — edge-to-edge Anton. Way bigger on wide screens. */
   .display-hero {
-    font-family: "Editorial New", Georgia, ui-serif, serif;
+    font-family: "Anton", Impact, Haettenschweiler, sans-serif;
     @apply text-foreground;
-    font-weight: 300;
-    font-size: clamp(3.25rem, 9.5vw, 7.5rem);
-    line-height: 1.02;
-    letter-spacing: -0.025em;
+    font-weight: 400;
+    font-size: clamp(3.5rem, 14vw, 12rem);  /* 56 → 192 */
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+    text-transform: none;
     text-rendering: optimizeLegibility;
-    font-feature-settings: "ss01" on;
+  }
+
+  /* Money-as-hero — bigger than the headline. The loudest thing on the page. */
+  .display-money {
+    font-family: "Anton", Impact, Haettenschweiler, sans-serif;
+    @apply text-foreground;
+    font-weight: 400;
+    font-size: clamp(4.5rem, 10vw, 8rem);  /* 72 → 128 */
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    font-variant-numeric: tabular-nums;
   }
 
   .display-section {
-    font-family: "Editorial New", Georgia, ui-serif, serif;
+    font-family: "Anton", Impact, Haettenschweiler, sans-serif;
     @apply text-foreground;
-    font-weight: 300;
-    font-size: clamp(2.25rem, 5.5vw, 4.25rem);
-    line-height: 1.05;
-    letter-spacing: -0.025em;
-  }
-
-  .display-statement {
-    font-family: "Editorial New", Georgia, ui-serif, serif;
-    @apply text-foreground;
-    font-weight: 300;
-    font-style: italic;
-    font-size: clamp(1.75rem, 4vw, 3rem);
-    line-height: 1.15;
+    font-weight: 400;
+    font-size: clamp(3.5rem, 6.5vw, 6rem); /* Klarna-scale section heads */
+    line-height: 0.98;
     letter-spacing: -0.02em;
   }
 
-  .display-card {
-    @apply font-sans font-bold text-xl md:text-2xl text-foreground;
-    line-height: 1.2;
+  .display-statement {
+    font-family: "Anton", Impact, Haettenschweiler, sans-serif;
+    @apply text-foreground;
+    font-weight: 400;
+    font-size: clamp(1.625rem, 3.2vw, 2.25rem);
+    line-height: 1.05;
     letter-spacing: -0.015em;
   }
 
+  .display-card {
+    font-family: "Anton", Impact, Haettenschweiler, sans-serif;
+    @apply text-foreground;
+    font-weight: 400;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+  }
+
+  /* Eyebrow / section caption — Anton, uppercase, letterspaced.
+   * Used as plain caption (navy at 0.55). Distinct from the violet eyebrow pill below.
+   */
+  .eyebrow-caption {
+    font-family: "Anton", Impact, Haettenschweiler, sans-serif;
+    font-weight: 400;
+    font-size: 0.975rem; /* +20% — 15.6px */
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: hsl(var(--foreground) / 0.55);
+  }
+
+  /* Eyebrow pill — solid violet, white text, Anton uppercase.
+   * One-per-section moment, sits above a hero heading.
+   */
+  .eyebrow-pill {
+    @apply inline-flex items-center rounded-full;
+    background: var(--brand-violet);
+    color: #FFFFFF;
+    font-family: "Anton", Impact, Haettenschweiler, sans-serif;
+    font-weight: 400;
+    font-size: 0.8125rem;   /* 13px */
+    line-height: 1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+  }
+
+  /* Body */
   .body-lead {
-    @apply text-lg md:text-xl font-normal leading-[1.55] text-muted-foreground max-w-[42ch];
+    @apply text-lg md:text-xl font-normal max-w-[48ch];
+    color: hsl(var(--foreground) / 0.7);
+    line-height: 1.55;
   }
 
   .body-base {
-    @apply text-base leading-[1.55] text-muted-foreground;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: hsl(var(--foreground) / 0.7);
   }
 
   .caption {
-    @apply text-sm font-medium text-muted-foreground;
+    @apply text-sm font-medium;
+    color: hsl(var(--foreground) / 0.55);
   }
 
-  /* Klarna-style flat surface: rounded, bordered, no shadow, no glow. */
+  /* Restrained card chrome (brief: white surface, hairline border, multi-layer shadow, 20px radius). */
   .surface-card {
-    @apply rounded-[1.25rem] border border-border bg-card text-card-foreground;
-    transition: border-color 0.2s ease;
+    background: #FFFFFF;
+    border: 1px solid hsl(var(--foreground) / 0.08);
+    border-radius: 20px;
+    box-shadow:
+      0 1px 2px rgba(17, 21, 31, 0.04),
+      0 8px 28px rgba(17, 21, 31, 0.07);
+    transition: border-color 0.2s ease, transform 0.2s ease;
   }
 
   .surface-card:hover {
-    border-color: hsl(var(--foreground) / 0.18);
+    border-color: hsl(var(--foreground) / 0.16);
   }
 
   .surface-elevated {
-    @apply rounded-[1.25rem] border border-border bg-background-elevated;
+    @apply rounded-[20px] border bg-background-elevated;
+    border-color: hsl(var(--foreground) / 0.08);
   }
 
-  /* Dark hero block — Klarna does this with their black canvas; we use violet-ink. */
+  /* Dark hero block — kept for moments-of-decision (signup) per brief. */
   .surface-ink {
     @apply rounded-[1.5rem] bg-ink text-ink-foreground;
   }
 
-  /* Pill tag — used for "verified", category labels. Flat, no shadow. */
+  /* Pill tag — quiet, no shadow */
   .pill-tag {
-    @apply inline-flex items-center rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground;
+    @apply inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-medium;
+    border-color: hsl(var(--foreground) / 0.12);
+    color: hsl(var(--foreground) / 0.6);
   }
 
   .pill-tag-accent {
-    @apply inline-flex items-center rounded-full bg-brand-teal-light px-2.5 py-1 text-xs font-semibold text-brand-teal;
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold;
+    background: var(--brand-violet-soft);
+    color: var(--brand-violet-dark);
   }
 
-  /* Nav shell stays minimal; no read-progress. */
   .nav-shell {
     @apply border-b border-border bg-background;
+  }
+}
+
+/* Curtain-scroll panels — each step is sticky; later panels slide up and
+ * cover earlier ones, like a stage curtain rising. No JS pin, no trap.
+ */
+.curtain-panel {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  background: hsl(var(--background));
+  border-top: 1px solid hsl(var(--foreground) / 0.08);
+  box-shadow: 0 -10px 36px rgba(17, 21, 31, 0.05);
+}
+.curtain-panel--first {
+  border-top: 0;
+  box-shadow: none;
+}
+.curtain-panel--violet {
+  background: var(--brand-violet);
+  border-top: 0;
+  box-shadow: none;
+}
+.curtain-panel-inner {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1600px;
+  padding: 0 1.5rem;
+}
+@media (min-width: 640px) {
+  .curtain-panel-inner {
+    padding: 0 2.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .curtain-panel-inner {
+    padding: 0 4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curtain-panel {
+    position: relative;
+    height: auto;
+    min-height: 60vh;
+    padding: 4rem 0;
+  }
+}
+
+@keyframes valora-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [style*="valora-fade-up"] {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Discreet scroll cue — just a downward chevron, gently pulsing */
+.hero-scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  padding: 0.5rem;
+  color: hsl(var(--foreground) / 0.6);
+  transition: color 0.2s ease;
+}
+.hero-scroll-cue:hover {
+  color: hsl(var(--foreground));
+}
+.hero-scroll-cue:focus-visible {
+  outline: 2px solid var(--brand-violet);
+  outline-offset: 4px;
+  border-radius: 999px;
+}
+.hero-scroll-cue-icon {
+  width: 32px;
+  height: 32px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-scroll-cue-icon {
+    animation: hero-scroll-pulse 1.8s ease-in-out infinite;
+  }
+}
+@keyframes hero-scroll-pulse {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+
+/* Hero video — full-bleed on desktop, natural-height on mobile portrait. */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  pointer-events: none;
+  background: hsl(var(--background));
+}
+
+/* Mobile portrait — the video is landscape, so `cover` would crop the sides
+ * and `contain` leaves big empty cream bands above/below. Instead, let the
+ * video flow in its native aspect ratio and let the section shrink to fit.
+ */
+@media (max-width: 768px) and (orientation: portrait) {
+  .hero-section-video {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  .hero-video {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+}
+
+/* Soft cream scrim so navy type stays readable over any frame */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 52%,
+    hsl(var(--background) / 0.55),
+    hsl(var(--background) / 0.18) 60%,
+    transparent 92%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-fade-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: linear-gradient(
+    to bottom,
+    hsl(var(--background)) 0%,
+    hsl(var(--background) / 0.6) 45%,
+    transparent 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-fade-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 22%;
+  background: linear-gradient(
+    to top,
+    hsl(var(--background)) 0%,
+    transparent 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-video {
+    display: none;
   }
 }
 
@@ -294,37 +549,49 @@
     background-color: hsl(var(--accent-strong));
   }
 
-  /* For numerals in display contexts: proportional, not tabular. */
+  .text-violet {
+    color: var(--brand-violet);
+  }
+
+  .bg-violet {
+    background-color: var(--brand-violet);
+  }
+
+  /* Money figures — tabular numerals across the page */
+  .nums-tab {
+    font-variant-numeric: tabular-nums;
+  }
+
   .nums-prop {
     font-variant-numeric: proportional-nums;
   }
 
-  /*
-   * Scroll-driven parallax on painterly card images.
-   * The photo translates from -5% → +5% of its height as the card moves
-   * through the viewport — creating "look-through-a-window" depth against
-   * the static card frame and gradient overlay.
-   *
-   * Uses CSS `animation-timeline: view()`. Falls back to no animation on
-   * browsers without support (Safari < 18.4, Firefox stable).
+  /* Ambient corner glows — sage bottom-left, honey bottom-right.
+   * Use on cream sections only. Subtle, blurred, low-opacity radial gradients.
    */
-  @media (prefers-reduced-motion: no-preference) {
-    @supports (animation-timeline: view()) {
-      @keyframes painterly-image-parallax {
-        from {
-          transform: translate3d(0, -5%, 0) scale(1.14);
-        }
-        to {
-          transform: translate3d(0, 5%, 0) scale(1.14);
-        }
-      }
+  .glow-sage-bl {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 70% 80% at 8% 100%,
+      rgba(95, 140, 118, 0.20),
+      rgba(60, 108, 90, 0.08) 40%,
+      transparent 78%
+    );
+    filter: blur(40px);
+  }
 
-      .painterly-parallax {
-        animation: painterly-image-parallax linear both;
-        animation-timeline: view();
-        animation-range: entry 0% exit 100%;
-        will-change: transform;
-      }
-    }
+  .glow-honey-br {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 70% 80% at 92% 100%,
+      rgba(218, 180, 108, 0.18),
+      rgba(180, 148, 80, 0.08) 40%,
+      transparent 78%
+    );
+    filter: blur(40px);
   }
 }
