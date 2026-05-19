@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
+import { z } from "zod";
 import { LinkedInBrandButton } from "@/components/LinkedInBrandButton";
 import { MarketingClerkWaitlistEmbed } from "@/components/MarketingClerkWaitlistEmbed";
 import { VALORA_LINKEDIN_URL, MARKETING_INFO_EMAIL } from "@/config/marketing";
