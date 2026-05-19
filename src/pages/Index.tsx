@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { ValoraLogo } from "@/components/ValoraLogo";
 import { CountUpNumber } from "@/components/CountUpNumber";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -41,6 +41,7 @@ const Index = () => {
   const [submitted, setSubmitted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navScrolled = useNavScroll();
+  const headerRef = useRef<HTMLElement>(null);
   const { t } = useTranslation();
   const signupUrl = getSignupUrl();
 
@@ -122,10 +123,30 @@ const Index = () => {
       return;
     }
 
-    // Fixed header slides in once scrollY > 80; offset so section tops aren't hidden under it.
     const header = document.querySelector<HTMLElement>("header");
-    const offset = header?.offsetHeight ?? 0;
-    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    const headerOffset = header?.offsetHeight ?? 0;
+
+    // Full-height sections vertically center content — scroll the content block into view, not the section top.
+    const isVerticallyCentered =
+      el.classList.contains("items-center") && el.classList.contains("min-h-screen");
+    const focus =
+      el.querySelector<HTMLElement>("[data-scroll-focus]") ??
+      (isVerticallyCentered
+        ? el.querySelector<HTMLElement>(":scope > :not([aria-hidden])")
+        : null) ??
+      el;
+
+    if (isVerticallyCentered && focus !== el) {
+      const focusTop = focus.getBoundingClientRect().top + window.scrollY;
+      const focusHeight = focus.offsetHeight;
+      const viewport = window.innerHeight;
+      const top =
+        focusTop + focusHeight / 2 - headerOffset - (viewport - headerOffset) / 2;
+      window.scrollTo({ top: Math.max(0, top), behavior });
+      return;
+    }
+
+    const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
     window.scrollTo({ top: Math.max(0, top), behavior });
   };
 
@@ -149,24 +170,35 @@ const Index = () => {
     return () => window.removeEventListener("keydown", onKey);
   }, [mobileMenuOpen]);
 
+  // Hidden header must not trap focus (aria-hidden + focused descendant warns in DevTools).
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    header.inert = !navScrolled;
+    if (navScrolled) return;
+    if (mobileMenuOpen) setMobileMenuOpen(false);
+    const active = document.activeElement;
+    if (active instanceof HTMLElement && header.contains(active)) {
+      active.blur();
+    }
+  }, [navScrolled]);
+
   useEffect(() => {
     if (window.location.hash !== "#waitlist") return;
-    const tid = window.setTimeout(() => {
-      document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 80);
+    const tid = window.setTimeout(() => scrollToSection("waitlist"), 80);
     return () => window.clearTimeout(tid);
   }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-[var(--brand-violet)]/25">
       <header
+        ref={headerRef}
         className={cn(
           "fixed top-0 z-50 w-full border-b transition-all duration-300 ease-out",
           navScrolled
             ? "translate-y-0 opacity-100 border-border bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/85"
             : "pointer-events-none -translate-y-full opacity-0 border-transparent",
         )}
-        aria-hidden={!navScrolled}
       >
         <div className="relative mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
           <button
