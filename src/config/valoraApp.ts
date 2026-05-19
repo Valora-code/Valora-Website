@@ -9,3 +9,7 @@ export function getValoraAppOrigin(): string {
   }
   return "https://app.valora-tech.com";
 }
+
+export function getSignupUrl(): string {
+  return `${getValoraAppOrigin()}/register`;
+}

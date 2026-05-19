@@ -42,6 +42,7 @@ const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navScrolled = useNavScroll();
   const { t } = useTranslation();
+  const signupUrl = getSignupUrl();
 
   const pinnedItems = t("marketing.brand.pinned.items", { returnObjects: true }) as PinnedItem[];
 
