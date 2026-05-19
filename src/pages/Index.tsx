@@ -13,10 +13,8 @@ import { Link } from "react-router-dom";
 import { LinkedInBrandButton } from "@/components/LinkedInBrandButton";
 import { MarketingClerkWaitlistEmbed } from "@/components/MarketingClerkWaitlistEmbed";
 import { VALORA_LINKEDIN_URL, MARKETING_INFO_EMAIL } from "@/config/marketing";
-import { useTranslation } from "@/lib/i18n";
-import { LinkedInBrandButton } from "@/components/LinkedInBrandButton";
-import { VALORA_LINKEDIN_URL } from "@/config/marketing";
 import { getSignupUrl } from "@/config/valoraApp";
+import { useTranslation } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 type StatItem = { end: number; text: string };
