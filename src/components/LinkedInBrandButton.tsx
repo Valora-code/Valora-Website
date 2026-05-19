@@ -9,7 +9,7 @@ type LinkedInBrandButtonProps = {
 };
 
 /**
- * LinkedIn company link — uses bundled SVG (SVG Repo / standard LinkedIn mark).
+ * LinkedIn company link — bundled SVG mark.
  */
 export function LinkedInBrandButton({ href, "aria-label": ariaLabel, className }: LinkedInBrandButtonProps) {
   return (
@@ -19,7 +19,7 @@ export function LinkedInBrandButton({ href, "aria-label": ariaLabel, className }
       rel="noopener noreferrer"
       aria-label={ariaLabel}
       className={cn(
-        "inline-flex size-6 shrink-0 items-center justify-center text-black transition-opacity hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "inline-flex size-6 shrink-0 items-center justify-center text-foreground transition-opacity hover:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         className,
       )}
     >

@@ -51,15 +51,27 @@ export default {
           DEFAULT: "hsl(var(--ink))",
           foreground: "hsl(var(--ink-foreground))",
         },
+        "brand-violet": {
+          DEFAULT: "var(--brand-violet)",
+          soft: "var(--brand-violet-soft)",
+          dark: "var(--brand-violet-dark)",
+        },
         "brand-teal": {
-          DEFAULT: "var(--brand-teal)",
-          light: "var(--brand-teal-light)",
-          dark: "var(--brand-teal-dark)",
+          DEFAULT: "var(--brand-violet)",
+          light: "var(--brand-violet-soft)",
+          dark: "var(--brand-violet-dark)",
+        },
+        cream: {
+          DEFAULT: "var(--cream)",
+          deep: "var(--cream-deep)",
         },
         "cream-deep": "var(--cream-deep)",
+        navy: "var(--navy)",
         "ink-warm": "var(--ink-warm)",
+        mint: "var(--mint)",
+        honey: "var(--honey)",
         "signal-yellow": {
-          DEFAULT: "var(--signal-yellow)",
+          DEFAULT: "var(--honey)",
           soft: "var(--signal-yellow-soft)",
         },
         popover: {
@@ -88,7 +100,8 @@ export default {
       },
       fontFamily: {
         sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
-        display: ['"Editorial New"', "Georgia", "ui-serif", "serif"],
+        display: ["Anton", "Impact", "Haettenschweiler", "sans-serif"],
+        anton: ["Anton", "Impact", "Haettenschweiler", "sans-serif"],
       },
       letterSpacing: {
         tight: "-0.02em",
