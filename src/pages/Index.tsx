@@ -10,7 +10,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Link } from "react-router-dom";
 import { LinkedInBrandButton } from "@/components/LinkedInBrandButton";
 import { MarketingClerkWaitlistEmbed } from "@/components/MarketingClerkWaitlistEmbed";
-import { VALORA_LINKEDIN_URL } from "@/config/marketing";
+import { MARKETING_INFO_EMAIL, VALORA_LINKEDIN_URL } from "@/config/marketing";
 import { useTranslation } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
@@ -465,10 +465,10 @@ const Index = () => {
             <div>
               <p className="eyebrow-caption mb-6">{t("marketing.footer.colKontakt")}</p>
               <a
-                href="mailto:info@valora.se"
+                href={`mailto:${MARKETING_INFO_EMAIL}`}
                 className="text-base text-foreground transition-opacity hover:opacity-70"
               >
-                info@valora.se
+                {MARKETING_INFO_EMAIL}
               </a>
               <div className="mt-4">
                 <LinkedInBrandButton
