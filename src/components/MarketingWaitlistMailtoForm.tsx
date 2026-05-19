@@ -64,7 +64,7 @@ export function MarketingWaitlistMailtoForm() {
 
   if (submitted) {
     return (
-      <div className="card-modern marketing-card-lift p-10 text-center">
+      <div className="surface-card p-9 text-center">
         <div className="mx-auto mb-4 flex h-11 w-11 items-center justify-center rounded-full border border-primary/30 bg-primary/10">
           <svg className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -76,7 +76,7 @@ export function MarketingWaitlistMailtoForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="card-accent marketing-card-lift space-y-5 rounded-lg p-6 sm:p-8">
+    <form onSubmit={handleSubmit} className="surface-card space-y-5 p-7 sm:p-9">
       <p className="text-sm text-muted-foreground">{t("marketing.waitlist.fallbackHint")}</p>
       <div className="space-y-2">
         <label htmlFor="waitlist-fallback-email" className="text-sm font-medium text-foreground">

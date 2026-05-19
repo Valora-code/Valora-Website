@@ -6,14 +6,11 @@ import { CurtainSteps, type PinnedStep } from "@/components/CurtainSteps";
 import { HeroIntro } from "@/components/HeroIntro";
 import { MarketingLanguageSwitcher } from "@/components/MarketingLanguageSwitcher";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
-import { z } from "zod";
 import { LinkedInBrandButton } from "@/components/LinkedInBrandButton";
 import { MarketingClerkWaitlistEmbed } from "@/components/MarketingClerkWaitlistEmbed";
-import { VALORA_LINKEDIN_URL, MARKETING_INFO_EMAIL } from "@/config/marketing";
+import { VALORA_LINKEDIN_URL } from "@/config/marketing";
 import { getSignupUrl } from "@/config/valoraApp";
 import { useTranslation } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
@@ -37,8 +34,6 @@ const useNavScroll = () => {
 const sectionInner = "mx-auto max-w-6xl px-6 sm:px-8 py-24 sm:py-32 md:py-36";
 
 const Index = () => {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navScrolled = useNavScroll();
   const headerRef = useRef<HTMLElement>(null);
@@ -46,14 +41,6 @@ const Index = () => {
   const signupUrl = getSignupUrl();
 
   const pinnedItems = t("marketing.brand.pinned.items", { returnObjects: true }) as PinnedItem[];
-
-  const waitlistSchema = useMemo(
-    () =>
-      z.object({
-        email: z.string().trim().email({ message: t("marketing.waitlist.errors.invalidEmail") }).max(255),
-      }),
-    [t],
-  );
 
   const navLinks = useMemo(
     () =>
@@ -81,36 +68,6 @@ const Index = () => {
   };
 
   const formatMoney = (n: number) => n.toLocaleString("sv-SE").replace(/,/g, " ");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const validated = waitlistSchema.parse({ email });
-      const subject = encodeURIComponent(t("marketing.waitlist.mailtoSubject"));
-      const emailLine = t("marketing.waitlist.mailtoEmailLine");
-      const body = encodeURIComponent(`${emailLine} ${validated.email}`);
-      window.location.href = `mailto:info@valora.se?subject=${subject}&body=${body}`;
-      setSubmitted(true);
-      toast({
-        title: t("marketing.waitlist.toastThanksTitle"),
-        description: t("marketing.waitlist.toastThanksBody"),
-      });
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        toast({
-          title: t("marketing.waitlist.toastInvalidTitle"),
-          description: error.errors[0].message,
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: t("marketing.waitlist.toastErrorTitle"),
-          description: t("marketing.waitlist.toastErrorBody"),
-          variant: "destructive",
-        });
-      }
-    }
-  };
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -486,53 +443,8 @@ const Index = () => {
               {t("marketing.waitlist.subtitle")}
             </p>
 
-            {!submitted ? (
-              <form
-                onSubmit={handleSubmit}
-                className="surface-card p-7 sm:p-9"
-              >
-                <div className="space-y-2">
-                  <label
-                    htmlFor="email"
-                    className="font-anton text-[11px] uppercase tracking-[0.16em]"
-                    style={{ color: "hsl(var(--foreground) / 0.6)" }}
-                  >
-                    {t("marketing.waitlist.emailLabel")}
-                  </label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    placeholder={t("marketing.waitlist.emailPlaceholder")}
-                    className="h-auto rounded-lg border border-foreground/10 bg-background px-3.5 py-3 text-[15px] font-medium text-foreground placeholder:text-muted-foreground/70 focus-visible:border-[var(--brand-violet)] focus-visible:ring-[var(--brand-violet)]/15"
-                  />
-                </div>
+            <MarketingClerkWaitlistEmbed />
 
-                <div className="mt-8 flex flex-col items-center gap-3">
-                  <button
-                    type="submit"
-                    className="group inline-flex w-full items-center justify-center gap-2 rounded-full px-7 py-4 text-[16px] font-bold tracking-tight text-foreground transition-all duration-200 hover:bg-[var(--brand-violet-dark)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-violet)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
-                    style={{ background: "var(--brand-violet)" }}
-                  >
-                    <span>{t("marketing.waitlist.submit")}</span>
-                    <svg className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none">
-                      <path d="M3 8h10m0 0L9 4m4 4l-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </button>
-                </div>
-              </form>
-            ) : (
-              <div className="surface-card p-9 text-center">
-                <div className="mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-full" style={{ background: "var(--brand-violet-soft)" }}>
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.25} style={{ color: "var(--brand-violet-dark)" }}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <p className="text-sm leading-relaxed text-foreground sm:text-base">{t("marketing.waitlist.success")}</p>
-              </div>
-            )}
           </ScrollReveal>
         </section>
 
