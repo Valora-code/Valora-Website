@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 import { LinkedInBrandButton } from "@/components/LinkedInBrandButton";
 import { MarketingClerkWaitlistEmbed } from "@/components/MarketingClerkWaitlistEmbed";
 import { VALORA_LINKEDIN_URL } from "@/config/marketing";
-import { getSignupUrl } from "@/config/valoraApp";
 import { useTranslation } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
@@ -38,8 +37,6 @@ const Index = () => {
   const navScrolled = useNavScroll();
   const headerRef = useRef<HTMLElement>(null);
   const { t } = useTranslation();
-  const signupUrl = getSignupUrl();
-
   const pinnedItems = t("marketing.brand.pinned.items", { returnObjects: true }) as PinnedItem[];
 
   const navLinks = useMemo(
@@ -211,15 +208,8 @@ const Index = () => {
                 </button>
               ))}
             </nav>
-            <div className="mt-6 flex items-center justify-end border-t border-border pt-6">
+            <div className="mt-6 border-t border-border pt-6">
               <MarketingLanguageSwitcher />
-              <a
-                href={signupUrl}
-                onClick={() => setMobileMenuOpen(false)}
-                className="font-anton text-sm uppercase tracking-[0.18em] text-foreground/65 transition-colors hover:text-foreground"
-              >
-                {t("marketing.nav.signup")}
-              </a>
             </div>
           </div>
         </div>
