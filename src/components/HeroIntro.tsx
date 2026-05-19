@@ -27,9 +27,9 @@ export const HeroIntro = ({ className }: HeroIntroProps) => {
 
       <div className="hero-intro-content">
         <div className="hero-intro-wordmark">
-          <div className="select-none overflow-hidden px-3 sm:px-4">
+          <div className="select-none overflow-hidden px-3 sm:px-4 w-fit max-w-full">
             <span
-              className="font-anton block w-full text-center"
+              className="hero-intro-valora font-anton block w-fit text-center"
               style={{
                 fontSize: "39vw",
                 lineHeight: 0.9,

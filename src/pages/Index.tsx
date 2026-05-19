@@ -12,6 +12,8 @@ import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import { z } from "zod";
 import { useTranslation } from "@/lib/i18n";
+import { LinkedInBrandButton } from "@/components/LinkedInBrandButton";
+import { VALORA_LINKEDIN_URL } from "@/config/marketing";
 import { getSignupUrl } from "@/config/valoraApp";
 import { cn } from "@/lib/utils";
 
@@ -114,7 +116,29 @@ const Index = () => {
     const el = document.getElementById(id);
     if (!el) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    const behavior = reduce ? "auto" : "smooth";
+
+    if (id === "top") {
+      window.scrollTo({ top: 0, behavior });
+      return;
+    }
+
+    // Fixed header slides in once scrollY > 80; offset so section tops aren't hidden under it.
+    const header = document.querySelector<HTMLElement>("header");
+    const offset = header?.offsetHeight ?? 0;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top: Math.max(0, top), behavior });
+  };
+
+  const scrollToSectionFromNav = (id: string) => {
+    if (mobileMenuOpen) {
+      setMobileMenuOpen(false);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => scrollToSection(id));
+      });
+      return;
+    }
+    scrollToSection(id);
   };
 
   useEffect(() => {
@@ -164,7 +188,7 @@ const Index = () => {
             variant="valora"
             size="sm"
             className="shrink-0 px-3 text-xs sm:px-5 sm:text-sm"
-            onClick={() => scrollToSection("waitlist")}
+            onClick={() => scrollToSectionFromNav("waitlist")}
           >
             {t("marketing.hero.ctaWaitlist")}
           </Button>
@@ -184,10 +208,7 @@ const Index = () => {
                 <button
                   key={id}
                   type="button"
-                  onClick={() => {
-                    scrollToSection(id);
-                    setMobileMenuOpen(false);
-                  }}
+                  onClick={() => scrollToSectionFromNav(id)}
                   className="block w-full rounded-md py-3 text-left font-display text-3xl font-normal uppercase tracking-tight text-foreground transition-colors hover:text-[var(--brand-violet)] focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-4xl"
                 >
                   {label}
@@ -515,6 +536,12 @@ const Index = () => {
               >
                 info@valora.se
               </a>
+              <div className="mt-4">
+                <LinkedInBrandButton
+                  href={VALORA_LINKEDIN_URL}
+                  aria-label={t("marketing.footer.linkedin")}
+                />
+              </div>
             </div>
 
             <div>

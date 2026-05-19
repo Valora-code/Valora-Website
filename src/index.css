@@ -444,13 +444,24 @@
   right: 0;
   bottom: 6vh;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Wordmark — center-curtain unfold. Clip-path is a vector mask, so
  * the type stays crisp and kerned through every frame. */
 .hero-intro-wordmark {
+  width: 100%;
+  display: flex;
+  justify-content: center;
   clip-path: inset(0 50% 0 50%);
   animation: hero-intro-curtain 1.5s cubic-bezier(0.76, 0, 0.24, 1) 0.3s forwards;
+}
+
+/* Anton’s side bearings read heavy on the right — nudge for optical center. */
+.hero-intro-wordmark .hero-intro-valora {
+  transform: translateX(-1.1%);
 }
 @keyframes hero-intro-curtain {
   to { clip-path: inset(0 0 0 0); }
@@ -479,6 +490,9 @@
   .hero-intro-wordmark {
     animation: none;
     clip-path: none;
+  }
+  .hero-intro-wordmark .hero-intro-valora {
+    transform: none;
   }
   .hero-intro-subtitle {
     animation: none;
