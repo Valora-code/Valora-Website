@@ -21,6 +21,7 @@
     },
     "hero": {
       "eyebrow": "Autonomous finance · Sweden",
+      "intro": "The autopilot for your loans",
       "title1": "Autopilot",
       "title2": "for your loans.",
       "subtitle": "Valora is your financial assistant that finds improvements for you. On your own terms.",
@@ -120,6 +121,10 @@
       "statement": "Valora — your money on autopilot.",
       "statementSupport": "You set the rules. We handle the rest.",
       "stepLabel": "Step",
+      "showcase": {
+        "caption": "This is what it looks like.",
+        "tagline": "Done. Saved."
+      },
       "pinned": {
         "eyebrow": "How it works",
         "headline": "Your money, on autopilot.",

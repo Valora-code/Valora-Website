@@ -21,6 +21,7 @@
     },
     "hero": {
       "eyebrow": "Autonom ekonomi · Sverige",
+      "intro": "Autopiloten för dina lån",
       "title1": "Autopiloten",
       "title2": "för dina lån.",
       "subtitle": "Valora är din finansiella assistent som hittar förbättringar åt dig. Enligt dina egna villkor.",
@@ -120,6 +121,10 @@
       "statement": "Valora — din ekonomi på autopilot.",
       "statementSupport": "Du sätter reglerna. Vi sköter resten.",
       "stepLabel": "Steg",
+      "showcase": {
+        "caption": "Så här ser det ut.",
+        "tagline": "Klart. Sparat."
+      },
       "pinned": {
         "eyebrow": "Så fungerar det",
         "headline": "Din ekonomi, på autopilot.",

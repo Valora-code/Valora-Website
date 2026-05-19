@@ -418,6 +418,75 @@
   }
 }
 
+/* ─── Hero intro — single-scene violet canvas, mask-wipe wordmark ───────
+ *  Background: solid violet. No transitions.
+ *  Title: VALORA at footer-matching 39vw, revealed via left-to-right
+ *    clip-path wipe.
+ *  Subtitle: slides up as one block once the wipe finishes.
+ * ─────────────────────────────────────────────────────────────────────── */
+.hero-intro {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-intro-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--brand-violet);
+}
+
+.hero-intro-content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6vh;
+  z-index: 2;
+}
+
+/* Wordmark — center-curtain unfold. Clip-path is a vector mask, so
+ * the type stays crisp and kerned through every frame. */
+.hero-intro-wordmark {
+  clip-path: inset(0 50% 0 50%);
+  animation: hero-intro-curtain 1.5s cubic-bezier(0.76, 0, 0.24, 1) 0.3s forwards;
+}
+@keyframes hero-intro-curtain {
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* Subtitle — slides up as one block once the wordmark fades in. */
+.hero-intro-subtitle {
+  font-family: "Anton", Impact, Haettenschweiler, sans-serif;
+  color: hsl(221 39% 11% / 0.92);
+  font-size: clamp(1.5rem, 6.5vw, 6.5rem);
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 1.25rem 0 0;
+  padding: 0 1rem;
+  opacity: 0;
+  transform: translateY(40px);
+  animation: hero-intro-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.9s forwards;
+}
+@keyframes hero-intro-up {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-intro-wordmark {
+    animation: none;
+    clip-path: none;
+  }
+  .hero-intro-subtitle {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Discreet scroll cue — just a downward chevron, gently pulsing */
 .hero-scroll-cue {
   position: absolute;
@@ -457,37 +526,6 @@
   50% { transform: translateY(8px); opacity: 1; }
 }
 
-/* Hero video — full-bleed on desktop, natural-height on mobile portrait. */
-.hero-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  z-index: 0;
-  pointer-events: none;
-  background: hsl(var(--background));
-}
-
-/* Mobile portrait — the video is landscape, so `cover` would crop the sides
- * and `contain` leaves big empty cream bands above/below. Instead, let the
- * video flow in its native aspect ratio and let the section shrink to fit.
- */
-@media (max-width: 768px) and (orientation: portrait) {
-  .hero-section-video {
-    height: auto !important;
-    min-height: 0 !important;
-  }
-  .hero-video {
-    position: relative;
-    inset: auto;
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: contain;
-  }
-}
 
 /* Soft cream scrim so navy type stays readable over any frame */
 .hero-scrim {

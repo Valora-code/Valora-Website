@@ -3,6 +3,7 @@ import { ValoraLogo } from "@/components/ValoraLogo";
 import { CountUpNumber } from "@/components/CountUpNumber";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CurtainSteps, type PinnedStep } from "@/components/CurtainSteps";
+import { HeroIntro } from "@/components/HeroIntro";
 import { MarketingLanguageSwitcher } from "@/components/MarketingLanguageSwitcher";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -208,23 +209,15 @@ const Index = () => {
       </header>
 
       <main>
-        {/* HERO — full-bleed video. One viewport tall. Soft fade to cream
-            at the bottom + a discreet scroll cue. */}
+        {/* HERO — multi-stage cinematic intro. Violet brand canvas with
+            "VALORA. / Autopiloten för dina lån" lands first, then the scene
+            crossfades to cream with the navy mark drawing itself in. */}
         <section
           id="top"
-          className="hero-section-video relative isolate h-screen w-full overflow-hidden bg-background"
+          className="relative isolate flex h-screen w-full items-center justify-center overflow-hidden"
         >
-          <video
-            className="hero-video"
-            src="/video/hero.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            aria-hidden="true"
-            tabIndex={-1}
-          />
+          <HeroIntro />
+
           {/* Discreet scroll affordance — just a downward chevron */}
           <button
             type="button"
@@ -299,8 +292,8 @@ const Index = () => {
                 body: "",
                 variant: "showcase" as const,
                 background: "violet" as const,
-                caption: "Så här ser det ut.",
-                tagline: "Klart. Sparat.",
+                caption: t("marketing.brand.showcase.caption"),
+                tagline: t("marketing.brand.showcase.tagline"),
                 cta: {
                   label: t("marketing.hero.ctaWaitlist"),
                   onClick: () => scrollToSection("waitlist"),
