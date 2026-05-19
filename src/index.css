@@ -243,6 +243,17 @@
     letter-spacing: -0.02em;
   }
 
+  /* Waitlist hero — balance long Swedish lines; avoid tight overlap at large sizes. */
+  .display-waitlist-title {
+    font-family: "Anton", Impact, Haettenschweiler, sans-serif;
+    @apply mx-auto max-w-full px-2 text-center text-foreground;
+    font-weight: 400;
+    font-size: clamp(2.5rem, 6.5vw, 7.25rem);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
   .display-statement {
     font-family: "Anton", Impact, Haettenschweiler, sans-serif;
     @apply text-foreground;

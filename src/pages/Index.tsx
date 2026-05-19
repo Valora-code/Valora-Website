@@ -416,14 +416,7 @@ const Index = () => {
             >
               {t("marketing.waitlist.caption")}
             </p>
-            <h2
-              className="mb-4 text-center font-anton text-foreground"
-              style={{
-                fontSize: "clamp(4.5rem, 9vw, 9rem)",
-                lineHeight: 0.92,
-                letterSpacing: "-0.03em",
-              }}
-            >
+            <h2 className="display-waitlist-title mb-4">
               {t("marketing.waitlist.title")}
             </h2>
             <p
